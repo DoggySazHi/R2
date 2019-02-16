@@ -10,6 +10,8 @@ public class MoveLadderToNextPos extends Command {
     Since nobody could seem to explain such a mess of a method, it's pretty much this:
     - Drop the ladder to the next position
     - Not die
+    - Cheer for 3952 (but not their software team; some head decided to force
+    two people to work alone, what the hell and claimed they did nothing >:[)
      */
 
     public static final double TIMEOUT = 8.0;

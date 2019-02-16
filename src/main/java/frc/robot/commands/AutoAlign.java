@@ -9,6 +9,7 @@ public class AutoAlign extends Command {
     public static final int STEP = 5;
     public static final double STEPPING_SPEED = 0.7;
 
+    //totally not offensive
     private int cnt = 0;
 
     public AutoAlign() {
@@ -22,14 +23,13 @@ public class AutoAlign extends Command {
     @Override
     protected void execute() {
         if(cnt++ % PERIOD <= STEP) {
-            if(Robot.distanceToCenter()[0] > 0) {
+            if(Robot.distanceToCenter()[0] > 0)
                 Robot.driveTrain.drive(STEPPING_SPEED, 0, 0);
-            } else {
+            else
                 Robot.driveTrain.drive(-STEPPING_SPEED, 0, 0);
-            }
-        } else {
-            Robot.driveTrain.stop();
         }
+        else
+            Robot.driveTrain.stop();
     }
 
     @Override

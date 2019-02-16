@@ -72,9 +72,7 @@ public class Robot extends TimedRobot {
     public void testInit() {}
 
     @Override
-    public void testPeriodic() {
-        Scheduler.getInstance().run();
-    }
+    public void testPeriodic() { Scheduler.getInstance().run(); }
 
     public static int[] distanceToCenter() {
         return new int[] {autoAlignX.getNumber(0).intValue(), autoAlignY.getNumber(0).intValue()};
