@@ -16,6 +16,8 @@ public class LadderController extends AbstractController
         super(joystick);
     }
 
+    MoveLadderToNextPos mltnp;
+
     protected void init()
     {
         // "It's piecewise refinement!" - reid, probably
