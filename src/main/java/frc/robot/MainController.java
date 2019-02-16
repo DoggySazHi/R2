@@ -23,7 +23,6 @@ public class MainController extends AbstractController
     protected void init()
     {
         // "It's piecewise refinement!" - reid, probably
-        buttons[1].whenPressed(null);
     }
 
     public double getRotation() {

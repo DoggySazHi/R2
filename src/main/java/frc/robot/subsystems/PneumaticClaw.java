@@ -26,6 +26,11 @@ public class PneumaticClaw extends Subsystem
         }
     }
 
+    public boolean isExtended()
+    {
+        return extended;
+    }
+
     public void stop() {
         piston.set(DoubleSolenoid.Value.kOff);
     }

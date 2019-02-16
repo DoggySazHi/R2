@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.robot.*;
 
 public class ManualLadder extends Command
 {
@@ -12,11 +12,11 @@ public class ManualLadder extends Command
 
     protected void initialize() {}
     
+    //literally a "manual ladder"
+
     protected void execute() {
-    	if(Robot.ladderController.getLateralMovement() > 0)
-			Robot.ladder.extend();
-    	else if(Robot.ladderController.getLateralMovement() < 0)
-            Robot.ladder.retract();
+    	if(Math.abs(Robot.ladderController.getLateralMovement()) > 0)
+			RobotMap.ladder.set(Robot.ladderController.getLateralMovement());
         else
             Robot.ladder.stop();
     }

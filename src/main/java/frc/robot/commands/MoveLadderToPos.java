@@ -1,15 +1,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.*;
+import frc.robot.*;
 
 public class MoveLadderToPos extends Command
 {
     public static final double TIMEOUT = 8.0;
 
+    public static final double THRESHOLD = 50;
+    public static final double MAX_ENCODER = 700;
+
+
     public static final int[] POSITIONS = new int[] {200, 300, 400, 500, 600, 700};
 
     public int pos;
+
+    public Encoder encoder = RobotMap.ladderEncoder;
 
     public MoveLadderToPos(int pos) {
         requires(Robot.ladder);
@@ -23,7 +30,7 @@ public class MoveLadderToPos extends Command
     protected void execute() {
         switch(pos) {
             case 0:
-                if(Robot.ladder.bottomLimit.get()) {
+                if(Robot.ladder.bottomLimit.get() || encoder.get() < THRESHOLD) {
                     Robot.ladder.pos = 0;
                     Robot.ladder.encoder.reset();
                     Robot.ladder.stop();
@@ -31,7 +38,7 @@ public class MoveLadderToPos extends Command
                     Robot.ladder.retract();
                 break;
             case 5:
-                if(Robot.ladder.topLimit.get()) {
+                if(Robot.ladder.topLimit.get() || encoder.get() > MAX_ENCODER - THRESHOLD) {
                     Robot.ladder.pos = 5;
                     Robot.ladder.stop();
                 }

@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ManualPneumatics extends Command {
-    boolean extend;
-
-    public ManualPneumatics(boolean extend) {
-        this.extend = extend;
+    public ManualPneumatics() {
         requires(Robot.pneumaticClaw);
         setTimeout(2);
         setInterruptible(true);
@@ -16,17 +13,20 @@ public class ManualPneumatics extends Command {
     @Override
     protected void initialize() {}
 
+    boolean isFinished = false;
+
     @Override
     protected void execute() {
-        if(extend)
+        if(!Robot.pneumaticClaw.isExtended())
             Robot.pneumaticClaw.shoot();
         else
             Robot.pneumaticClaw.retract();
+        isFinished = true;
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return isFinished;
     }
 
     @Override
