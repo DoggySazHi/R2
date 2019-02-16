@@ -11,7 +11,7 @@ public class MoveLadderToNextPos extends Command {
     - Drop the ladder to the next position
     - Not die
     - Cheer for 3952 (but not their software team; some head decided to force
-    two people to work alone, what the hell and claimed they did nothing >:[)
+    two people to work alone, what the hell and claimed they did nothing >:[0)
      */
 
     public static final double TIMEOUT = 8.0;
