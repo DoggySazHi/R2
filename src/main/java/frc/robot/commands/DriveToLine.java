@@ -1,10 +1,9 @@
-package org.usfirst.frc.team3952.robot.commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team3952.robot.Robot;
-import org.usfirst.frc.team3952.robot.RobotMap;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveToLine extends Command {
     public static final double TIMEOUT = 5.0;
@@ -14,7 +13,7 @@ public class DriveToLine extends Command {
     public AnalogInput sensor = RobotMap.qtiSensor;
 
     public DriveToLine() {
-        requires(Robot.drive);
+        requires(Robot.driveTrain);
         setTimeout(TIMEOUT);
         setInterruptible(true);
     }
@@ -24,7 +23,7 @@ public class DriveToLine extends Command {
 
     @Override
     protected void execute() {
-        Robot.drive.drive(0, SPEED, 0);
+        Robot.driveTrain.drive(0, SPEED, 0);
         
     }
 
@@ -35,11 +34,11 @@ public class DriveToLine extends Command {
 
     @Override
     protected void end() {
-    	Robot.drive.stop();
+    	Robot.driveTrain.stop();
     }
 
     @Override
     protected void interrupted() {
-    	Robot.drive.stop();
+    	Robot.driveTrain.stop();
     }
 }

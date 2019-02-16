@@ -10,11 +10,6 @@ public class MainController extends AbstractController
     Why was this written with buttons[0] being pointed to buttons[1]? Good question too.
      */
 
-    public double c = 0.1;
-    public double deadzone = 0.2;
-    public double max = 0.8;
-    public double k = (max - c) / Math.log(2 - deadzone);
-
     public double cT = 0.08;
     public double deadzoneT = 0.08;
     public double maxT = 0.4;
@@ -29,16 +24,6 @@ public class MainController extends AbstractController
     {
         // "It's piecewise refinement!" - reid, probably
         buttons[1].whenPressed(null);
-    }
-
-    public double getHorizontalMovement() {
-        double x = joystick.getX();
-        return Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
-    }
-
-    public double getLateralMovement() {
-        double y = -joystick.getY();
-        return Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
     }
 
     public double getRotation() {

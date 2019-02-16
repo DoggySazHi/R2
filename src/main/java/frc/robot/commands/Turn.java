@@ -1,8 +1,7 @@
-package org.usfirst.frc.team3952.robot.commands;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.*;
-
-import org.usfirst.frc.team3952.robot.*;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class Turn extends Command {
 	public static final double SPEED = 0.5;
@@ -13,27 +12,27 @@ public class Turn extends Command {
 	public boolean finished;
 
     public Turn(double degrees) {
-        requires(Robot.drive);
+        requires(Robot.driveTrain);
         setInterruptible(false);
         this.degrees = degrees;
     }
     
 	@Override
     protected void initialize() {
-    	initialAngle = Robot.drive.gyro.getAngle();
+    	initialAngle = Robot.driveTrain.gyro.getAngle();
     	lastMillis = System.currentTimeMillis();
     }
     
 	@Override
     protected void execute() {
     	long nowMillis = System.currentTimeMillis();
-    	if(differenceAngle(Robot.drive.gyro.getAngle() + Robot.drive.gyro.getRate() * (nowMillis - lastMillis) / 1000, initialAngle + degrees) < 7.0) {
-    		Robot.drive.stop();
+    	if(differenceAngle(Robot.driveTrain.gyro.getAngle() + Robot.driveTrain.gyro.getRate() * (nowMillis - lastMillis) / 1000, initialAngle + degrees) < 7.0) {
+    		Robot.driveTrain.stop();
     		finished = true;
     	} else if(degrees < 0) {
-    		Robot.drive.drive(0,  0,  -SPEED);
+    		Robot.driveTrain.drive(0,  0,  -SPEED);
     	} else if(degrees > 0) {
-    		Robot.drive.drive(0, 0, SPEED);
+    		Robot.driveTrain.drive(0, 0, SPEED);
     	}
     	lastMillis = nowMillis;
     }
@@ -45,12 +44,12 @@ public class Turn extends Command {
     
 	@Override
     protected void end() {
-    	Robot.drive.stop();
+    	Robot.driveTrain.stop();
     }
 	
 	@Override
     protected void interrupted() {
-    	Robot.drive.stop();
+    	Robot.driveTrain.stop();
     }
     
     private static double differenceAngle(double a1, double a2) {

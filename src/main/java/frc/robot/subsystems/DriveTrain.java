@@ -15,9 +15,7 @@ public class DriveTrain extends Subsystem
 	public Encoder right = RobotMap.rightEncoder;
 	public ADXRS450_Gyro gyro = RobotMap.gyro;
 	
-    public void initDefaultCommand() {
-    	setDefaultCommand(new ManualDrive());
-    }
+    public void initDefaultCommand() { setDefaultCommand(new ManualDrive()); }
     
     public void drive(double hor, double lat, double rot) {
     	drive.driveCartesian(lat, hor, rot);

@@ -5,21 +5,20 @@ import frc.robot.Robot;
 
 public class ManualLadder extends Command
 {
-    boolean extending;
-
-    public ManualLadder(boolean extending) {
+    public ManualLadder() {
         requires(Robot.ladder);
         setInterruptible(true);
-        this.extending = extending;
     }
 
     protected void initialize() {}
     
     protected void execute() {
-    	if(extending)
+    	if(Robot.ladderController.getLateralMovement() > 0)
 			Robot.ladder.extend();
-    	else
-			Robot.ladder.retract();
+    	else if(Robot.ladderController.getLateralMovement() < 0)
+            Robot.ladder.retract();
+        else
+            Robot.ladder.stop();
     }
 
     protected boolean isFinished() {

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 public class Robot extends TimedRobot {
     public static DriveTrain driveTrain;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        RobotMap.init();
         driveTrain = new DriveTrain();
         ladder = new Ladder();
         pneumaticClaw = new PneumaticClaw();
@@ -55,14 +57,10 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousInit() {
-        Scheduler.getInstance().add(new DeployClaw());
-    }
+    public void autonomousInit() { Scheduler.getInstance().add(new DeployClaw()); }
 
     @Override
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
+    public void autonomousPeriodic() { Scheduler.getInstance().run(); }
 
     @Override
     public void teleopInit() { Scheduler.getInstance().add(new DeployClaw()); }

@@ -1,27 +1,33 @@
-package org.usfirst.frc.team3952.robot.commands;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.*;
-
-import org.usfirst.frc.team3952.robot.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.*;
 
 public class MoveLadderToNextPos extends Command {
+    /*
+    Since nobody could seem to explain such a mess of a method, it's pretty much this:
+    - Drop the ladder to the next position
+    - Not die
+     */
+
     public static final double TIMEOUT = 8.0;
     //TODO: edit
-    public static final double[] POSITIONS = new double[] {200, //panel #1
-                                                           300, //ball #1
-                                                           400, //panel #2
-                                                           500, //ball #2
-                                                           600, //panel #3
-                                                           700  //ball #3
+    public static final double[] POSITIONS = new double[] {100, //panel #1
+                                                           200, //ball #1
+                                                           300, //panel #2
+                                                           400, //ball #2
+                                                           500, //panel #3
+                                                           600  //ball #3
                                                           };
-    public static final int DELTA = 15;
     public static final int MIN = 0;
     public static final int MAX = 5;
+    public static final int THRESHOLD = 50;
 
+    public double oldpos;
     public double pos;
     public boolean dir;
-    public int diff;
     public boolean override;
 
     public Encoder encoder = Robot.ladder.encoder;
@@ -31,42 +37,39 @@ public class MoveLadderToNextPos extends Command {
     public MoveLadderToNextPos(boolean dir) {
         requires(Robot.ladder);
         setTimeout(TIMEOUT);
-        setInterruptible(false);
+        setInterruptible(true);
         this.dir = dir;
     }
 
     @Override
     protected void initialize() {
-        double dist = encoder.getDistance();
+        double oldpos = encoder.getDistance();
         if(dir) {
             int position = MIN;
-            while(dist >= POSITIONS[position] && position < MAX) {
-                ++position;
+            while(oldpos >= POSITIONS[position] && position < MAX) {
+                position++;
             }
+            pos = POSITIONS[Math.min(MAX, position + 1)];
         } else {
             int position = MAX;
-            while(dist <= POSITIONS[position] && position > MIN) {
-                --position;
+            while(oldpos <= POSITIONS[position] && position > MIN) {
+                position--;
             }
+            pos = POSITIONS[Math.min(MIN, position - 1)];
         }
-        override |= Robot.subController.override();
     }
 
     @Override
     protected void execute() {
-        if(dir) {
-            Robot.ladder.extend();
-        } else {
-            Robot.ladder.retract();
-        }
+        Robot.ladder.goTo(oldpos, pos);
     }
 
     @Override
     protected boolean isFinished() {
-        if(topLimit.get() || bottomLimit.get() || override) {
+        if(topLimit.get() || bottomLimit.get() || override)
             return true;
-        }
-        return dir ? encoder.getDistance() >= pos : encoder.getDistance() <= pos;
+        //stop if it is within a threshold, or just simply "past" it if the robotrio didn't update encoder values fast enough
+        return Math.abs(encoder.get() - pos) <= THRESHOLD || oldpos < pos ? encoder.get() > pos : encoder.get() < pos;
     }
 
     @Override

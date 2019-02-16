@@ -27,28 +27,27 @@ public class MoveLadderToPos extends Command
                     Robot.ladder.pos = 0;
                     Robot.ladder.encoder.reset();
                     Robot.ladder.stop();
-                } else {
+                } else
                     Robot.ladder.retract();
-                }
                 break;
-            case 7:
+            case 5:
                 if(Robot.ladder.topLimit.get()) {
-                    Robot.ladder.pos = 7;
+                    Robot.ladder.pos = 5;
                     Robot.ladder.stop();
-                } else {
-                    Robot.ladder.extend();
                 }
+                else
+                    Robot.ladder.extend();
                 break;
             default:
                 int diff = POSITIONS[pos - 1] - (int)Robot.ladder.encoder.getDistance();
                 if(Math.abs(diff) < 100) {
                     Robot.ladder.pos = pos;
                     Robot.ladder.stop();
-                } else if(diff > 0) {
-                    Robot.ladder.extend();
-                } else {
-                    Robot.ladder.retract();
                 }
+                else if(diff > 0)
+                    Robot.ladder.extend();
+                else
+                    Robot.ladder.retract();
                 break;
         }
     }

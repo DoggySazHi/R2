@@ -38,8 +38,8 @@ public class RobotMap {
     public static final int CLAW_CLOSING_LIMIT_PORT = 9;
 
     //PNEUMATIC BOARD (PCM)
-    public static final int DISC_SOLENOID_PORT_1 = 0;
-    public static final int DISC_SOLENOID_PORT_2 = 1;
+    public static final int CLAW_SOLENOID_PORT_1 = 0;
+    public static final int CLAW_SOLENOID_PORT_2 = 1;
 
     //ANALOG IN
     public static final int QTI_SENSOR_PORT = 0;
@@ -60,7 +60,7 @@ public class RobotMap {
     public static DigitalInput ladderBottomLimit;
     public static DigitalInput clawOpeningLimit;
     public static DigitalInput clawClosingLimit;
-    public static Solenoid claw;
+    public static DoubleSolenoid claw;
     public static AnalogInput qtiSensor;
     public static AnalogInput ultrasonicSensor;
 
@@ -85,5 +85,10 @@ public class RobotMap {
         ladderBottomLimit = new DigitalInput(LADDER_BOTTOM_LIMIT_PORT);
         clawOpeningLimit = new DigitalInput(CLAW_OPENING_LIMIT_PORT);
         clawClosingLimit = new DigitalInput(CLAW_CLOSING_LIMIT_PORT);
+
+        claw = new DoubleSolenoid(CLAW_SOLENOID_PORT_1, CLAW_SOLENOID_PORT_2);
+        clawActivator = new Servo(ACTIVATE_CLAW_SERVO);
+        qtiSensor = new AnalogInput(QTI_SENSOR_PORT);
+        ultrasonicSensor = new AnalogInput(ULTRASONIC_PORT);
     }
 }

@@ -1,11 +1,9 @@
-package org.usfirst.frc.team3952.robot.commands;
-
-import org.usfirst.frc.team3952.robot.Robot;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.command.*;
-
-import org.usfirst.frc.team3952.robot.*;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.*;
+import frc.robot.Robot;
 
 // Ultrasonic data tolerable within 11.6347742 in. - 16.5 in.
 public class MoveToWall extends Command { 
@@ -19,7 +17,7 @@ public class MoveToWall extends Command {
     public AnalogInput sensor = RobotMap.ultrasonicSensor;
 	
 	public MoveToWall() {
-        requires(Robot.drive);
+        requires(Robot.driveTrain);
 		setInterruptible(false);
 	}
 
@@ -29,9 +27,9 @@ public class MoveToWall extends Command {
     @Override
     protected void execute() {
         if (sensor.getVoltage() * v2in > STOPPING_DISTANCE) {
-            Robot.drive.drive(0, SPEED, 0);
+            Robot.driveTrain.drive(0, SPEED, 0);
         } else {
-            Robot.drive.stop();
+            Robot.driveTrain.stop();
             finished = true;
         }
         
@@ -44,12 +42,12 @@ public class MoveToWall extends Command {
     
     @Override
     protected void end() {
-    	Robot.drive.stop();
+    	Robot.driveTrain.stop();
     }
     
     @Override
     protected void interrupted() {
-    	Robot.drive.stop();
+    	Robot.driveTrain.stop();
     }
     
 }
