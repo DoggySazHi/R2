@@ -16,26 +16,30 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
+
+//It's sparks, not talons lucas, ya dumbie
+
 public class RobotMap {
     //PWM
-    public static final int FRONT_LEFT_WHEEL_PORT = 1;
-    public static final int FRONT_RIGHT_WHEEL_PORT = 0;
-    public static final int REAR_LEFT_WHEEL_PORT = 3;
-    public static final int REAR_RIGHT_WHEEL_PORT = 2;
+    public static final int FRONT_LEFT_WHEEL_PORT = 0;
+    public static final int FRONT_RIGHT_WHEEL_PORT = 3;
+    public static final int REAR_LEFT_WHEEL_PORT = 2;
+    public static final int REAR_RIGHT_WHEEL_PORT = 1;
     public static final int LADDER_PORT = 4;
-    public static final int ACTIVATE_CLAW_SERVO = 6;
+    public static final int ACTIVATE_CLAW_SERVO = 5;
 
     //DIGITAL IO
-    public static final int LEFT_ENCODER_PORT_1 = 1;
-    public static final int LEFT_ENCODER_PORT_2 = 0;
-    public static final int RIGHT_ENCODER_PORT_1 = 2;
-    public static final int RIGHT_ENCODER_PORT_2 = 3;
+
+    // these are the rear encoder ports, wtf mech
+    public static final int LEFT_ENCODER_PORT_1 = 2;
+    public static final int LEFT_ENCODER_PORT_2 = 3;
+    public static final int RIGHT_ENCODER_PORT_1 = 0;
+    public static final int RIGHT_ENCODER_PORT_2 = 1;
+
     public static final int LADDER_ENCODER_PORT_1 = 4;
     public static final int LADDER_ENCODER_PORT_2 = 5;
     public static final int LADDER_TOP_LIMIT_PORT = 6;
     public static final int LADDER_BOTTOM_LIMIT_PORT = 7;
-    public static final int CLAW_OPENING_LIMIT_PORT = 8;
-    public static final int CLAW_CLOSING_LIMIT_PORT = 9;
 
     //PNEUMATIC BOARD (PCM)
     public static final int CLAW_SOLENOID_PORT_1 = 0;
@@ -54,7 +58,7 @@ public class RobotMap {
     public static Encoder leftEncoder;
     public static Encoder rightEncoder;
     public static ADXRS450_Gyro gyro;
-    public static PWMVictorSPX ladder;
+    public static Spark ladder;
     public static Encoder ladderEncoder;
     public static DigitalInput ladderTopLimit;
     public static DigitalInput ladderBottomLimit;
@@ -73,18 +77,16 @@ public class RobotMap {
         drive = new MecanumDrive(frontLeftWheel, frontRightWheel, rearLeftWheel, rearRightWheel);
 
         leftEncoder = new Encoder(LEFT_ENCODER_PORT_1, LEFT_ENCODER_PORT_2, false, Encoder.EncodingType.k1X);
-        leftEncoder.setDistancePerPulse(0.007266115676069);
+        leftEncoder.setDistancePerPulse(-0.007266115676069);
         rightEncoder = new Encoder(RIGHT_ENCODER_PORT_1, RIGHT_ENCODER_PORT_2, false, Encoder.EncodingType.k1X);
-        rightEncoder.setDistancePerPulse(0.007604813285879);
+        rightEncoder.setDistancePerPulse(-0.007604813285879);
 
         gyro = new ADXRS450_Gyro();
 
-        ladder = new PWMVictorSPX(LADDER_PORT);
+        ladder = new Spark(LADDER_PORT);
         ladderEncoder = new Encoder(LADDER_ENCODER_PORT_1, LADDER_ENCODER_PORT_2, false, Encoder.EncodingType.k2X);
         ladderTopLimit = new DigitalInput(LADDER_TOP_LIMIT_PORT);
         ladderBottomLimit = new DigitalInput(LADDER_BOTTOM_LIMIT_PORT);
-        clawOpeningLimit = new DigitalInput(CLAW_OPENING_LIMIT_PORT);
-        clawClosingLimit = new DigitalInput(CLAW_CLOSING_LIMIT_PORT);
 
         claw = new DoubleSolenoid(CLAW_SOLENOID_PORT_1, CLAW_SOLENOID_PORT_2);
         clawActivator = new Servo(ACTIVATE_CLAW_SERVO);

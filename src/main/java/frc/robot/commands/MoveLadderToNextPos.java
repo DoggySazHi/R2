@@ -61,6 +61,8 @@ public class MoveLadderToNextPos extends Command {
 
     @Override
     protected void execute() {
+        //tahnk you c# for teaching me this
+        override |= Robot.ladderController.override();
         Robot.ladder.goTo(oldpos, pos);
     }
 

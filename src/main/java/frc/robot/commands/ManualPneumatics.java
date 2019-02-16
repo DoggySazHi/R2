@@ -9,6 +9,7 @@ public class ManualPneumatics extends Command {
     public ManualPneumatics(boolean extend) {
         this.extend = extend;
         requires(Robot.pneumaticClaw);
+        setTimeout(2);
         setInterruptible(true);
     }
 

@@ -1,11 +1,8 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.DeployClaw;
 import frc.robot.commands.ManualLadder;
 
 public class Ladder extends Subsystem
@@ -14,7 +11,7 @@ public class Ladder extends Subsystem
 	public static final double LADDER_EXTENDING_SPEED = 0.65;
 	public static final double LADDER_RETRACTING_SPEED = 0.4;
 	
-	private PWMVictorSPX motor = RobotMap.ladder;
+	private Spark motor = RobotMap.ladder;
 	
 	public Encoder encoder = RobotMap.ladderEncoder;
 	public DigitalInput topLimit = RobotMap.ladderTopLimit;
