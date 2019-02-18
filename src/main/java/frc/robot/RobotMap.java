@@ -81,7 +81,7 @@ public class RobotMap {
         rightEncoder = new Encoder(RIGHT_ENCODER_PORT_1, RIGHT_ENCODER_PORT_2, false, Encoder.EncodingType.k1X);
         rightEncoder.setDistancePerPulse(-0.007604813285879);
 
-        gyro = new ADXRS450_Gyro();
+        //gyro = new ADXRS450_Gyro();
 
         ladder = new Spark(LADDER_PORT);
         ladderEncoder = new Encoder(LADDER_ENCODER_PORT_1, LADDER_ENCODER_PORT_2, false, Encoder.EncodingType.k2X);

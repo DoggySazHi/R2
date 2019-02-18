@@ -31,6 +31,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        ntInst = NetworkTableInstance.getDefault();
+        nTable = ntInst.getTable("datatable");
+        autoAlignX = nTable.getEntry("movex");
+        autoAlignY = nTable.getEntry("movey");
+        
         RobotMap.init();
         driveTrain = new DriveTrain();
         ladder = new Ladder();
@@ -62,11 +67,6 @@ public class Robot extends TimedRobot {
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
         camera.setResolution(640, 480);
         */
-        
-        ntInst = NetworkTableInstance.getDefault();
-        nTable = ntInst.getTable("datatable");
-        autoAlignX = nTable.getEntry("movex");
-        autoAlignY = nTable.getEntry("movey");
     }
 
     @Override
