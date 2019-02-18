@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -35,10 +37,29 @@ public class Robot extends TimedRobot {
         driveTrain = new DriveTrain();
         ladder = new Ladder();
         pneumaticClaw = new PneumaticClaw();
-        mainController = new MainController(new Joystick(0));
-        ladderController = new LadderController(new Joystick(1));
+        try
+        {
+            mainController = new MainController(new Joystick(0));
+        }
+        catch(Exception ex)
+        {
+            System.out.println("The main controller has failed to initialize. See logs.\n" +
+                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?");
+        }
+        try
+        {
+            ladderController = new LadderController(new Joystick(1));
+        }
+        catch(Exception ex)
+        {
+            System.out.println("The ladder controller has failed to initialize. See logs.\n" +
+                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?");
+        }
 
-        //requires pi (see other code)
+        // requires pi (see other code)
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(640, 480);
+        
         ntInst = NetworkTableInstance.getDefault();
         nTable = ntInst.getTable("datatable");
         autoAlignX = nTable.getEntry("movex");

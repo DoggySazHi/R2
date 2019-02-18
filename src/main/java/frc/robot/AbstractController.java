@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public abstract class AbstractController
 {
+    boolean successfulInit;
     Joystick joystick;
     Button[] buttons;
 
@@ -18,6 +19,7 @@ public abstract class AbstractController
         if(buttons.length >= 2)
             buttons[0] = buttons[1];
         init();
+        successfulInit = true;
     }
 
     protected abstract void init();

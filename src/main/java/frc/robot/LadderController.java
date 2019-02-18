@@ -21,6 +21,12 @@ public class LadderController extends AbstractController
     protected void init()
     {
         // "It's piecewise refinement!" - reid, probably
+        if(buttons.length < 8)
+        {
+            //no buttons (except for index 0, useless)
+            System.out.println("Uh oh, the ladder controller seems to not have enough buttons!");
+            throw new ArrayIndexOutOfBoundsException();
+        }
         //open
         buttons[1].whenPressed(new ManualPneumatics());
         buttons[4].whenPressed(new AutoAlign());
