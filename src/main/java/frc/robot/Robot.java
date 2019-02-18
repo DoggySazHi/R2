@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -37,6 +35,7 @@ public class Robot extends TimedRobot {
         driveTrain = new DriveTrain();
         ladder = new Ladder();
         pneumaticClaw = new PneumaticClaw();
+
         try
         {
             mainController = new MainController(new Joystick(0));
@@ -44,7 +43,8 @@ public class Robot extends TimedRobot {
         catch(Exception ex)
         {
             System.out.println("The main controller has failed to initialize. See logs.\n" +
-                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?");
+                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
+                "Please restart the RoboRIO after these errors are fixed.");
         }
         try
         {
@@ -53,12 +53,15 @@ public class Robot extends TimedRobot {
         catch(Exception ex)
         {
             System.out.println("The ladder controller has failed to initialize. See logs.\n" +
-                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?");
+                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
+                "Please restart the RoboRIO after these errors are fixed.");
         }
 
         // requires pi (see other code)
+        /*
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
         camera.setResolution(640, 480);
+        */
         
         ntInst = NetworkTableInstance.getDefault();
         nTable = ntInst.getTable("datatable");

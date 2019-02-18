@@ -60,7 +60,7 @@ public class MoveLadderToPos extends Command
     }
 
     protected boolean isFinished() {
-        return Robot.ladder.pos == pos;
+        return Robot.ladder.pos == pos || Robot.ladderController.override();
     }
 
     protected void end() {

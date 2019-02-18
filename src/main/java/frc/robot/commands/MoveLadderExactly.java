@@ -26,7 +26,7 @@ public class MoveLadderExactly extends Command
 
     protected boolean isFinished()
     {
-        if(Math.abs(goTo - (int)Robot.ladder.encoder.getDistance()) < 100)
+        if(Math.abs(goTo - (int)Robot.ladder.encoder.getDistance()) < 100 || Robot.ladderController.override())
         {
             Robot.ladder.stop();
             return true;

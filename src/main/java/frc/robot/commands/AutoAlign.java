@@ -34,7 +34,7 @@ public class AutoAlign extends Command {
 
     @Override
     protected boolean isFinished() {
-        if(Math.abs(Robot.distanceToCenter()[0]) < MIN_DISTANCE_FROM_TARGET) {
+        if(Math.abs(Robot.distanceToCenter()[0]) < MIN_DISTANCE_FROM_TARGET || Robot.ladderController.override()) {
             Robot.driveTrain.stop();
             return true;
         }

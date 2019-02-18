@@ -30,7 +30,7 @@ public class MoveForward extends Command
     }
     
     protected boolean isFinished() {
-        return finished;
+        return finished || Robot.ladderController.override();
     }
     
     protected void end() {

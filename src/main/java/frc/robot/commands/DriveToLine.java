@@ -29,7 +29,7 @@ public class DriveToLine extends Command {
 
     @Override
     protected boolean isFinished() {
-        return sensor.getValue() < LIGHT_THRESHOLD;
+        return sensor.getValue() < LIGHT_THRESHOLD || Robot.ladderController.override();
     }
 
     @Override

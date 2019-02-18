@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
+import frc.robot.*;
 import frc.robot.commands.ManualLadder;
 
 public class Ladder extends Subsystem
@@ -20,6 +21,8 @@ public class Ladder extends Subsystem
 	public int pos = 0;
 
 	int linearSpeed = 0;
+
+	public NetworkTableEntry netTargetSpeed = Robot.nTable.getEntry("Target Ladder Speed");
 
     public void initDefaultCommand() { setDefaultCommand(new ManualLadder()); }
 
@@ -41,19 +44,21 @@ public class Ladder extends Subsystem
     }
 
     public void goTo(double from, double to)
-	{
+	{		
 		double speed;
 		if(encoder.get() <= (to+from)/2)
 		{
 			//ladder is behind midpoint; speed up
 			speed = speedRampUp() * encoder.get() < to ? 1 : -1;
 			motor.set(speed);
+			netTargetSpeed.setDouble(speed);
 		}
 		else
 		{
 			//ladder is past midpoint; speed down
 			speed = speedRampDown() * encoder.get() < to ? 1 : -1;
 			motor.set(speed);
+			netTargetSpeed.setDouble(speed);
 		}
 	}
 

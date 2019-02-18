@@ -37,7 +37,7 @@ public class MoveToWall extends Command {
     
     @Override
     protected boolean isFinished() {
-        return finished;
+        return finished || Robot.ladderController.override();
     }
     
     @Override

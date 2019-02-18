@@ -1,14 +1,17 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
+import frc.robot.*;
 
 public class PneumaticClaw extends Subsystem
 {
     public DoubleSolenoid piston = RobotMap.claw;
 
     public boolean extended;
+    
+    public NetworkTableEntry netExtended = Robot.nTable.getEntry("Claw Extended?");
 
     public void initDefaultCommand() { }
 
@@ -17,6 +20,7 @@ public class PneumaticClaw extends Subsystem
             piston.set(DoubleSolenoid.Value.kForward);
             extended = true;
         }
+        netExtended.setBoolean(extended);
     }
 
     public void retract() {
@@ -24,6 +28,7 @@ public class PneumaticClaw extends Subsystem
             piston.set(DoubleSolenoid.Value.kReverse);
             extended = false;
         }
+        netExtended.setBoolean(extended);
     }
 
     public boolean isExtended()

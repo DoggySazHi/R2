@@ -38,6 +38,7 @@ public class LadderController extends AbstractController
         //buttons[6].cancelWhenPressed(move ladder to next pos i guess);
     }
 
+    //WARNING: THE OVERRIDE BUTTON WILL KILL THE CURRENT COMMAND (EXCEPT MANUALS)
     public boolean override()
     {
         //i don't got time to figure out how cancelling works
