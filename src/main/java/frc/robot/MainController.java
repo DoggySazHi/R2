@@ -35,13 +35,21 @@ public class MainController extends AbstractController
     public double max = 0.8;
     public double k = (max - c) / Math.log(2 - deadzone);
 
-    public double getHorizontalMovement() {
+    public double getHorizontalMovement()
+    {
         double x = joystick.getX();
         return Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
     }
 
-    public double getLateralMovement() {
+    public double getLateralMovement()
+    {
         double y = -joystick.getY();
         return Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
+    }
+
+    public int getPOV()
+    {
+        //0 - top, going clockwise to 7
+        return joystick.getPOV(0) == -1 ? -1 : (int) Math.round(joystick.getPOV(0) / 45.0);
     }
 }
