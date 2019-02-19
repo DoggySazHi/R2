@@ -1,16 +1,15 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotMap;
+import org.usfirst.frc.team3952.robot.*;
 
-public class ResetClaw extends Command
-{
+public class DeployClaw extends Command {
     public static final double THRESHOLD = 2.5;
 
     Servo servo = RobotMap.clawActivator;
 
-    public ResetClaw() {
+    public DeployClaw() {
         setInterruptible(false);
     }
 
@@ -19,12 +18,12 @@ public class ResetClaw extends Command
 
     @Override
     protected void execute() {
-        servo.setAngle(0);
+        servo.setAngle(90.0);
     }
 
     @Override
     protected boolean isFinished() {
-        return Math.abs(servo.getAngle()) < THRESHOLD;
+        return Math.abs(servo.getAngle() - 90.0) < THRESHOLD;
     }
 
     @Override

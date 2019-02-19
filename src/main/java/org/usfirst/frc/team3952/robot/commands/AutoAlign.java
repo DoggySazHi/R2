@@ -1,7 +1,7 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import org.usfirst.frc.team3952.robot.Robot;
 
 public class AutoAlign extends Command {
     public static final int MIN_DISTANCE_FROM_TARGET = 10;

@@ -1,8 +1,8 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.*;
-import frc.robot.*;
+import org.usfirst.frc.team3952.robot.*;
 
 public class MoveLadderToPos extends Command
 {

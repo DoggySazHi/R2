@@ -1,9 +1,9 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.*;
+import org.usfirst.frc.team3952.robot.*;
 
 public class ManualLadder extends Command
 {

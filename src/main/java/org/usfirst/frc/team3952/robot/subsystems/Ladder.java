@@ -1,10 +1,10 @@
-package frc.robot.subsystems;
+package org.usfirst.frc.team3952.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.*;
-import frc.robot.commands.ManualLadder;
+import org.usfirst.frc.team3952.robot.*;
+import org.usfirst.frc.team3952.robot.commands.ManualLadder;
 
 public class Ladder extends Subsystem
 {

@@ -1,7 +1,7 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import org.usfirst.frc.team3952.robot.Robot;
 
 public class Turn extends Command {
 	public static final double SPEED = 0.5;

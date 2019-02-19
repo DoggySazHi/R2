@@ -1,9 +1,9 @@
-package frc.robot.subsystems;
+package org.usfirst.frc.team3952.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.*;
+import org.usfirst.frc.team3952.robot.*;
 
 public class PneumaticClaw extends Subsystem
 {

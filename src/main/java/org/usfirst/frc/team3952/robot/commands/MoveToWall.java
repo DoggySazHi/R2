@@ -1,9 +1,9 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.*;
-import frc.robot.Robot;
+import org.usfirst.frc.team3952.robot.*;
+import org.usfirst.frc.team3952.robot.Robot;
 
 // Ultrasonic data tolerable within 11.6347742 in. - 16.5 in.
 public class MoveToWall extends Command { 

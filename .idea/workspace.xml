@@ -186,7 +186,7 @@
       <replace>joystick</replace>
       <replace>frc.robot.Robot</replace>
       <replace>Robot.driveTrain</replace>
-      <replace>import frc.robot</replace>
+      <replace>import org.usfirst.frc.team3952.robot.</replace>
       <replace>driveTrain</replace>
     </replaceStrings>
   </component>

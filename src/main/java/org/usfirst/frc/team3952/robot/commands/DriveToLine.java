@@ -1,9 +1,9 @@
-package frc.robot.commands;
+package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
+import org.usfirst.frc.team3952.robot.Robot;
+import org.usfirst.frc.team3952.robot.RobotMap;
 
 public class DriveToLine extends Command {
     public static final double TIMEOUT = 5.0;

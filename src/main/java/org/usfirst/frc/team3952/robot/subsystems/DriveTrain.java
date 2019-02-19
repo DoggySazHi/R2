@@ -1,11 +1,11 @@
-package frc.robot.subsystems;
+package org.usfirst.frc.team3952.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import frc.robot.RobotMap;
-import frc.robot.commands.ManualDrive;
+import org.usfirst.frc.team3952.robot.RobotMap;
+import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 
 public class DriveTrain extends Subsystem
 {

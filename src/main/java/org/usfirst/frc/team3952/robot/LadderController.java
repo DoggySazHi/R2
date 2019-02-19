@@ -1,7 +1,7 @@
-package frc.robot;
+package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.commands.*;
+import org.usfirst.frc.team3952.robot.commands.*;
 
 public class LadderController extends AbstractController
 {
