@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3952.robot.*;
 
@@ -15,6 +15,7 @@ public class ManualLadder extends Command
     protected void initialize() {}
 
     public Encoder encoder = RobotMap.ladderEncoder;
+    public DigitalInput bottomLimit = RobotMap.ladderBottomLimit;
     
     //literally a "manual ladder"
     public NetworkTableEntry netEncoder = Robot.nTable.getEntry("Ladder Encoder");
@@ -52,6 +53,9 @@ public class ManualLadder extends Command
 			RobotMap.ladder.set(Robot.ladderController.getLateralMovement());
         else
             Robot.ladder.stop();
+        //TODO if encoder stuff doesn't work, invert this
+        if(bottomLimit.get())
+            encoder.reset();
     }
 
     protected boolean isFinished() {
