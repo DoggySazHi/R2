@@ -52,4 +52,9 @@ public class MainController extends AbstractController
         //0 - top, going clockwise to 7
         return joystick.getPOV(0) == -1 ? -1 : (int) Math.round(joystick.getPOV(0) / 45.0);
     }
+
+    public boolean getQuickTurn()
+    {
+        return joystick.getRawButtonPressed(1);
+    }
 }
