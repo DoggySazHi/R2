@@ -31,8 +31,6 @@ public class LadderController extends AbstractController
         buttons[1].whenPressed(new ManualPneumatics());
         buttons[4].whenPressed(new AutoAlign());
         buttons[5].whenPressed(new AutoAlign());
-        buttons[8].whenPressed(new DeployClaw());
-        buttons[8].whenReleased(new ResetClaw());
         buttons[3].whenPressed(new MoveLadderToNextPos(true));
         buttons[2].whenPressed(new MoveLadderToNextPos(false));
         //buttons[6].cancelWhenPressed(move ladder to next pos i guess);

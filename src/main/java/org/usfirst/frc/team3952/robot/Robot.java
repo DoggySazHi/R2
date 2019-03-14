@@ -81,13 +81,13 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousInit() { Scheduler.getInstance().add(new DeployClaw()); }
+    public void autonomousInit() { }
 
     @Override
     public void autonomousPeriodic() { Scheduler.getInstance().run(); }
 
     @Override
-    public void teleopInit() { Scheduler.getInstance().add(new DeployClaw()); }
+    public void teleopInit() { }
 
     @Override
     public void teleopPeriodic() { Scheduler.getInstance().run(); }

@@ -55,7 +55,7 @@ public class RobotMap {
     public static Spark rearLeftWheel;
     public static Spark rearRightWheel;
     public static Servo clawActivator;
-    public static DifferentialDrive drive;
+    public static MecanumDrive drive;
     public static Encoder leftEncoder;
     public static Encoder rightEncoder;
     public static ADXRS450_Gyro gyro;
@@ -75,10 +75,10 @@ public class RobotMap {
         rearLeftWheel = new Spark(REAR_LEFT_WHEEL_PORT);
         rearRightWheel = new Spark(REAR_RIGHT_WHEEL_PORT);
 
-        SpeedControllerGroup left = new SpeedControllerGroup(frontLeftWheel, rearLeftWheel);
-        SpeedControllerGroup right = new SpeedControllerGroup(frontRightWheel, rearRightWheel);
+        //SpeedControllerGroup left = new SpeedControllerGroup(frontLeftWheel, rearLeftWheel);
+        //SpeedControllerGroup right = new SpeedControllerGroup(frontRightWheel, rearRightWheel);
 
-        drive = new DifferentialDrive(left, right);
+        drive = new MecanumDrive(frontLeftWheel, rearLeftWheel, frontRightWheel, rearRightWheel);
 
         leftEncoder = new Encoder(LEFT_ENCODER_PORT_1, LEFT_ENCODER_PORT_2, false, Encoder.EncodingType.k1X);
         leftEncoder.setDistancePerPulse(-0.007266115676069);
