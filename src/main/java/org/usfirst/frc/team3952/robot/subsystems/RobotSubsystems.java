@@ -6,14 +6,16 @@ public class RobotSubsystems
 {
     private DriveTrain driveTrain;
     private PneumaticPiston pneumaticPiston;
+    private ControlWheel controlWheel;
 
     private MainController mainController;
     private SecondaryController secondaryController;
 
-    public RobotSubsystems(DriveTrain driveTrain, PneumaticPiston pneumaticPiston, MainController mainController, SecondaryController secondaryController)
+    public RobotSubsystems(DriveTrain driveTrain, PneumaticPiston pneumaticPiston, ControlWheel controlWheel, MainController mainController, SecondaryController secondaryController)
     {
         this.driveTrain = driveTrain;
         this.pneumaticPiston = pneumaticPiston;
+        this.controlWheel = controlWheel;
         this.mainController = mainController;
         this.secondaryController = secondaryController;
     }
@@ -36,5 +38,10 @@ public class RobotSubsystems
     public SecondaryController getSecondaryController()
     {
         return secondaryController;
+    }
+
+    public ControlWheel getControlWheel()
+    {
+        return controlWheel;
     }
 }

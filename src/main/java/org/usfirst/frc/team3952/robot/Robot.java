@@ -20,6 +20,7 @@ import org.usfirst.frc.team3952.robot.commands.*;
 public class Robot extends TimedRobot {
     private DriveTrain driveTrain;
     private PneumaticPiston pneumaticPiston;
+    private ControlWheel controlWheel;
 
     private MainController mainController;
     private SecondaryController secondaryController;
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
         RobotMap.init();
         driveTrain = new DriveTrain();
         pneumaticPiston = new PneumaticPiston();
+        controlWheel = new ControlWheel();
 
         try
         {
@@ -61,7 +63,7 @@ public class Robot extends TimedRobot {
                 "Please restart the RoboRIO after these errors are fixed.");
         }
 
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, mainController, secondaryController);
+        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         // requires pi (see other code)
         /*

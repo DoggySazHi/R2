@@ -29,6 +29,7 @@ public class SecondaryController extends AbstractController
         //open
         buttons[2].whileHeld(new TogglePiston(subsystems));
         buttons[4].whenPressed(new AutoAlign(subsystems));
+        buttons[5].whenPressed(new PlayWheelOfFortune(subsystems));
     }
 
     //it's not really a deadzone, but eh

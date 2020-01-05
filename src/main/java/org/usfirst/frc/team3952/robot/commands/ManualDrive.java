@@ -26,15 +26,6 @@ public class ManualDrive extends CommandBase
         double hor = mainController.getHorizontalMovement();
         double lat = mainController.getLateralMovement();
         double rot = mainController.getRotation();
-        int pov = mainController.getPOV();
-        if (pov == 1 || pov == 3)
-            hor = 0.4;
-        else if (pov == 2)
-            hor = 0.8;
-        else if (pov == 5 || pov == 7)
-            hor = -0.4;
-        else if (pov == 6)
-            hor = -0.8;
     	driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
     }
 

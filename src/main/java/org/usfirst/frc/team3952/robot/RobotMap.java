@@ -1,7 +1,12 @@
 package org.usfirst.frc.team3952.robot;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
+
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.util.Color;
 
 //It's sparks, not talons lucas, ya dumbie
 
@@ -19,14 +24,20 @@ public class RobotMap {
     public static final int CLAW_SOLENOID_PORT_2 = 1;
 
     //ANALOG IN
-    public static final int QTI_SENSOR_PORT = 0;
-    public static final int ULTRASONIC_PORT = 1;
 
     //AUTO ALIGN
     public static final int MIN_DISTANCE_FROM_TARGET = 10;
     public static final int PERIOD = 30;
     public static final int STEP = 5;
     public static final double STEPPING_SPEED = 0.7;
+
+    //Control Panel TODO
+    public static final Color CP_RED = ColorMatch.makeColor(0.5, 0.1, 0.1);
+    public static final Color CP_GREEN = ColorMatch.makeColor(0.1, 0.5, 0.1);
+    public static final Color CP_BLUE = ColorMatch.makeColor(0.1, 0.1, 0.5);
+    public static final Color CP_YELLOW = ColorMatch.makeColor(0.4, 0.4, 0.1);
+    public static final Color[] WHEEL = new Color[] {CP_RED, CP_GREEN, CP_BLUE, CP_YELLOW};
+    public static final int MIN_COUNT = 24;
 
     //OBJECTS
     public static Spark frontLeftWheel;
@@ -39,11 +50,9 @@ public class RobotMap {
 
     public static DifferentialDrive drive;
 
-    public static DigitalInput ladderTopLimit;
-    public static DigitalInput ladderBottomLimit;
-    public static DigitalInput clawOpeningLimit;
-    public static DigitalInput clawClosingLimit;
     public static DoubleSolenoid claw;
+
+    public static ColorSensorV3 colorSensor;
 
     public static void init() {
         frontLeftWheel = new Spark(FRONT_LEFT_WHEEL_PORT);
@@ -61,5 +70,7 @@ public class RobotMap {
 
         // No PCM installed
         //claw = new DoubleSolenoid(CLAW_SOLENOID_PORT_1, CLAW_SOLENOID_PORT_2);
+
+        colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     }
 }
