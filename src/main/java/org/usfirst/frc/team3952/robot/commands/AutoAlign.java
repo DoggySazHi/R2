@@ -1,53 +1,62 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3952.robot.Robot;
+import org.usfirst.frc.team3952.robot.SecondaryController;
+import org.usfirst.frc.team3952.robot.subsystems.*;
 
-public class AutoAlign extends Command {
-    public static final int MIN_DISTANCE_FROM_TARGET = 10;
-    public static final int PERIOD = 30;
-    public static final int STEP = 5;
-    public static final double STEPPING_SPEED = 0.7;
+import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
-    //totally not offensive
+public class AutoAlign extends CommandBase {
+    private DriveTrain driveTrain;
+
+    private NetworkTableInstance ntInst;
+    private NetworkTable nTable;
+    private NetworkTableEntry vector;
+
     private int cnt = 0;
 
-    public AutoAlign() {
-        requires(Robot.driveTrain);
-        setInterruptible(true);
+    public AutoAlign(RobotSubsystems subsystems) {
+        driveTrain = subsystems.getDriveTrain();
+        addRequirements(driveTrain);
     }
 
     @Override
-    protected void initialize() {}
+    public void initialize() {
+        ntInst = NetworkTableInstance.getDefault();
+        nTable = ntInst.getTable("LimeLightLite");
+        vector = nTable.getEntry("AutoAlign Coordinates");
+    }
 
     @Override
-    protected void execute() {
+    public void execute() {
+        //TODO optimize for diff drive
         if(cnt++ % PERIOD <= STEP) {
-            if(Robot.distanceToCenter()[0] > 0)
-                Robot.driveTrain.drive(STEPPING_SPEED, 0, 0);
+            if(distanceToCenter()[0] > 0)
+                driveTrain.drive(STEPPING_SPEED, 0, 0, false);
             else
-                Robot.driveTrain.drive(-STEPPING_SPEED, 0, 0);
+                driveTrain.drive(-STEPPING_SPEED, 0, 0, false);
         }
         else
-            Robot.driveTrain.stop();
+            driveTrain.stop();
     }
 
     @Override
-    protected boolean isFinished() {
-        if(Math.abs(Robot.distanceToCenter()[0]) < MIN_DISTANCE_FROM_TARGET || Robot.ladderController.override()) {
-            Robot.driveTrain.stop();
+    public boolean isFinished() {
+        //TODO cancel command
+        if(Math.abs(distanceToCenter()[0]) < MIN_DISTANCE_FROM_TARGET) {
+            driveTrain.stop();
             return true;
         }
         return false;
     }
 
     @Override
-    protected void end() {
-        Robot.driveTrain.stop();
+    public void end(boolean interrupted) {
+        driveTrain.stop();
     }
-
-    @Override
-    protected void interrupted() {
-        Robot.driveTrain.stop();
+    
+    private double[] distanceToCenter() {
+        return vector.getDoubleArray(new double[] {0.0, 0.0});
     }
 }

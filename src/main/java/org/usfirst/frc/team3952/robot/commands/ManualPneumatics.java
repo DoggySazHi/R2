@@ -1,41 +1,41 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3952.robot.Robot;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ManualPneumatics extends Command {
-    public ManualPneumatics() {
-        requires(Robot.pneumaticClaw);
-        setTimeout(2);
-        setInterruptible(true);
+import org.usfirst.frc.team3952.robot.Robot;
+import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
+
+public class ManualPneumatics extends CommandBase {
+    
+    private DoubleSolenoid.Value direction;
+    private PneumaticPiston pneumaticPiston;
+
+    public ManualPneumatics(RobotSubsystems subsystems, Value direction) {
+        pneumaticPiston = subsystems.getPneumaticPiston();
+        this.direction = direction;
+
+        addRequirements(pneumaticPiston);
     }
 
     @Override
-    protected void initialize() {}
+    public void initialize() { /* TODO: Maybe make the piston retract and then shut off */ }
 
     boolean isFinished = false;
 
     @Override
-    protected void execute() {
-        if(!Robot.pneumaticClaw.isExtended())
-            Robot.pneumaticClaw.shoot();
+    public void execute() {
+        if(direction == Value.kForward)
+            pneumaticPiston.shoot();
         else
-            Robot.pneumaticClaw.retract();
+            pneumaticPiston.retract();
         isFinished = true;
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return isFinished;
-    }
-
-    @Override
-    protected void end() {
-    	Robot.pneumaticClaw.stop();
-    }
-
-    @Override
-    protected void interrupted() {
-    	Robot.pneumaticClaw.stop();
     }
 }

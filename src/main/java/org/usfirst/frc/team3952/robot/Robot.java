@@ -21,36 +21,29 @@ import java.time.Instant;
 import org.usfirst.frc.team3952.robot.commands.*;
 
 public class Robot extends TimedRobot {
-    public static DriveTrain driveTrain;
-    public static Ladder ladder;
-    public static PneumaticClaw pneumaticClaw;
+    private DriveTrain driveTrain;
+    private PneumaticPiston pneumaticPiston;
 
-    public static MainController mainController;
-    public static LadderController ladderController;
+    private MainController mainController;
+    private SecondaryController secondaryController;
 
-    public static NetworkTableInstance ntInst;
-    public static NetworkTable nTable;
-    public static NetworkTableEntry vector;
+    private RobotSubsystems subsystems;
 
     private boolean mainControllerInit;
-    private boolean ladderControllerInit;
+    private boolean secondaryControllerInit;
     private Instant checkControllerTime;
+
     private final long CHECK_DELAY = 5000;
 
     @Override
     public void robotInit() {
-        ntInst = NetworkTableInstance.getDefault();
-        nTable = ntInst.getTable("LimeLightLite");
-        vector = nTable.getEntry("AutoAlign Coordinates");
-        
         RobotMap.init();
         driveTrain = new DriveTrain();
-        ladder = new Ladder();
-        pneumaticClaw = new PneumaticClaw();
+        pneumaticPiston = new PneumaticPiston();
 
         try
         {
-            mainController = new MainController(new Joystick(0));
+            mainController = new MainController(new Joystick(0), subsystems);
             mainControllerInit = true;
         }
         catch(Exception ex)
@@ -61,8 +54,8 @@ public class Robot extends TimedRobot {
         }
         try
         {
-            ladderController = new LadderController(new Joystick(1));
-            ladderControllerInit = true;
+            secondaryController = new SecondaryController(new Joystick(1), subsystems);
+            secondaryControllerInit = true;
         }
         catch(Exception ex)
         {
@@ -71,6 +64,8 @@ public class Robot extends TimedRobot {
                 "Please restart the RoboRIO after these errors are fixed.");
         }
 
+        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, mainController, secondaryController);
+        driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         // requires pi (see other code)
         /*
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -82,14 +77,14 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         if(checkControllerTime == null)
             checkControllerTime = Instant.now();
-        else if(!(mainControllerInit && ladderControllerInit))
+        else if(!(mainControllerInit && secondaryControllerInit))
             if(Duration.between(checkControllerTime, Instant.now()).toMillis() > CHECK_DELAY)
             {
                 if(!mainControllerInit)
                 {
                     try
                     {
-                        mainController = new MainController(new Joystick(0));
+                        mainController = new MainController(new Joystick(0), subsystems);
                         mainControllerInit = true;
                     }
                     catch(Exception ex)
@@ -97,12 +92,12 @@ public class Robot extends TimedRobot {
                         System.out.println("Failed to connect main controller. Retrying later.");
                     }
                 }
-                if(!ladderControllerInit)
+                if(!secondaryControllerInit)
                 {
                     try
                     {
-                        ladderController = new LadderController(new Joystick(1));
-                        ladderControllerInit = true;
+                        secondaryController = new SecondaryController(new Joystick(1), subsystems);
+                        secondaryControllerInit = true;
                     }
                     catch(Exception ex)
                     {
@@ -138,8 +133,4 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testPeriodic() { Scheduler.getInstance().run(); }
-
-    public static double[] distanceToCenter() {
-        return vector.getDoubleArray(new double[] {0.0, 0.0});
-    }
 }

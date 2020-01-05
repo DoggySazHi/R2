@@ -1,24 +1,36 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3952.robot.Robot;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ManualDrive extends Command
+import org.usfirst.frc.team3952.robot.MainController;
+import org.usfirst.frc.team3952.robot.Robot;
+import org.usfirst.frc.team3952.robot.SecondaryController;
+import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
+
+public class ManualDrive extends CommandBase
 {
-    public ManualDrive() {
-        requires(Robot.driveTrain);
-        setInterruptible(true);
+    private DriveTrain driveTrain;
+    private MainController mainController;
+    private SecondaryController secondaryController;
+
+    public ManualDrive(RobotSubsystems subsystems) {
+        driveTrain = subsystems.getDriveTrain();
+        mainController = subsystems.getMainController();
+        secondaryController = subsystems.getSecondaryController();
+
+        addRequirements(driveTrain);
     }
 
-    protected void initialize() {}
+    @Override
+    public void initialize() {}
 
-    protected void execute() {
-        //apparently drive team doesn't want to use horizontal for strafing?
-        //double hor = Robot.mainController.getHorizontalMovement();
-        double hor = 0;
-        double lat = Robot.mainController.getLateralMovement();
-        double rot = Robot.mainController.getRotation();
-        int pov = Robot.mainController.getPOV();
+    @Override
+    public void execute() {
+        double hor = mainController.getHorizontalMovement();
+        double lat = mainController.getLateralMovement();
+        double rot = mainController.getRotation();
+        int pov = mainController.getPOV();
         if (pov == 1 || pov == 3)
             hor = 0.4;
         else if (pov == 2)
@@ -27,18 +39,15 @@ public class ManualDrive extends Command
             hor = -0.4;
         else if (pov == 6)
             hor = -0.8;
-    	Robot.driveTrain.drive(hor, lat, rot);
+    	driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
     }
 
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
-    protected void end() {
-    	Robot.driveTrain.stop();
-    }
-
-    protected void interrupted() {
-    	Robot.driveTrain.stop();
+    @Override
+    public void end(boolean interrupted) {
+    	driveTrain.stop();
     }
 }

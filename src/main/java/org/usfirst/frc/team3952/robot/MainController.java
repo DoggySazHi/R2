@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3952.robot;
 
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 public class MainController extends AbstractController
@@ -15,9 +17,9 @@ public class MainController extends AbstractController
     public double maxT = 0.4;
     public double kT = (maxT - cT) / Math.log(2 - deadzoneT);
 
-    public MainController(Joystick joystick)
+    public MainController(Joystick joystick, RobotSubsystems subsystems)
     {
-        super(joystick);
+        super(joystick, subsystems);
     }
 
     protected void init()
