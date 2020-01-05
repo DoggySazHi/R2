@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import org.usfirst.frc.team3952.robot.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.*;
 
 import edu.wpi.first.networktables.*;

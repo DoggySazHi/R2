@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import org.usfirst.frc.team3952.robot.Robot;
 import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
