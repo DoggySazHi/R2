@@ -4,9 +4,9 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.util.Color;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 //It's sparks, not talons lucas, ya dumbie
 
@@ -16,8 +16,12 @@ public class RobotMap {
     public static final int FRONT_RIGHT_WHEEL_PORT = 3;
     public static final int REAR_LEFT_WHEEL_PORT = 2;
     public static final int REAR_RIGHT_WHEEL_PORT = 1;
-    public static final int PROJECTILE_BARREL_PORT = 5;
-    public static final int CONTROL_PANEL_SPINNER = 6;
+    public static final int INTAKE_LEFT_PORT = 5;
+    public static final int INTAKE_RIGHT_PORT = 6;
+
+    //CAN
+    public static final int PROJECTILE_BARREL_PORT = 1;
+    public static final int CONTROL_PANEL_SPINNER = 0;
 
     //PNEUMATIC BOARD (PCM)
     public static final int CLAW_SOLENOID_PORT_1 = 0;
@@ -45,8 +49,11 @@ public class RobotMap {
     public static Spark rearLeftWheel;
     public static Spark rearRightWheel;
     
-    public static PWMVictorSPX projectileBarrel;
-    public static PWMVictorSPX controlPanelSpinner;
+    public static VictorSPX projectileBarrel;
+    public static VictorSPX controlPanelSpinner;
+
+    public static Talon intakeLeft;
+    public static Talon intakeRight;
 
     public static DifferentialDrive drive;
 
@@ -59,9 +66,10 @@ public class RobotMap {
         frontRightWheel = new Spark(FRONT_RIGHT_WHEEL_PORT);
         rearLeftWheel = new Spark(REAR_LEFT_WHEEL_PORT);
         rearRightWheel = new Spark(REAR_RIGHT_WHEEL_PORT);
-
-        projectileBarrel = new PWMVictorSPX(PROJECTILE_BARREL_PORT);
-        controlPanelSpinner = new PWMVictorSPX(CONTROL_PANEL_SPINNER);
+        projectileBarrel = new VictorSPX(PROJECTILE_BARREL_PORT);
+        controlPanelSpinner = new VictorSPX(CONTROL_PANEL_SPINNER);
+        intakeLeft = new Talon(INTAKE_LEFT_PORT);
+        intakeRight = new Talon(INTAKE_RIGHT_PORT);
 
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeftWheel, rearLeftWheel);
         SpeedControllerGroup right = new SpeedControllerGroup(frontRightWheel, rearRightWheel);

@@ -65,6 +65,9 @@ public class Robot extends TimedRobot {
 
         subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
+        pneumaticPiston.retract();
+        //no default command for piston, should be retracted
+        controlWheel.setDefaultCommand(new ManualTurn(subsystems));
         // requires pi (see other code)
         /*
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();

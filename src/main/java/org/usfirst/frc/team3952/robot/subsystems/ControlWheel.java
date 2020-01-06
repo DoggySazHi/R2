@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -18,7 +20,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.CP_YELLOW;
 
 public class ControlWheel extends SubsystemBase
 {
-    private PWMVictorSPX motor = RobotMap.controlPanelSpinner;
+    private VictorSPX motor = RobotMap.controlPanelSpinner;
     private ColorSensorV3 sensor = RobotMap.colorSensor;
 
     private NetworkTableEntry color;
@@ -44,11 +46,11 @@ public class ControlWheel extends SubsystemBase
     }
 
     public void set(double value) {
-    	motor.set(value);
+    	motor.set(ControlMode.PercentOutput, value);
     }
     
     public void stop() {
-    	motor.set(0);
+    	motor.set(ControlMode.PercentOutput, 0);
     }
 
     public Color getColor() {
