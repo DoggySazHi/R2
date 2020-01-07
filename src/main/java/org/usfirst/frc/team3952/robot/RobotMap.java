@@ -36,10 +36,10 @@ public class RobotMap {
     public static final double STEPPING_SPEED = 0.7;
 
     //Control Panel TODO
-    public static final Color CP_RED = ColorMatch.makeColor(0.5, 0.1, 0.1);
-    public static final Color CP_GREEN = ColorMatch.makeColor(0.1, 0.5, 0.1);
-    public static final Color CP_BLUE = ColorMatch.makeColor(0.1, 0.1, 0.5);
-    public static final Color CP_YELLOW = ColorMatch.makeColor(0.4, 0.4, 0.1);
+    public static final Color CP_RED = ColorMatch.makeColor(0.475, 0.370, 0.150);
+    public static final Color CP_GREEN = ColorMatch.makeColor(0.190, 0.545, 0.260);
+    public static final Color CP_BLUE = ColorMatch.makeColor(0.150, 0.455, 0.385);
+    public static final Color CP_YELLOW = ColorMatch.makeColor(0.300, 0.550, 0.160);
     public static final Color[] WHEEL = new Color[] {CP_RED, CP_GREEN, CP_BLUE, CP_YELLOW};
     public static final int MIN_COUNT = 24;
 

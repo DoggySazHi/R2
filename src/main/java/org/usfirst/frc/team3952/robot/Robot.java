@@ -9,7 +9,8 @@ package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
@@ -56,7 +57,7 @@ public class Robot extends TimedRobot {
                 "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
                 "Please restart the RoboRIO after these errors are fixed.");
         }
-        /*
+
         try
         {
             secondaryController = new SecondaryController(new Joystick(1), subsystems);
@@ -68,8 +69,6 @@ public class Robot extends TimedRobot {
                 "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
                 "Please restart the RoboRIO after these errors are fixed.");
         }
-
-         */
 
         subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
@@ -103,7 +102,6 @@ public class Robot extends TimedRobot {
                         System.out.println("Failed to connect main controller. Retrying later.");
                     }
                 }
-                /*
                 if(!secondaryControllerInit)
                 {
                     try
@@ -116,34 +114,34 @@ public class Robot extends TimedRobot {
                         System.out.println("Failed to connect ladder controller. Retrying later.");
                     }
                 }
-                 */
                 checkControllerTime = Instant.now();
             }
+        CommandScheduler.getInstance().run();
     }
 
     @Override
     public void disabledInit() {}
 
     @Override
-    public void disabledPeriodic() {
-        Scheduler.getInstance().run();
-    }
+    public void disabledPeriodic() { }
 
     @Override
-    public void autonomousInit() { }
+    public void autonomousInit() { /* TODO autoalign should be .schedule()ed */ }
 
     @Override
-    public void autonomousPeriodic() { Scheduler.getInstance().run(); }
+    public void autonomousPeriodic() {  }
 
     @Override
     public void teleopInit() { }
 
     @Override
-    public void teleopPeriodic() { Scheduler.getInstance().run(); }
+    public void teleopPeriodic() { }
 
     @Override
-    public void testInit() {}
+    public void testInit() {
+        CommandScheduler.getInstance().cancelAll();
+    }
 
     @Override
-    public void testPeriodic() { Scheduler.getInstance().run(); }
+    public void testPeriodic() { }
 }

@@ -19,16 +19,17 @@ public class PlayWheelOfFortune extends CommandBase
     private int direction;
 
     public PlayWheelOfFortune(RobotSubsystems subsystems) {
-        System.out.println("constructed");
         controlWheel = subsystems.getControlWheel();
 
         addRequirements(controlWheel);
-        //withTimeout(15);
+        //no, bad withTimeout(15);
     }
 
     @Override
     public void initialize() {
-        System.out.println("inited");
+        tilesPassed = 0;
+        direction = 0;
+        System.out.println("AYAYYAYAYAYAYAAYYAYAYAYAYYAYAYYAYYYAYYAY!");
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)
             if(c.equals(WHEEL[i])) {
@@ -41,7 +42,6 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void execute() {
-        System.out.println("Execute");
         ColorMatchResult match = controlWheel.getClosestColor();
         if(match != null && !match.color.equals(WHEEL[currentColor])) {
             if(direction == 0) {
@@ -58,8 +58,12 @@ public class PlayWheelOfFortune extends CommandBase
             }
             else
             {
-                if(match.color.equals(WHEEL[(currentColor + WHEEL.length + direction) % WHEEL.length]))
+                int nextIndex = (currentColor + WHEEL.length + direction) % WHEEL.length;
+                if(match.color.equals(WHEEL[nextIndex]))
+                {
                     tilesPassed++;
+                    currentColor = nextIndex;
+                }
                 else
                     System.out.println("Read incorrectly; is the motor randomly switching, or is the sensor messed up?");
             }
@@ -68,7 +72,6 @@ public class PlayWheelOfFortune extends CommandBase
     }
 
     public boolean isFinished() {
-        System.out.println("IsFinished");
         if(tilesPassed >= MIN_COUNT && controlWheel.getClosestColor().color.equals(controlWheel.getFMSColor()))
         {
             controlWheel.stop();
@@ -79,7 +82,6 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("End");
     	controlWheel.stop();
     }
 }

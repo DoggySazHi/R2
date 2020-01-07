@@ -106,7 +106,6 @@ public class ControlWheel extends SubsystemBase
 
     public void update(int rotations)
     {
-        System.out.println("updated");
         getColor();
         getClosestColor();
         getFMSColor();

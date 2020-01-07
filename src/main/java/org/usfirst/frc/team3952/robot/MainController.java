@@ -25,10 +25,7 @@ public class MainController extends AbstractController
 
     protected void init()
     {
-        System.out.println("Controller inited");
-        for(Button b : buttons)
-            b.whenPressed(new PlayWheelOfFortune(subsystems));
-        //buttons[1].whenPressed();
+        buttons[2].whenPressed(new PlayWheelOfFortune(subsystems));
     }
 
     public double getRotation() {
