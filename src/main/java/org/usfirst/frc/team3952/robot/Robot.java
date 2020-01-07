@@ -10,12 +10,15 @@ package org.usfirst.frc.team3952.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import org.usfirst.frc.team3952.robot.subsystems.*;
+import org.usfirst.frc.team3952.robot.commands.ManualDrive;
+import org.usfirst.frc.team3952.robot.commands.ManualTurn;
+import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
+import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 import java.time.Duration;
 import java.time.Instant;
-
-import org.usfirst.frc.team3952.robot.commands.*;
 
 public class Robot extends TimedRobot {
     private DriveTrain driveTrain;
@@ -40,6 +43,8 @@ public class Robot extends TimedRobot {
         pneumaticPiston = new PneumaticPiston();
         controlWheel = new ControlWheel();
 
+        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
+
         try
         {
             mainController = new MainController(new Joystick(0), subsystems);
@@ -51,6 +56,7 @@ public class Robot extends TimedRobot {
                 "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
                 "Please restart the RoboRIO after these errors are fixed.");
         }
+        /*
         try
         {
             secondaryController = new SecondaryController(new Joystick(1), subsystems);
@@ -63,11 +69,14 @@ public class Robot extends TimedRobot {
                 "Please restart the RoboRIO after these errors are fixed.");
         }
 
+         */
+
         subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         pneumaticPiston.retract();
         //no default command for piston, should be retracted
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
+
         // requires pi (see other code)
         /*
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -94,6 +103,7 @@ public class Robot extends TimedRobot {
                         System.out.println("Failed to connect main controller. Retrying later.");
                     }
                 }
+                /*
                 if(!secondaryControllerInit)
                 {
                     try
@@ -106,6 +116,7 @@ public class Robot extends TimedRobot {
                         System.out.println("Failed to connect ladder controller. Retrying later.");
                     }
                 }
+                 */
                 checkControllerTime = Instant.now();
             }
     }

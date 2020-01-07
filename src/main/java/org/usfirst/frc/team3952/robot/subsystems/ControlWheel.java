@@ -2,21 +2,18 @@ package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.*;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.util.Color;
-
-import com.revrobotics.ColorSensorV3;
-
-import org.usfirst.frc.team3952.robot.*;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.usfirst.frc.team3952.robot.RobotMap;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
-import static org.usfirst.frc.team3952.robot.RobotMap.CP_YELLOW;
 
 public class ControlWheel extends SubsystemBase
 {
@@ -109,6 +106,7 @@ public class ControlWheel extends SubsystemBase
 
     public void update(int rotations)
     {
+        System.out.println("updated");
         getColor();
         getClosestColor();
         getFMSColor();

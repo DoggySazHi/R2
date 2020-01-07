@@ -1,8 +1,9 @@
 package org.usfirst.frc.team3952.robot;
 
-import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import org.usfirst.frc.team3952.robot.commands.PlayWheelOfFortune;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class MainController extends AbstractController
 {
@@ -24,7 +25,10 @@ public class MainController extends AbstractController
 
     protected void init()
     {
-        // "It's piecewise refinement!" - reid, probably
+        System.out.println("Controller inited");
+        for(Button b : buttons)
+            b.whenPressed(new PlayWheelOfFortune(subsystems));
+        //buttons[1].whenPressed();
     }
 
     public double getRotation() {

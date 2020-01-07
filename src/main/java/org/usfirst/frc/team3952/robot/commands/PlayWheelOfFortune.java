@@ -3,10 +3,11 @@ package org.usfirst.frc.team3952.robot.commands;
 import com.revrobotics.ColorMatchResult;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-import org.usfirst.frc.team3952.robot.subsystems.*;
-
-import static org.usfirst.frc.team3952.robot.RobotMap.*;
+import static org.usfirst.frc.team3952.robot.RobotMap.MIN_COUNT;
+import static org.usfirst.frc.team3952.robot.RobotMap.WHEEL;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
 public class PlayWheelOfFortune extends CommandBase
@@ -18,14 +19,16 @@ public class PlayWheelOfFortune extends CommandBase
     private int direction;
 
     public PlayWheelOfFortune(RobotSubsystems subsystems) {
+        System.out.println("constructed");
         controlWheel = subsystems.getControlWheel();
 
         addRequirements(controlWheel);
-        withTimeout(15);
+        //withTimeout(15);
     }
 
     @Override
     public void initialize() {
+        System.out.println("inited");
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)
             if(c.equals(WHEEL[i])) {
@@ -38,6 +41,7 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void execute() {
+        System.out.println("Execute");
         ColorMatchResult match = controlWheel.getClosestColor();
         if(match != null && !match.color.equals(WHEEL[currentColor])) {
             if(direction == 0) {
@@ -64,6 +68,7 @@ public class PlayWheelOfFortune extends CommandBase
     }
 
     public boolean isFinished() {
+        System.out.println("IsFinished");
         if(tilesPassed >= MIN_COUNT && controlWheel.getClosestColor().color.equals(controlWheel.getFMSColor()))
         {
             controlWheel.stop();
@@ -74,6 +79,7 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("End");
     	controlWheel.stop();
     }
 }
