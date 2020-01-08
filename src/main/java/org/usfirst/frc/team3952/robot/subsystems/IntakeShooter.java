@@ -14,6 +14,7 @@ public class IntakeShooter extends SubsystemBase {
     private DoubleSolenoid piston = RobotMap.liftDeploy;
     private VictorSPX intakeLeft = RobotMap.intake;
     private VictorSPX intakeRight = RobotMap.intake2;
+
     private Talon angleMotor = null;
 
     public void shoot() {

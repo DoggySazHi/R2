@@ -24,18 +24,11 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class Robot extends TimedRobot {
-<<<<<<< HEAD
-=======
     private DriveTrain driveTrain;
     private IntakeShooter intakeShooter;
->>>>>>> faa1ffcd3d94063af00524f61631ceeead757042
     private ControlWheel controlWheel;
-    private DriveTrain driveTrain;
     private Intake intake;
     private ShooterSS shooter;
-
-    private IntakeShooter intakeShooter;
-
 
     private MainController mainController;
     private SecondaryController secondaryController;
@@ -86,7 +79,6 @@ public class Robot extends TimedRobot {
         //all system defaulting
         subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, intake,shooter, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
 
         // requires pi (see other code)
