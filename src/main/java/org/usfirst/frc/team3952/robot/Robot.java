@@ -10,13 +10,12 @@ package org.usfirst.frc.team3952.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualPneumatics;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
+import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 import java.time.Duration;
@@ -24,7 +23,7 @@ import java.time.Instant;
 
 public class Robot extends TimedRobot {
     private DriveTrain driveTrain;
-    private PneumaticPiston pneumaticPiston;
+    private IntakeShooter intakeShooter;
     private ControlWheel controlWheel;
 
     private MainController mainController;
@@ -42,10 +41,10 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         RobotMap.init();
         driveTrain = new DriveTrain();
-        pneumaticPiston = new PneumaticPiston();
+        intakeShooter = new IntakeShooter();
         controlWheel = new ControlWheel();
 
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
+        subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, mainController, secondaryController);
 
         try
         {
@@ -63,18 +62,16 @@ public class Robot extends TimedRobot {
         {
             secondaryController = new SecondaryController(new Joystick(1), subsystems);
             secondaryControllerInit = true;
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("The ladder controller has failed to initialize. See logs.\n" +
-                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
-                "Please restart the RoboRIO after these errors are fixed.");
+                    "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" +
+                    "Please restart the RoboRIO after these errors are fixed.");
         }
 
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
+        subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-        pneumaticPiston.retract();
-        pneumaticPiston.setDefaultCommand(new ManualPneumatics(subsystems));
+        intakeShooter.retract();
+        intakeShooter.setDefaultCommand(new ManualPneumatics(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
 
         // requires pi (see other code)

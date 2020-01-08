@@ -1,16 +1,12 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
-public class PneumaticPiston extends SubsystemBase
-{
+public class IntakeShooter extends SubsystemBase {
     public static final double INTAKE_SPEED = 1.0;
     public static final double REJECT_SPEED = 1.0;
 
@@ -19,7 +15,7 @@ public class PneumaticPiston extends SubsystemBase
     private VictorSPX intakeRight = RobotMap.intakeRight;
 
     public void shoot() {
-        if(piston != null)
+        if (piston != null)
             piston.set(DoubleSolenoid.Value.kForward);
     }
 
