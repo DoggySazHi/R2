@@ -27,4 +27,9 @@ public abstract class AbstractController
     }
 
     protected abstract void init();
+
+    public boolean getRawButton(int button)
+    {
+        return buttons[button].get();
+    }
 }

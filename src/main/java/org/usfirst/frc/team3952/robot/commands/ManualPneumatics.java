@@ -4,17 +4,20 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import org.usfirst.frc.team3952.robot.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualPneumatics extends CommandBase {
     
     private DoubleSolenoid.Value direction;
-    private PneumaticPiston pneumaticPiston;
 
-    public ManualPneumatics(RobotSubsystems subsystems, Value direction) {
+    private PneumaticPiston pneumaticPiston;
+    private SecondaryController secondaryController;
+
+    public ManualPneumatics(RobotSubsystems subsystems) {
         pneumaticPiston = subsystems.getPneumaticPiston();
-        this.direction = direction;
+        secondaryController = subsystems.getSecondaryController();
 
         addRequirements(pneumaticPiston);
     }
@@ -26,11 +29,12 @@ public class ManualPneumatics extends CommandBase {
 
     @Override
     public void execute() {
-        if(direction == Value.kForward)
-            pneumaticPiston.shoot();
+        if(secondaryController.getRawButton(3))
+            pneumaticPiston.reject();
+        else if(secondaryController.getRawButton(4))
+            pneumaticPiston.intake();
         else
-            pneumaticPiston.retract();
-        isFinished = true;
+            pneumaticPiston.stop();
     }
 
     @Override

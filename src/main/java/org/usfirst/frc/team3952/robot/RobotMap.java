@@ -16,12 +16,12 @@ public class RobotMap {
     public static final int FRONT_RIGHT_WHEEL_PORT = 3;
     public static final int REAR_LEFT_WHEEL_PORT = 2;
     public static final int REAR_RIGHT_WHEEL_PORT = 1;
-    public static final int INTAKE_LEFT_PORT = 5;
-    public static final int INTAKE_RIGHT_PORT = 6;
+    public static final int PROJECTILE_BARREL_PORT = 5;
+    public static final int CONTROL_PANEL_SPINNER = 6;
 
     //CAN
-    public static final int PROJECTILE_BARREL_PORT = 1;
-    public static final int CONTROL_PANEL_SPINNER = 0;
+    public static final int INTAKE_LEFT_PORT = 0;
+    public static final int INTAKE_RIGHT_PORT = 1;
 
     //PNEUMATIC BOARD (PCM)
     public static final int CLAW_SOLENOID_PORT_1 = 0;
@@ -49,11 +49,11 @@ public class RobotMap {
     public static Spark rearLeftWheel;
     public static Spark rearRightWheel;
     
-    public static VictorSPX projectileBarrel;
-    public static VictorSPX controlPanelSpinner;
+    public static Talon projectileBarrel;
+    public static Talon controlPanelSpinner;
 
-    public static Talon intakeLeft;
-    public static Talon intakeRight;
+    public static VictorSPX intakeLeft;
+    public static VictorSPX intakeRight;
 
     public static DifferentialDrive drive;
 
@@ -66,10 +66,10 @@ public class RobotMap {
         frontRightWheel = new Spark(FRONT_RIGHT_WHEEL_PORT);
         rearLeftWheel = new Spark(REAR_LEFT_WHEEL_PORT);
         rearRightWheel = new Spark(REAR_RIGHT_WHEEL_PORT);
-        projectileBarrel = new VictorSPX(PROJECTILE_BARREL_PORT);
-        controlPanelSpinner = new VictorSPX(CONTROL_PANEL_SPINNER);
-        intakeLeft = new Talon(INTAKE_LEFT_PORT);
-        intakeRight = new Talon(INTAKE_RIGHT_PORT);
+        projectileBarrel = new Talon(PROJECTILE_BARREL_PORT);
+        controlPanelSpinner = new Talon(CONTROL_PANEL_SPINNER);
+        intakeLeft = new VictorSPX(INTAKE_LEFT_PORT);
+        intakeRight = new VictorSPX(INTAKE_RIGHT_PORT);
 
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeftWheel, rearLeftWheel);
         SpeedControllerGroup right = new SpeedControllerGroup(frontRightWheel, rearRightWheel);

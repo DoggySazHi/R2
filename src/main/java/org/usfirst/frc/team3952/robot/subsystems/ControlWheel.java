@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
@@ -17,7 +18,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 public class ControlWheel extends SubsystemBase
 {
-    private VictorSPX motor = RobotMap.controlPanelSpinner;
+    private Talon motor = RobotMap.controlPanelSpinner;
     private ColorSensorV3 sensor = RobotMap.colorSensor;
 
     private NetworkTableEntry color;
@@ -43,11 +44,11 @@ public class ControlWheel extends SubsystemBase
     }
 
     public void set(double value) {
-    	motor.set(ControlMode.PercentOutput, value);
+    	motor.set(value);
     }
     
     public void stop() {
-    	motor.set(ControlMode.PercentOutput, 0);
+    	motor.set(0);
     }
 
     public Color getColor() {

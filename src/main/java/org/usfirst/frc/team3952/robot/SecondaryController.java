@@ -27,9 +27,9 @@ public class SecondaryController extends AbstractController
             throw new ArrayIndexOutOfBoundsException();
         }
         //open
-        buttons[2].whileHeld(new TogglePiston(subsystems));
-        buttons[4].whenPressed(new AutoAlign(subsystems));
-        buttons[5].whenPressed(new PlayWheelOfFortune(subsystems));
+        buttons[1].whileHeld(new TogglePiston(subsystems));
+        buttons[7].whenPressed(new AutoAlign(subsystems));
+        buttons[2].whenPressed(new PlayWheelOfFortune(subsystems));
     }
 
     //it's not really a deadzone, but eh

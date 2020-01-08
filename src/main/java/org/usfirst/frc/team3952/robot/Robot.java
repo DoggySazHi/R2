@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
+import org.usfirst.frc.team3952.robot.commands.ManualPneumatics;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
@@ -73,7 +74,7 @@ public class Robot extends TimedRobot {
         subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         pneumaticPiston.retract();
-        //no default command for piston, should be retracted
+        pneumaticPiston.setDefaultCommand(new ManualPneumatics(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
 
         // requires pi (see other code)

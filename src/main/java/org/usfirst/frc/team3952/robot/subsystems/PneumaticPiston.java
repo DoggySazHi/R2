@@ -3,16 +3,20 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import org.usfirst.frc.team3952.robot.RobotMap;
 
 public class PneumaticPiston extends SubsystemBase
 {
-    public static final double INTAKE_SPEED = 0.5;
-    public static final double REJECT_SPEED = 0.8;
+    public static final double INTAKE_SPEED = 1.0;
+    public static final double REJECT_SPEED = 1.0;
 
     private DoubleSolenoid piston = RobotMap.claw;
-    private Talon intakeLeft = RobotMap.intakeLeft;
-    private Talon intakeRight = RobotMap.intakeRight;
+    private VictorSPX intakeLeft = RobotMap.intakeLeft;
+    private VictorSPX intakeRight = RobotMap.intakeRight;
 
     public void shoot() {
         if(piston != null)
@@ -25,6 +29,7 @@ public class PneumaticPiston extends SubsystemBase
     }
 
     public void toggle() {
+        if(piston == null) return;
         if (piston.get() == DoubleSolenoid.Value.kForward)
             piston.set(DoubleSolenoid.Value.kReverse);
         else
@@ -32,13 +37,13 @@ public class PneumaticPiston extends SubsystemBase
     }
 
     public void intake() {
-        intakeLeft.set(INTAKE_SPEED);
-        intakeRight.set(-1.0 * INTAKE_SPEED);
+        intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
+        intakeRight.set(ControlMode.PercentOutput, INTAKE_SPEED);
     }
 
     public void reject() {
-        intakeLeft.set(-1.0 * REJECT_SPEED);
-        intakeRight.set(REJECT_SPEED);
+        intakeLeft.set(ControlMode.PercentOutput, REJECT_SPEED);
+        intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
     }
 
     public boolean isExtended()
@@ -47,8 +52,9 @@ public class PneumaticPiston extends SubsystemBase
     }
 
     public void stop() {
-        intakeLeft.stopMotor();
-        intakeRight.stopMotor();
-        piston.set(DoubleSolenoid.Value.kReverse);
+        intakeLeft.set(ControlMode.PercentOutput, 0);
+        intakeRight.set(ControlMode.PercentOutput, 0);
+        if(piston != null)
+            piston.set(DoubleSolenoid.Value.kReverse);
     }
 }

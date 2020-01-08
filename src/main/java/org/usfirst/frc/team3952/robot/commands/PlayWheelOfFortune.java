@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import com.revrobotics.ColorMatchResult;
+
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
@@ -14,9 +16,12 @@ public class PlayWheelOfFortune extends CommandBase
 {
     private ControlWheel controlWheel;
 
+    private NetworkTableEntry badColor;
+
     private int tilesPassed;
     private int currentColor;
     private int direction;
+    private boolean incorrectDirection = false;
 
     public PlayWheelOfFortune(RobotSubsystems subsystems) {
         controlWheel = subsystems.getControlWheel();
@@ -27,9 +32,14 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void initialize() {
+        NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+        NetworkTable nTable = ntInst.getTable("Control Wheel");
+        badColor = nTable.getEntry("Bad Color Spinner");
+        badColor.setBoolean(false);
+
         tilesPassed = 0;
         direction = 0;
-        System.out.println("AYAYYAYAYAYAYAAYYAYAYAYAYYAYAYYAYYYAYYAY!");
+        System.out.println("AYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA!");
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)
             if(c.equals(WHEEL[i])) {
@@ -61,14 +71,22 @@ public class PlayWheelOfFortune extends CommandBase
                 int nextIndex = (currentColor + WHEEL.length + direction) % WHEEL.length;
                 if(match.color.equals(WHEEL[nextIndex]))
                 {
+                    incorrectDirection = false;
                     tilesPassed++;
                     currentColor = nextIndex;
                 }
                 else
-                    System.out.println("Read incorrectly; is the motor randomly switching, or is the sensor messed up?");
+                {
+                    if(!incorrectDirection)
+                        System.out.println("Read incorrectly; is the motor randomly switching, or is the sensor messed up?");
+                    incorrectDirection = true;
+                }
+                badColor.setBoolean(incorrectDirection);
             }
         }
         controlWheel.update(tilesPassed);
+
+        controlWheel.set(0.5);
     }
 
     public boolean isFinished() {
