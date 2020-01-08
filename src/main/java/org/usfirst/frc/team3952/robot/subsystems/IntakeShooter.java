@@ -3,6 +3,7 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
@@ -13,6 +14,7 @@ public class IntakeShooter extends SubsystemBase {
     private DoubleSolenoid piston = RobotMap.claw;
     private VictorSPX intakeLeft = RobotMap.intakeLeft;
     private VictorSPX intakeRight = RobotMap.intakeRight;
+    private Talon angleMotor = null;
 
     public void shoot() {
         if (piston != null)
@@ -42,15 +44,18 @@ public class IntakeShooter extends SubsystemBase {
         intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
     }
 
-    public boolean isExtended()
-    {
+    public boolean isExtended() {
         return piston.get() == DoubleSolenoid.Value.kForward;
     }
 
     public void stop() {
         intakeLeft.set(ControlMode.PercentOutput, 0);
         intakeRight.set(ControlMode.PercentOutput, 0);
-        if(piston != null)
+        if (piston != null)
             piston.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void setAngleMotor(double speed) {
+        angleMotor.set(speed);
     }
 }

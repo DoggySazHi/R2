@@ -5,12 +5,12 @@ import org.usfirst.frc.team3952.robot.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-public class ManualPneumatics extends CommandBase {
+public class ManualIntakeShooter extends CommandBase {
 
     private IntakeShooter intakeShooter;
     private SecondaryController secondaryController;
 
-    public ManualPneumatics(RobotSubsystems subsystems) {
+    public ManualIntakeShooter(RobotSubsystems subsystems) {
         intakeShooter = subsystems.getIntakeShooter();
         secondaryController = subsystems.getSecondaryController();
 
@@ -26,12 +26,14 @@ public class ManualPneumatics extends CommandBase {
 
     @Override
     public void execute() {
-        if(secondaryController.getRawButton(3))
+        if (secondaryController.getRawButton(3))
             intakeShooter.reject();
-        else if(secondaryController.getRawButton(4))
+        else if (secondaryController.getRawButton(4))
             intakeShooter.intake();
         else
             intakeShooter.stop();
+
+        intakeShooter.setAngleMotor(secondaryController.getLateralMovement());
     }
 
     @Override
