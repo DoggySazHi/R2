@@ -10,11 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.*;
 
 //It's sparks, not talons lucas, ya dumbie
 
-
 public class RobotMap {
-
-    
-
 
     //PWM
     public static final int RIGHT_DRIVE_PORT = 0;
@@ -22,7 +18,7 @@ public class RobotMap {
     public static final int PROJECTILE_EJECTION_PORT = 2;
     public static final int PROJECTILE_AIM_SERVO_PORT = 3;
     public static final int PROJECTILE_STORAGE_PORT = 4;
-    public static final int TILT_LINEAR_ACTUATOR_PORT = 5;
+    public static final int TILT_LINEAR_ACTUATOR_PORT = 8;
     public static final int CONTROL_PANEL_SPINNER_PORT = 6;
     public static final int LIFT_MOTOR_PORT = 7;    
 
@@ -46,9 +42,8 @@ public class RobotMap {
     public static final Color[] WHEEL = new Color[] {CP_RED, CP_GREEN, CP_BLUE, CP_YELLOW};
     public static final int MIN_COUNT = 24;
 
-    public static Encoder linearActuatorEncoder;
+    public static AnalogEncoder linearActuatorEncoder;
 
- 
     //Drive Train
     public static Spark leftDrive;
     public static Spark rightDrive;
@@ -60,10 +55,6 @@ public class RobotMap {
     public static Talon projectileTilt;
     public static Talon controlPanelSpinner;
 
-
-
-
-   
     //misc
     public static Talon liftMotor;
     public static VictorSPX intake;
@@ -73,7 +64,7 @@ public class RobotMap {
     public static ColorSensorV3 colorSensor;
 
     public static void init() {
-        linearActuatorEncoder = new Encoder(TILT_LINEAR_ACTUATOR_ENCODER1,TILT_LINEAR_ACTUATOR_ENCODER2, false, Encoder.EncodingType.k1X);
+        linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
         leftDrive = new Spark(RIGHT_DRIVE_PORT);
         rightDrive = new Spark(LEFT_DRIVE_PORT);
         projectileTilt = new Talon (TILT_LINEAR_ACTUATOR_PORT);

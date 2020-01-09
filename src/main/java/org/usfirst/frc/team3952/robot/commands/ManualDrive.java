@@ -1,8 +1,10 @@
 package org.usfirst.frc.team3952.robot.commands;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import org.usfirst.frc.team3952.robot.MainController;
+import org.usfirst.frc.team3952.robot.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
@@ -10,10 +12,14 @@ public class ManualDrive extends CommandBase
 {
     private DriveTrain driveTrain;
     private MainController mainController;
+    private SecondaryController secondaryController;
+    private Talon motor;
 
     public ManualDrive(RobotSubsystems subsystems) {
         driveTrain = subsystems.getDriveTrain();
         mainController = subsystems.getMainController();
+        secondaryController = subsystems.getSecondaryController();
+        motor = new Talon(5);
 
         addRequirements(driveTrain);
     }
@@ -27,6 +33,9 @@ public class ManualDrive extends CommandBase
         double lat = mainController.getLateralMovement();
         double rot = mainController.getRotation();
     	driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
+
+    	double speed = secondaryController.getHorizontalMovement();
+    	motor.set(speed);
     }
 
     public boolean isFinished() {

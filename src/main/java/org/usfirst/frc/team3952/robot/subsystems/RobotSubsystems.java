@@ -1,11 +1,12 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import org.usfirst.frc.team3952.robot.*;
+import org.usfirst.frc.team3952.robot.MainController;
+import org.usfirst.frc.team3952.robot.SecondaryController;
 
 public class RobotSubsystems
 {
     private DriveTrain driveTrain;
-    private PneumaticPiston pneumaticPiston;
+    private IntakeShooter intakeShooter;
     private ControlWheel controlWheel;
     private Intake intake;
     private ShooterSS shooter;
@@ -13,10 +14,10 @@ public class RobotSubsystems
     private MainController mainController;
     private SecondaryController secondaryController;
 
-    public RobotSubsystems(DriveTrain driveTrain, PneumaticPiston pneumaticPiston, ControlWheel controlWheel,Intake intake,ShooterSS shooter, MainController mainController, SecondaryController secondaryController)
+    public RobotSubsystems(DriveTrain driveTrain, IntakeShooter intakeShooter, ControlWheel controlWheel,Intake intake,ShooterSS shooter, MainController mainController, SecondaryController secondaryController)
     {
         this.driveTrain = driveTrain;
-        this.pneumaticPiston = pneumaticPiston;
+        this.intakeShooter = intakeShooter;
         this.controlWheel = controlWheel;
         this.mainController = mainController;
         this.secondaryController = secondaryController;
@@ -29,9 +30,8 @@ public class RobotSubsystems
         return driveTrain;
     }
 
-    public PneumaticPiston getPneumaticPiston()
-    {
-        return pneumaticPiston;
+    public IntakeShooter getIntakeShooter() {
+        return intakeShooter;
     }
 
     public MainController getMainController()

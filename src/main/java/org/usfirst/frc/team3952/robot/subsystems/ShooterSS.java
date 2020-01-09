@@ -15,7 +15,7 @@ public class ShooterSS extends SubsystemBase
     public  Servo projectileAimer = RobotMap.projectileAimer;
     public  Talon projectileStorage = RobotMap.projectileStorage;
     public  Talon projectileTilt = RobotMap.projectileTilt;
-    public Encoder encoder = RobotMap.linearActuatorEncoder;
+    public AnalogEncoder encoder = RobotMap.linearActuatorEncoder;
 
     public int speed = 100;
     public int accuracy = 5;

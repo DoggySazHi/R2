@@ -10,13 +10,12 @@ package org.usfirst.frc.team3952.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualPneumatics;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
+import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 import org.usfirst.frc.team3952.robot.subsystems.Intake;
 import org.usfirst.frc.team3952.robot.subsystems.ShooterSS;
@@ -28,9 +27,10 @@ public class Robot extends TimedRobot {
     private ControlWheel controlWheel;
     private DriveTrain driveTrain;
     private Intake intake;
-    private PneumaticPiston pneumaticPiston;
     private ShooterSS shooter;
-  
+
+    private IntakeShooter intakeShooter;
+
 
     private MainController mainController;
     private SecondaryController secondaryController;
@@ -46,15 +46,15 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         RobotMap.init();
+
+        driveTrain = new DriveTrain();
+        intakeShooter = new IntakeShooter();
         controlWheel = new ControlWheel();
-        pneumaticPiston = new PneumaticPiston();
         intake = new Intake();
         driveTrain = new DriveTrain();
         shooter = new ShooterSS();
 
-       
-
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, intake,shooter, mainController, secondaryController);
+        subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, intake, shooter, mainController, secondaryController);
 
         try
         {
@@ -72,18 +72,16 @@ public class Robot extends TimedRobot {
         {
             secondaryController = new SecondaryController(new Joystick(1), subsystems);
             secondaryControllerInit = true;
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("The ladder controller has failed to initialize. See logs.\n" +
-                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
-                "Please restart the RoboRIO after these errors are fixed.");
+                    "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" +
+                    "Please restart the RoboRIO after these errors are fixed.");
         }
 
         //all system defaulting
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, intake,shooter, mainController, secondaryController);
+        subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, intake,shooter, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-        pneumaticPiston.setDefaultCommand(new ManualPneumatics(subsystems));
+
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
 
         // requires pi (see other code)

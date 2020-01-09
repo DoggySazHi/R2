@@ -1,38 +1,36 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import org.usfirst.frc.team3952.robot.SecondaryController;
-import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
+import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualPneumatics extends CommandBase {
-    
-
-    private PneumaticPiston lift;
+    private IntakeShooter intakeShooter;
     private SecondaryController secondaryController;
 
     public ManualPneumatics(RobotSubsystems subsystems) {
-        lift = subsystems.getPneumaticPiston();
+        intakeShooter = subsystems.getIntakeShooter();
         secondaryController = subsystems.getSecondaryController();
 
-        addRequirements(lift);
+        //addRequirements(intakeShooter);
     }
 
     @Override
-    public void initialize() { /* TODO: Maybe make the piston retract and then shut off */ }
+    public void initialize() {
+        intakeShooter.retract();
+    }
 
     boolean isFinished = false;
 
     @Override
     public void execute() {
         if(secondaryController.getRawButton(3))
-            lift.extend();
+            intakeShooter.retract();
         else if(secondaryController.getRawButton(4))
-            lift.retract();
+            intakeShooter.extend();
         else
-            lift.stop();
+            intakeShooter.stop();
     }
 
     @Override
