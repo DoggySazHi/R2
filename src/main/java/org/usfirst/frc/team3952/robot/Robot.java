@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
-import org.usfirst.frc.team3952.robot.commands.ManualPneumatics;
+import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
@@ -24,6 +24,11 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class Robot extends TimedRobot {
+<<<<<<< HEAD
+=======
+    private DriveTrain driveTrain;
+    private IntakeShooter intakeShooter;
+>>>>>>> faa1ffcd3d94063af00524f61631ceeead757042
     private ControlWheel controlWheel;
     private DriveTrain driveTrain;
     private Intake intake;

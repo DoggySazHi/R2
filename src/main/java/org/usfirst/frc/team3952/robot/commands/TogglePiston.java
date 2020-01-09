@@ -9,8 +9,8 @@ public class TogglePiston extends CommandBase {
     private IntakeShooter piston;
 
     public TogglePiston(RobotSubsystems subsystems) {
-        //this.piston = subsystems.ge;
-        //addRequirements(piston);
+        this.piston = subsystems.getIntakeShooter();
+        addRequirements(piston);
     }
 
     @Override

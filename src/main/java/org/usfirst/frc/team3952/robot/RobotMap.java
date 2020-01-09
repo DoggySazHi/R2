@@ -24,6 +24,7 @@ public class RobotMap {
 
     //CAN
     public static final int INTAKE_PORT = 0;
+    public static final int INTAKE_TWO_PORT = 1;
    
     public static final int TILT_LINEAR_ACTUATOR_ENCODER1 = 1;
     public static final int TILT_LINEAR_ACTUATOR_ENCODER2 = 2;
@@ -58,6 +59,7 @@ public class RobotMap {
     //misc
     public static Talon liftMotor;
     public static VictorSPX intake;
+    public static VictorSPX intake2;
 
     //pneumatics and vision
     public static DoubleSolenoid liftDeploy;
@@ -75,6 +77,7 @@ public class RobotMap {
         liftMotor = new Talon (LIFT_MOTOR_PORT);
        
         intake = new VictorSPX(INTAKE_PORT);
+        intake2 = new VictorSPX(INTAKE_TWO_PORT);
 
         //  PCM installed ? 
         liftDeploy = new DoubleSolenoid(LIFT_SOLENOID_PORT_1, LIFT_SOLENOID_PORT_2);
