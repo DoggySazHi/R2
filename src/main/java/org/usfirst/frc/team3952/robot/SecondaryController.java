@@ -28,7 +28,6 @@ public class SecondaryController extends AbstractController
         }
         //open
         buttons[1].whileHeld(new TogglePiston(subsystems));
-        buttons[7].whenPressed(new AutoAlign(subsystems));
         buttons[2].whenPressed(new PlayWheelOfFortune(subsystems));
     }
 
