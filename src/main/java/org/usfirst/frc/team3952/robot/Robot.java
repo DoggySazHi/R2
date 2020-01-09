@@ -18,14 +18,19 @@ import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
+import org.usfirst.frc.team3952.robot.subsystems.Intake;
+import org.usfirst.frc.team3952.robot.subsystems.ShooterSS;
 
 import java.time.Duration;
 import java.time.Instant;
 
 public class Robot extends TimedRobot {
-    private DriveTrain driveTrain;
-    private PneumaticPiston pneumaticPiston;
     private ControlWheel controlWheel;
+    private DriveTrain driveTrain;
+    private Intake intake;
+    private PneumaticPiston pneumaticPiston;
+    private ShooterSS shooter;
+  
 
     private MainController mainController;
     private SecondaryController secondaryController;
@@ -41,11 +46,15 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         RobotMap.init();
-        driveTrain = new DriveTrain();
-        pneumaticPiston = new PneumaticPiston();
         controlWheel = new ControlWheel();
+        pneumaticPiston = new PneumaticPiston();
+        intake = new Intake();
+        driveTrain = new DriveTrain();
+        shooter = new ShooterSS();
 
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
+       
+
+        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, intake,shooter, mainController, secondaryController);
 
         try
         {
@@ -71,9 +80,9 @@ public class Robot extends TimedRobot {
                 "Please restart the RoboRIO after these errors are fixed.");
         }
 
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, mainController, secondaryController);
+        //all system defaulting
+        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, intake,shooter, mainController, secondaryController);
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-        pneumaticPiston.retract();
         pneumaticPiston.setDefaultCommand(new ManualPneumatics(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
 

@@ -1,11 +1,9 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 
 import org.usfirst.frc.team3952.robot.RobotMap;
 
@@ -14,47 +12,37 @@ public class PneumaticPiston extends SubsystemBase
     public static final double INTAKE_SPEED = 1.0;
     public static final double REJECT_SPEED = 1.0;
 
-    private DoubleSolenoid piston = RobotMap.claw;
-    private VictorSPX intakeLeft = RobotMap.intakeLeft;
-    private VictorSPX intakeRight = RobotMap.intakeRight;
+    private DoubleSolenoid lift = RobotMap.liftDeploy;
+    
 
-    public void shoot() {
-        if(piston != null)
-            piston.set(DoubleSolenoid.Value.kForward);
+    public void extend() {
+        if(lift != null)
+            lift.set(DoubleSolenoid.Value.kForward);
     }
 
     public void retract() {
-        if(piston != null)
-            piston.set(DoubleSolenoid.Value.kReverse);
+        if(lift != null)
+            lift.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void toggle() {
-        if(piston == null) return;
-        if (piston.get() == DoubleSolenoid.Value.kForward)
-            piston.set(DoubleSolenoid.Value.kReverse);
+        if(lift == null) return;
+        if (lift.get() == DoubleSolenoid.Value.kForward)
+            lift.set(DoubleSolenoid.Value.kReverse);
         else
-            piston.set(DoubleSolenoid.Value.kForward);
+            lift.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void intake() {
-        intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
-        intakeRight.set(ControlMode.PercentOutput, INTAKE_SPEED);
-    }
-
-    public void reject() {
-        intakeLeft.set(ControlMode.PercentOutput, REJECT_SPEED);
-        intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
-    }
+   
 
     public boolean isExtended()
     {
-        return piston.get() == DoubleSolenoid.Value.kForward;
+        return lift.get() == DoubleSolenoid.Value.kForward;
     }
 
     public void stop() {
-        intakeLeft.set(ControlMode.PercentOutput, 0);
-        intakeRight.set(ControlMode.PercentOutput, 0);
-        if(piston != null)
-            piston.set(DoubleSolenoid.Value.kReverse);
+     
+        if(lift != null)
+            lift.set(DoubleSolenoid.Value.kReverse);
     }
 }

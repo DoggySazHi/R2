@@ -4,36 +4,39 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 import edu.wpi.first.wpilibj.util.Color;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 //It's sparks, not talons lucas, ya dumbie
 
+
 public class RobotMap {
+
+    
+
+
     //PWM
-    public static final int FRONT_LEFT_WHEEL_PORT = 0;
-    public static final int FRONT_RIGHT_WHEEL_PORT = 3;
-    public static final int REAR_LEFT_WHEEL_PORT = 2;
-    public static final int REAR_RIGHT_WHEEL_PORT = 1;
-    public static final int PROJECTILE_BARREL_PORT = 5;
-    public static final int CONTROL_PANEL_SPINNER = 6;
+    public static final int RIGHT_DRIVE_PORT = 0;
+    public static final int LEFT_DRIVE_PORT = 1;
+    public static final int PROJECTILE_EJECTION_PORT = 2;
+    public static final int PROJECTILE_AIM_SERVO_PORT = 3;
+    public static final int PROJECTILE_STORAGE_PORT = 4;
+    public static final int TILT_LINEAR_ACTUATOR_PORT = 5;
+    public static final int CONTROL_PANEL_SPINNER_PORT = 6;
+    public static final int LIFT_MOTOR_PORT = 7;    
 
     //CAN
-    public static final int INTAKE_LEFT_PORT = 0;
-    public static final int INTAKE_RIGHT_PORT = 1;
+    public static final int INTAKE_PORT = 0;
+   
+    public static final int TILT_LINEAR_ACTUATOR_ENCODER1 = 1;
+    public static final int TILT_LINEAR_ACTUATOR_ENCODER2 = 2;
 
     //PNEUMATIC BOARD (PCM)
-    public static final int CLAW_SOLENOID_PORT_1 = 0;
-    public static final int CLAW_SOLENOID_PORT_2 = 1;
+    public static final int LIFT_SOLENOID_PORT_1 = 3;
+    public static final int LIFT_SOLENOID_PORT_2 = 4;
 
-    //ANALOG IN
-
-    //AUTO ALIGN
-    public static final int MIN_DISTANCE_FROM_TARGET = 10;
-    public static final int PERIOD = 30;
-    public static final int STEP = 5;
-    public static final double STEPPING_SPEED = 0.7;
+   
 
     //Control Panel TODO
     public static final Color CP_RED = ColorMatch.makeColor(0.475, 0.370, 0.150);
@@ -43,41 +46,47 @@ public class RobotMap {
     public static final Color[] WHEEL = new Color[] {CP_RED, CP_GREEN, CP_BLUE, CP_YELLOW};
     public static final int MIN_COUNT = 24;
 
-    //OBJECTS
-    public static Spark frontLeftWheel;
-    public static Spark frontRightWheel;
-    public static Spark rearLeftWheel;
-    public static Spark rearRightWheel;
+    public static Encoder linearActuatorEncoder;
+
+ 
+    //Drive Train
+    public static Spark leftDrive;
+    public static Spark rightDrive;
     
-    public static Talon projectileBarrel;
+    //Shooter Superstructure
+    public static Talon projectileEjector;
+    public static Servo projectileAimer;
+    public static Talon projectileStorage;
+    public static Talon projectileTilt;
     public static Talon controlPanelSpinner;
 
-    public static VictorSPX intakeLeft;
-    public static VictorSPX intakeRight;
 
-    public static DifferentialDrive drive;
 
-    public static DoubleSolenoid claw;
 
+   
+    //misc
+    public static Talon liftMotor;
+    public static VictorSPX intake;
+
+    //pneumatics and vision
+    public static DoubleSolenoid liftDeploy;
     public static ColorSensorV3 colorSensor;
 
     public static void init() {
-        frontLeftWheel = new Spark(FRONT_LEFT_WHEEL_PORT);
-        frontRightWheel = new Spark(FRONT_RIGHT_WHEEL_PORT);
-        rearLeftWheel = new Spark(REAR_LEFT_WHEEL_PORT);
-        rearRightWheel = new Spark(REAR_RIGHT_WHEEL_PORT);
-        projectileBarrel = new Talon(PROJECTILE_BARREL_PORT);
-        controlPanelSpinner = new Talon(CONTROL_PANEL_SPINNER);
-        intakeLeft = new VictorSPX(INTAKE_LEFT_PORT);
-        intakeRight = new VictorSPX(INTAKE_RIGHT_PORT);
+        linearActuatorEncoder = new Encoder(TILT_LINEAR_ACTUATOR_ENCODER1,TILT_LINEAR_ACTUATOR_ENCODER2, false, Encoder.EncodingType.k1X);
+        leftDrive = new Spark(RIGHT_DRIVE_PORT);
+        rightDrive = new Spark(LEFT_DRIVE_PORT);
+        projectileTilt = new Talon (TILT_LINEAR_ACTUATOR_PORT);
+        projectileAimer = new Servo (PROJECTILE_AIM_SERVO_PORT);
+        projectileStorage = new Talon (PROJECTILE_STORAGE_PORT);
+        projectileEjector = new Talon (PROJECTILE_EJECTION_PORT);
+        controlPanelSpinner = new Talon (CONTROL_PANEL_SPINNER_PORT);
+        liftMotor = new Talon (LIFT_MOTOR_PORT);
+       
+        intake = new VictorSPX(INTAKE_PORT);
 
-        SpeedControllerGroup left = new SpeedControllerGroup(frontLeftWheel, rearLeftWheel);
-        SpeedControllerGroup right = new SpeedControllerGroup(frontRightWheel, rearRightWheel);
-
-        drive = new DifferentialDrive(left, right);
-
-        // No PCM installed
-        //claw = new DoubleSolenoid(CLAW_SOLENOID_PORT_1, CLAW_SOLENOID_PORT_2);
+        //  PCM installed ? 
+        liftDeploy = new DoubleSolenoid(LIFT_SOLENOID_PORT_1, LIFT_SOLENOID_PORT_2);
 
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     }

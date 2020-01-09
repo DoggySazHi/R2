@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import org.usfirst.frc.team3952.robot.SecondaryController;
@@ -10,16 +9,15 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualPneumatics extends CommandBase {
     
-    private DoubleSolenoid.Value direction;
 
-    private PneumaticPiston pneumaticPiston;
+    private PneumaticPiston lift;
     private SecondaryController secondaryController;
 
     public ManualPneumatics(RobotSubsystems subsystems) {
-        pneumaticPiston = subsystems.getPneumaticPiston();
+        lift = subsystems.getPneumaticPiston();
         secondaryController = subsystems.getSecondaryController();
 
-        addRequirements(pneumaticPiston);
+        addRequirements(lift);
     }
 
     @Override
@@ -30,11 +28,11 @@ public class ManualPneumatics extends CommandBase {
     @Override
     public void execute() {
         if(secondaryController.getRawButton(3))
-            pneumaticPiston.reject();
+            lift.extend();
         else if(secondaryController.getRawButton(4))
-            pneumaticPiston.intake();
+            lift.retract();
         else
-            pneumaticPiston.stop();
+            lift.stop();
     }
 
     @Override

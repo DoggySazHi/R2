@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -15,7 +13,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//
+//might want to consider merge with shooter superstructure since the spinner is at the top of the shooter mechanism and utilizes one of the shooter motors
+//
+//
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
 public class ControlWheel extends SubsystemBase
 {
     private Talon motor = RobotMap.controlPanelSpinner;

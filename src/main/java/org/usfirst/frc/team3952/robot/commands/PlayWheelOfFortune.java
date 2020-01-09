@@ -32,14 +32,20 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void initialize() {
+        //NetworkTables Input From Vision System
+        //William, can you put more comments so we know what exactly these network table values are
         NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
         NetworkTable nTable = ntInst.getTable("Control Wheel");
         badColor = nTable.getEntry("Bad Color Spinner");
         badColor.setBoolean(false);
 
+        //varibles initialization
         tilesPassed = 0;
         direction = 0;
+
+        //terrible debug message dont imitate
         System.out.println("AYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA!");
+
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)
             if(c.equals(WHEEL[i])) {
@@ -85,7 +91,7 @@ public class PlayWheelOfFortune extends CommandBase
             }
         }
         controlWheel.update(tilesPassed);
-
+        //.5 might seem too fast
         controlWheel.set(0.5);
     }
 
