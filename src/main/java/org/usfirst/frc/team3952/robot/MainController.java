@@ -1,8 +1,6 @@
 package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.button.Button;
-import org.usfirst.frc.team3952.robot.commands.PlayWheelOfFortune;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class MainController extends AbstractController
@@ -25,10 +23,11 @@ public class MainController extends AbstractController
 
     protected void init()
     {
-        buttons[2].whenPressed(new PlayWheelOfFortune(subsystems));
+        // Place all button bindings here.
     }
 
     public double getRotation() {
+        if (joystick == null) return 0;
         double t = joystick.getZ();
         return Math.abs(t) >= deadzoneT ? kT * Math.signum(t) * (Math.log(Math.abs(t) + 1 - deadzoneT) + cT) : 0;
     }
@@ -40,12 +39,14 @@ public class MainController extends AbstractController
 
     public double getHorizontalMovement()
     {
+        if (joystick == null) return 0;
         double x = joystick.getX();
         return Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
     }
 
     public double getLateralMovement()
     {
+        if (joystick == null) return 0;
         double y = -joystick.getY();
         return Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
     }
@@ -53,11 +54,13 @@ public class MainController extends AbstractController
     public int getPOV()
     {
         //0 - top, going clockwise to 7
+        if (joystick == null) return -1;
         return joystick.getPOV(0) == -1 ? -1 : (int) Math.round(joystick.getPOV(0) / 45.0);
     }
 
     public boolean getQuickTurn()
     {
+        if (joystick == null) return false;
         return joystick.getRawButtonPressed(1);
     }
 }

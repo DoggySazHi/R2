@@ -8,21 +8,16 @@ public class RobotSubsystems
     private DriveTrain driveTrain;
     private IntakeShooter intakeShooter;
     private ControlWheel controlWheel;
-    private Intake intake;
-    private ShooterSS shooter;
 
     private MainController mainController;
     private SecondaryController secondaryController;
 
-    public RobotSubsystems(DriveTrain driveTrain, IntakeShooter intakeShooter, ControlWheel controlWheel,Intake intake,ShooterSS shooter, MainController mainController, SecondaryController secondaryController)
-    {
+    public RobotSubsystems(DriveTrain driveTrain, IntakeShooter intakeShooter, ControlWheel controlWheel, MainController mainController, SecondaryController secondaryController) {
         this.driveTrain = driveTrain;
         this.intakeShooter = intakeShooter;
         this.controlWheel = controlWheel;
         this.mainController = mainController;
         this.secondaryController = secondaryController;
-        this.intake = intake;
-        this.shooter = shooter;
     }
 
     public DriveTrain getDriveTrain()
@@ -47,13 +42,5 @@ public class RobotSubsystems
     public ControlWheel getControlWheel()
     {
         return controlWheel;
-    }
-
-    public Intake intake(){
-        return intake;
-    }
-
-    public ShooterSS shooter(){
-        return shooter;
     }
 }

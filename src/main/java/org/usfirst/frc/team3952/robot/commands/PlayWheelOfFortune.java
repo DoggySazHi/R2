@@ -1,8 +1,9 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import com.revrobotics.ColorMatchResult;
-
-import edu.wpi.first.networktables.*;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
@@ -12,14 +13,17 @@ import static org.usfirst.frc.team3952.robot.RobotMap.MIN_COUNT;
 import static org.usfirst.frc.team3952.robot.RobotMap.WHEEL;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
-public class PlayWheelOfFortune extends CommandBase
-{
+public class PlayWheelOfFortune extends CommandBase {
     private ControlWheel controlWheel;
 
+    // Is the robot somehow spinning the wrong way?
     private NetworkTableEntry badColor;
 
     private int tilesPassed;
+    // An index for RobotMap.WHEEL of the current color
     private int currentColor;
+
+    // States direction of rotation (+1 to the right, -1 to the left, 0 if unknown)
     private int direction;
     private boolean incorrectDirection = false;
 
@@ -32,19 +36,13 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void initialize() {
-        //NetworkTables Input From Vision System
-        //William, can you put more comments so we know what exactly these network table values are
         NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
         NetworkTable nTable = ntInst.getTable("Control Wheel");
         badColor = nTable.getEntry("Bad Color Spinner");
         badColor.setBoolean(false);
 
-        //varibles initialization
         tilesPassed = 0;
         direction = 0;
-
-        //terrible debug message dont imitate
-        System.out.println("AYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA!");
 
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)

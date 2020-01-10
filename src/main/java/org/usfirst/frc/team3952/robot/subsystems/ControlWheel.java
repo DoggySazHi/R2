@@ -63,17 +63,16 @@ public class ControlWheel extends SubsystemBase
 
     public ColorMatchResult getClosestColor() {
         ColorMatchResult output = colorMatch.matchClosestColor(sensor.getColor());
-        if (CP_RED.equals(output.color)) {
+        if (CP_RED.equals(output.color))
             color.setString("RED");
-        } else if (CP_GREEN.equals(output.color)) {
+        else if (CP_GREEN.equals(output.color))
             color.setString("GREEN");
-        } else if (CP_BLUE.equals(output.color)) {
+        else if (CP_BLUE.equals(output.color))
             color.setString("BLUE");
-        } else if (CP_YELLOW.equals(output.color)) {
+        else if (CP_YELLOW.equals(output.color))
             color.setString("YELLOW");
-        } else {
+        else
             color.setString("NO MATCH");
-        }
         return output;
     }
 

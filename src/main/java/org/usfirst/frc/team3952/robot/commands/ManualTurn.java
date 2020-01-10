@@ -1,11 +1,13 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.networktables.*;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import org.usfirst.frc.team3952.robot.MainController;
-import org.usfirst.frc.team3952.robot.subsystems.*;
+import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualTurn extends CommandBase
 {
@@ -32,7 +34,7 @@ public class ManualTurn extends CommandBase
 
     @Override
     public void execute() {
-        double rot = mainController.getRotation();
+        double rot = mainController.getHorizontalMovement();
         controlWheel.set(rot);
         Color c = controlWheel.getColor();
         colorValue.setDoubleArray(new double[] {c.red, c.green, c.blue});
