@@ -19,10 +19,7 @@ public class ManualIntakeShooter extends CommandBase {
 
     @Override
     public void initialize() {
-        intakeShooter.retract();
     }
-
-    boolean isFinished = false;
 
     @Override
     public void execute() {
@@ -38,6 +35,6 @@ public class ManualIntakeShooter extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return false;
     }
 }

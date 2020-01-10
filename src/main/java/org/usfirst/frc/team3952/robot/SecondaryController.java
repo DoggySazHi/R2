@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import org.usfirst.frc.team3952.robot.commands.*;
+import org.usfirst.frc.team3952.robot.commands.PlayWheelOfFortune;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class SecondaryController extends AbstractController
@@ -23,11 +23,8 @@ public class SecondaryController extends AbstractController
         if(buttons.length < 8)
         {
             //no buttons (except for index 0, useless)
-            System.out.println("Uh oh, the ladder controller seems to not have enough buttons!");
-            throw new ArrayIndexOutOfBoundsException();
+            throw new ArrayIndexOutOfBoundsException("Uh oh, the ladder controller seems to not have enough buttons!");
         }
-        //open
-        buttons[1].whileHeld(new TogglePiston(subsystems));
         buttons[2].whenPressed(new PlayWheelOfFortune(subsystems));
     }
 
@@ -35,10 +32,12 @@ public class SecondaryController extends AbstractController
     public static final double DEADZONE = 0.2;
 
     public double getHorizontalMovement() {
+        if (joystick == null) return 0;
         return Math.abs(joystick.getX()) >= DEADZONE ? joystick.getX() : 0;
     }
 
     public double getLateralMovement() {
+        if (joystick == null) return 0;
         return Math.abs(joystick.getY()) >= DEADZONE ? joystick.getY() : 0;
     }
 }
