@@ -43,6 +43,9 @@ public class RobotMap {
     public static final Color CP_YELLOW = ColorMatch.makeColor(0.300, 0.550, 0.160);
     public static final Color[] WHEEL = new Color[]{CP_RED, CP_GREEN, CP_BLUE, CP_YELLOW};
     public static final int MIN_COUNT = 24;
+    public static final double CW_SPEED_FAST = 0.5;
+    public static final double CW_SPEED_SLOW = 0.2;
+    public static final int SLOWDOWN_TILES = 5;
 
     // Drive Train
     public static Spark leftDrive;
@@ -54,6 +57,27 @@ public class RobotMap {
     public static Talon projectileStorage;
     public static Talon projectileTilt;
     public static Talon controlPanelSpinner;
+
+    public static final double INTAKE_POSITION = 0.0;
+    public static final double SHOOT_POSITION = 40.0;
+    public static final double CP_POSITION = 100.0;
+    public enum Position {
+        Intake (0.0),
+        Shooting (40.0),
+        ControlPanel (100.0);
+
+        private double distance;
+
+        Position(double distance)
+        {
+            this.distance = distance;
+        }
+
+        public double getDistance()
+        {
+            return distance;
+        }
+    }
 
     // Misc
     public static Talon linearActuator;

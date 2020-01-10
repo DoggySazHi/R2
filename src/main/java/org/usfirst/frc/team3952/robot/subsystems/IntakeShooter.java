@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
+import static org.usfirst.frc.team3952.robot.RobotMap.linearActuator;
+import static org.usfirst.frc.team3952.robot.RobotMap.linearActuatorEncoder;
+
 public class IntakeShooter extends SubsystemBase {
     public static final double INTAKE_SPEED = 1.0;
     public static final double REJECT_SPEED = 1.0;
@@ -39,5 +42,21 @@ public class IntakeShooter extends SubsystemBase {
 
     public double getEncoderValue() {
         return liftMotorEncoder.get();
+    }
+
+    public double getPositionRaw()
+    {
+        return linearActuator.get();
+    }
+
+    public RobotMap.Position getPosition()
+    {
+        RobotMap.Position toReturn = RobotMap.Position.values()[0];
+        double encoder = linearActuatorEncoder.get();
+        for(RobotMap.Position p : RobotMap.Position.values()) {
+            if (Math.abs(p.getDistance() - encoder) < Math.abs(toReturn.getDistance() - encoder))
+                toReturn = p;
+        }
+        return toReturn;
     }
 }

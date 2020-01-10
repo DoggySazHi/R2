@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.MIN_COUNT;
-import static org.usfirst.frc.team3952.robot.RobotMap.WHEEL;
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
 public class PlayWheelOfFortune extends CommandBase {
@@ -89,8 +88,6 @@ public class PlayWheelOfFortune extends CommandBase {
             }
         }
         controlWheel.update(tilesPassed);
-        //.5 might seem too fast
-        controlWheel.set(0.5);
     }
 
     public boolean isFinished() {
