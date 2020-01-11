@@ -49,6 +49,7 @@ public class IntakeShooter extends SubsystemBase {
     }
 
     public double getAngle(){
+        //TODO haoyan doesn't know how to write code
         return 0;
     }
 
