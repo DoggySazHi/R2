@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.linearActuator;
 import static org.usfirst.frc.team3952.robot.RobotMap.linearActuatorEncoder;
 
 public class IntakeShooter extends SubsystemBase {
@@ -46,7 +45,12 @@ public class IntakeShooter extends SubsystemBase {
 
     public double getPositionRaw()
     {
-        return linearActuator.get();
+        return linearActuatorEncoder.get();
+    }
+
+    public double getAngle(){
+        //TODO haoyan doesn't know how to write code
+        return 0;
     }
 
     public RobotMap.Position getPosition()
