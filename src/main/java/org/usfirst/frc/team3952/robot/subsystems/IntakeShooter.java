@@ -40,10 +40,6 @@ public class IntakeShooter extends SubsystemBase {
         angleMotor.set(speed);
     }
 
-    public double getEncoderValue() {
-        return liftMotorEncoder.get();
-    }
-
     public double getPositionRaw()
     {
         return linearActuator.get();

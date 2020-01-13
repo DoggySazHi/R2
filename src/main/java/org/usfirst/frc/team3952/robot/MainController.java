@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+
+import org.usfirst.frc.team3952.robot.commands.GoToAngle;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class MainController extends AbstractController
@@ -24,6 +26,8 @@ public class MainController extends AbstractController
     protected void init()
     {
         // Place all button bindings here.
+        buttons[7].whenPressed(new GoToAngle(subsystems, 430));
+        buttons[8].whenPressed(new GoToAngle(subsystems, 240));
     }
 
     public double getRotation() {
