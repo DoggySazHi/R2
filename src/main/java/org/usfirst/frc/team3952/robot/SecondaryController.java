@@ -6,6 +6,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class SecondaryController extends AbstractController
 {
+    private PlayWheelOfFortune wheelOfFortune;
     /*
     Each button can be accessed via buttons[number], where number is an integer starting from 1.
     Why do they start from 1 and not 0? Good question.
@@ -25,7 +26,9 @@ public class SecondaryController extends AbstractController
             //no buttons (except for index 0, useless)
             throw new ArrayIndexOutOfBoundsException("Uh oh, the ladder controller seems to not have enough buttons!");
         }
-        buttons[2].whenPressed(new PlayWheelOfFortune(subsystems));
+        wheelOfFortune = new PlayWheelOfFortune(subsystems);
+        buttons[2].whenPressed(wheelOfFortune);
+        buttons[3].cancelWhenPressed(wheelOfFortune);
     }
 
     //it's not really a deadzone, but eh
