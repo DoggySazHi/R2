@@ -3,6 +3,7 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
@@ -13,6 +14,7 @@ public class IntakeShooter extends SubsystemBase {
     public static final double INTAKE_SPEED = 1.0;
     public static final double REJECT_SPEED = 1.0;
 
+    public static final Servo aimingServo = RobotMap.projectileAimer;
     private VictorSPX intakeLeft = RobotMap.intake;
     private VictorSPX intakeRight = RobotMap.intake2;
 
@@ -35,6 +37,10 @@ public class IntakeShooter extends SubsystemBase {
         angleMotor.stopMotor();
     }
 
+    public void setAimer(double position){
+        aimingServo.set(position);
+    }
+
     public void setAngleMotor(double speed) {
         angleMotor.set(speed);
     }
@@ -45,7 +51,7 @@ public class IntakeShooter extends SubsystemBase {
     }
 
     public double getAngle(){
-        //TODO haoyan doesn't know how to write code
+        //TODO placeholder rn
         return 0;
     }
 

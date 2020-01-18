@@ -31,6 +31,8 @@ public class ManualIntakeShooter extends CommandBase {
             intakeShooter.stop();
 
         intakeShooter.setAngleMotor(secondaryController.getLateralMovement());
+
+        intakeShooter.setAimer((secondaryController.getHorizontalMovement() + 1.0)/2.0);
     }
 
     @Override
