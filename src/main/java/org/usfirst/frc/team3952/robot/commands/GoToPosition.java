@@ -37,12 +37,7 @@ public class GoToPosition extends CommandBase
     }
 
     public boolean isFinished() {
-        if (intakeShooter.getAngle() - position.getDistance() <= deadZone){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return intakeShooter.getAngle() - position.getDistance() <= deadZone;
     }
 
     @Override

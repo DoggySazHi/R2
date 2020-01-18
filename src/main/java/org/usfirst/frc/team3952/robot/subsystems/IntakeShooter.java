@@ -48,7 +48,7 @@ public class IntakeShooter extends SubsystemBase {
         return linearActuatorEncoder.get();
     }
 
-    public double getAngle(){
+    public double getAngle() {
         //TODO haoyan doesn't know how to write code
         return 0;
     }
