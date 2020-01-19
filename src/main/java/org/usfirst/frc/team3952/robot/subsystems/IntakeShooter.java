@@ -3,6 +3,7 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
@@ -16,8 +17,9 @@ public class IntakeShooter extends SubsystemBase {
     private VictorSPX intakeLeft = RobotMap.intake;
     private VictorSPX intakeRight = RobotMap.intake2;
 
-    private Talon angleMotor = RobotMap.linearActuator;
+    private Talon angleMotor = RobotMap.projectileTilt;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
+    private Servo tiltServos = RobotMap.projectileAimer;
 
     public void intake() {
         intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
@@ -37,6 +39,10 @@ public class IntakeShooter extends SubsystemBase {
 
     public void setAngleMotor(double speed) {
         angleMotor.set(speed);
+    }
+
+    public void setTiltServos(double speed) {
+        tiltServos.set(speed);
     }
 
     public double getPositionRaw()
