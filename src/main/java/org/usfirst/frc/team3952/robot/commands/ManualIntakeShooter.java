@@ -30,7 +30,7 @@ public class ManualIntakeShooter extends CommandBase {
         else
             intakeShooter.stop();
 
-        intakeShooter.setAngleMotor(secondaryController.getLateralMovement());
+        intakeShooter.setTiltServos(secondaryController.getLateralMovement());
     }
 
     @Override

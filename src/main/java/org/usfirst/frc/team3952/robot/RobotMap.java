@@ -18,7 +18,6 @@ public class RobotMap {
     public static final int PROJECTILE_STORAGE_PORT = 4;
     public static final int TILT_LINEAR_ACTUATOR_PORT = 8;
     public static final int CONTROL_PANEL_SPINNER_PORT = 6;
-    public static final int LIFT_MOTOR_PORT = 7;
 
     //CAN
     public static final int INTAKE_PORT = 0;
@@ -58,9 +57,6 @@ public class RobotMap {
     public static Talon projectileTilt;
     public static Talon controlPanelSpinner;
 
-    public static final double INTAKE_POSITION = 0.0;
-    public static final double SHOOT_POSITION = 40.0;
-    public static final double CP_POSITION = 100.0;
     public enum Position {
         Intake (0.0),
         Shooting (40.0),
@@ -80,7 +76,6 @@ public class RobotMap {
     }
 
     // Misc
-    public static Talon linearActuator;
     public static AnalogEncoder linearActuatorEncoder;
     public static VictorSPX intake;
     public static VictorSPX intake2;
@@ -97,7 +92,6 @@ public class RobotMap {
         projectileEjector = new Talon(PROJECTILE_EJECTION_PORT);
         controlPanelSpinner = new Talon(CONTROL_PANEL_SPINNER_PORT);
 
-        linearActuator = new Talon(LIFT_MOTOR_PORT);
         linearActuatorEncoder = new AnalogEncoder(new AnalogInput(TILT_LINEAR_ACTUATOR_ENCODER));
 
         intake = new VictorSPX(INTAKE_PORT);
