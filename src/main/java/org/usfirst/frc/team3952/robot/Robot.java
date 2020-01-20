@@ -44,9 +44,14 @@ public class Robot extends TimedRobot {
 
         // Set up all subsystems, after controllers are ready.
         subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, mainController, secondaryController);
-        driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-        controlWheel.setDefaultCommand(new ManualTurn(subsystems));
-        intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
+        if (mainController != null) {
+            if (secondaryController != null) {
+
+            }
+            driveTrain.setDefaultCommand(new ManualDrive(subsystems));
+            controlWheel.setDefaultCommand(new ManualTurn(subsystems));
+            intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
+        }
     }
 
     @Override
