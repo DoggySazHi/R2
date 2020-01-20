@@ -30,6 +30,8 @@ public abstract class AbstractController
 
     public boolean getRawButton(int button)
     {
+        if(!successfulInit || button >= buttons.length || buttons[button] == null)
+            return false;
         return buttons[button].get();
     }
 }
