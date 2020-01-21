@@ -11,29 +11,28 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualTurn extends CommandBase
 {
-    private ControlWheel controlWheel;
-    private MainController mainController;
+    private RobotSubsystems subsystems;
 
-    private NetworkTableInstance ntInst;
-    private NetworkTable nTable;
     private NetworkTableEntry colorValue;
 
     public ManualTurn(RobotSubsystems subsystems) {
-        controlWheel = subsystems.getControlWheel();
-        mainController = subsystems.getMainController();
+        this.subsystems = subsystems;
 
-        addRequirements(controlWheel);
+        addRequirements(subsystems.getControlWheel());
     }
 
     @Override
     public void initialize() {
-        ntInst = NetworkTableInstance.getDefault();
-        nTable = ntInst.getTable("Sensors");
+        NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+        NetworkTable nTable = ntInst.getTable("Sensors");
         colorValue = nTable.getEntry("Color");
     }
 
     @Override
     public void execute() {
+        MainController mainController = subsystems.getMainController();
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         double rot = mainController.getHorizontalMovement();
         controlWheel.set(rot);
         Color c = controlWheel.getColor();
@@ -46,6 +45,7 @@ public class ManualTurn extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
-    	controlWheel.stop();
+        ControlWheel controlWheel = subsystems.getControlWheel();
+        controlWheel.stop();
     }
 }

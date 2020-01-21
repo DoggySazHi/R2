@@ -19,10 +19,6 @@ import java.time.Instant;
 import static org.usfirst.frc.team3952.robot.RobotMap.CONTROLLER_CHECK_DELAY;
 
 public class Robot extends TimedRobot {
-
-    private MainController mainController;
-    private SecondaryController secondaryController;
-
     private RobotSubsystems subsystems;
 
     private boolean mainControllerInit;
@@ -37,21 +33,26 @@ public class Robot extends TimedRobot {
         IntakeShooter intakeShooter = new IntakeShooter();
         ControlWheel controlWheel = new ControlWheel();
 
-        subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, mainController, secondaryController);
+        // Dummy controllers.
+        MainController mainController = new MainController(null, null);
+        SecondaryController secondaryController = new SecondaryController(null, null);
+
+        subsystems = new RobotSubsystems();
+        subsystems.setMainController(mainController);
+        subsystems.setSecondaryController(secondaryController);
+
+        // Actually sets them to real controllers.
 
         initMainController();
         initSecondaryController();
 
-        // Set up all subsystems, after controllers are ready.
-        subsystems = new RobotSubsystems(driveTrain, intakeShooter, controlWheel, mainController, secondaryController);
-        if (mainController != null) {
-            if (secondaryController != null) {
+        subsystems.setDriveTrain(driveTrain);
+        subsystems.setIntakeShooter(intakeShooter);
+        subsystems.setControlWheel(controlWheel);
 
-            }
-            driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-            controlWheel.setDefaultCommand(new ManualTurn(subsystems));
-            intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
-        }
+        driveTrain.setDefaultCommand(new ManualDrive(subsystems));
+        controlWheel.setDefaultCommand(new ManualTurn(subsystems));
+        intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
     }
 
     @Override
@@ -81,7 +82,7 @@ public class Robot extends TimedRobot {
 
     private void initMainController() {
         try {
-            mainController = new MainController(new Joystick(0), subsystems);
+            subsystems.setMainController(new MainController(new Joystick(0), subsystems));
             mainControllerInit = true;
         } catch (Exception ex) {
             System.out.println("The main controller has failed to initialize. See logs.\n" +
@@ -93,7 +94,7 @@ public class Robot extends TimedRobot {
 
     private void initSecondaryController() {
         try {
-            secondaryController = new SecondaryController(new Joystick(1), subsystems);
+            subsystems.setSecondaryController(new SecondaryController(new Joystick(1), subsystems));
             secondaryControllerInit = true;
         } catch (Exception ex) {
             System.out.println("The ladder controller has failed to initialize. See logs.\n" +

@@ -2,6 +2,7 @@ package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+import org.usfirst.frc.team3952.robot.commands.IntakeBall;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class MainController extends AbstractController
@@ -25,6 +26,8 @@ public class MainController extends AbstractController
     protected void init()
     {
         // Place all button bindings here.
+        //TODO Remove me!
+        buttons[0].whenPressed(new IntakeBall(subsystems));
     }
 
     public double getRotation() {
