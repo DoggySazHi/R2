@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.RobotMap.Position;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
@@ -8,15 +7,16 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class GoToPosition extends CommandBase
 {
-    private IntakeShooter intakeShooter;
+    private RobotSubsystems subsystems;
+
     private Position position;
     private int deadZone;
     private double speed;
 
     public GoToPosition(RobotSubsystems subsystems, Position pos) {
-        intakeShooter = subsystems.getIntakeShooter();
+        this.subsystems = subsystems;
         position = pos;
-        addRequirements(intakeShooter);
+        addRequirements(subsystems.getIntakeShooter());
     }
 
     @Override
@@ -28,6 +28,7 @@ public class GoToPosition extends CommandBase
     @Override
     //could be reversed based on situation
     public void execute() {
+        IntakeShooter intakeShooter = subsystems.getIntakeShooter();
         if(intakeShooter.getAngle() < position.getDistance()){
             intakeShooter.setAngleMotor(speed);
         }
@@ -37,6 +38,7 @@ public class GoToPosition extends CommandBase
     }
 
     public boolean isFinished() {
+        IntakeShooter intakeShooter = subsystems.getIntakeShooter();
         return intakeShooter.getAngle() - position.getDistance() <= deadZone;
     }
 

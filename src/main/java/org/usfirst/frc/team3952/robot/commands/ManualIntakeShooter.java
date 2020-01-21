@@ -7,14 +7,12 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualIntakeShooter extends CommandBase {
 
-    private IntakeShooter intakeShooter;
-    private SecondaryController secondaryController;
+    private RobotSubsystems subsystems;
 
     public ManualIntakeShooter(RobotSubsystems subsystems) {
-        intakeShooter = subsystems.getIntakeShooter();
-        secondaryController = subsystems.getSecondaryController();
+        this.subsystems = subsystems;
 
-        addRequirements(intakeShooter);
+        addRequirements(subsystems.getIntakeShooter());
     }
 
     @Override
@@ -23,6 +21,9 @@ public class ManualIntakeShooter extends CommandBase {
 
     @Override
     public void execute() {
+        IntakeShooter intakeShooter = subsystems.getIntakeShooter();
+        SecondaryController secondaryController = subsystems.getSecondaryController();
+
         if (secondaryController.getRawButton(3))
             intakeShooter.reject();
         else if (secondaryController.getRawButton(4))

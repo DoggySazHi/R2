@@ -9,17 +9,12 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class ManualDrive extends CommandBase
 {
-    private DriveTrain driveTrain;
-    private MainController mainController;
-    private SecondaryController secondaryController;
-    private Talon motor;
+    private RobotSubsystems subsystems;
 
     public ManualDrive(RobotSubsystems subsystems) {
-        driveTrain = subsystems.getDriveTrain();
-        mainController = subsystems.getMainController();
-        secondaryController = subsystems.getSecondaryController();
+        this.subsystems = subsystems;
 
-        addRequirements(driveTrain);
+        addRequirements(subsystems.getDriveTrain());
     }
 
     @Override
@@ -27,12 +22,13 @@ public class ManualDrive extends CommandBase
 
     @Override
     public void execute() {
+        MainController mainController = subsystems.getMainController();
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+
         double hor = mainController.getHorizontalMovement();
         double lat = mainController.getLateralMovement();
         double rot = mainController.getRotation();
         driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
-        double speed = secondaryController.getHorizontalMovement();
-        motor.set(speed);
     }
 
     public boolean isFinished() {
@@ -41,6 +37,7 @@ public class ManualDrive extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
+        DriveTrain driveTrain = subsystems.getDriveTrain();
     	driveTrain.stop();
     }
 }

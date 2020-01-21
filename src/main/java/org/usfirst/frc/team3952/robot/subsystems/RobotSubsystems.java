@@ -21,14 +21,6 @@ public class RobotSubsystems
         return subsystem.getCurrentCommand() != null;
     }*/
 
-    public RobotSubsystems(DriveTrain driveTrain, IntakeShooter intakeShooter, ControlWheel controlWheel, MainController mainController, SecondaryController secondaryController) {
-        this.driveTrain = driveTrain;
-        this.intakeShooter = intakeShooter;
-        this.controlWheel = controlWheel;
-        this.mainController = mainController;
-        this.secondaryController = secondaryController;
-    }
-
     public DriveTrain getDriveTrain()
     {
         return driveTrain;
@@ -51,5 +43,25 @@ public class RobotSubsystems
     public ControlWheel getControlWheel()
     {
         return controlWheel;
+    }
+
+    public void setDriveTrain(DriveTrain driveTrain) {
+        this.driveTrain = driveTrain;
+    }
+
+    public void setIntakeShooter(IntakeShooter intakeShooter) {
+        this.intakeShooter = intakeShooter;
+    }
+
+    public void setControlWheel(ControlWheel controlWheel) {
+        this.controlWheel = controlWheel;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void setSecondaryController(SecondaryController secondaryController) {
+        this.secondaryController = secondaryController;
     }
 }

@@ -13,7 +13,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
 public class PlayWheelOfFortune extends CommandBase {
-    private ControlWheel controlWheel;
+    private RobotSubsystems subsystems;
 
     // Is the robot somehow spinning the wrong way?
     private NetworkTableEntry badColor;
@@ -27,14 +27,16 @@ public class PlayWheelOfFortune extends CommandBase {
     private boolean incorrectDirection = false;
 
     public PlayWheelOfFortune(RobotSubsystems subsystems) {
-        controlWheel = subsystems.getControlWheel();
+        this.subsystems = subsystems;
 
-        addRequirements(controlWheel);
+        addRequirements(subsystems.getControlWheel());
         //no, bad withTimeout(15);
     }
 
     @Override
     public void initialize() {
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
         NetworkTable nTable = ntInst.getTable("Control Wheel");
         badColor = nTable.getEntry("Bad Color Spinner");
@@ -55,6 +57,8 @@ public class PlayWheelOfFortune extends CommandBase {
 
     @Override
     public void execute() {
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         ColorMatchResult match = controlWheel.getClosestColor();
         if(match != null && !match.color.equals(WHEEL[currentColor])) {
             if(direction == 0) {
@@ -97,6 +101,8 @@ public class PlayWheelOfFortune extends CommandBase {
     }
 
     public boolean isFinished() {
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         if(tilesPassed >= MIN_COUNT && controlWheel.getClosestColor().color.equals(controlWheel.getFMSColor()))
         {
             controlWheel.stop();
@@ -107,6 +113,8 @@ public class PlayWheelOfFortune extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-    	controlWheel.stop();
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
+        controlWheel.stop();
     }
 }
