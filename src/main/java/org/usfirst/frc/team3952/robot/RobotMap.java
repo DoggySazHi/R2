@@ -19,6 +19,10 @@ public class RobotMap {
     public static final int TILT_LINEAR_ACTUATOR_PORT = 8;
     public static final int CONTROL_PANEL_SPINNER_PORT = 6;
 
+    // u/DIO_ships_renmari
+    public static final int LIMIT_SWITCH_ENABLE_SHOOTER_PORT = 0;
+    public static final int LIMIT_SWITCH_DISABLE_SHOOTER_PORT = 1;
+
     //CAN
     public static final int INTAKE_PORT = 0;
     public static final int INTAKE_TWO_PORT = 1;
@@ -46,6 +50,9 @@ public class RobotMap {
     public static final double CW_SPEED_SLOW = 0.2;
     public static final int SLOWDOWN_TILES = 5;
 
+    // Shooter Values
+    public static final int MAX_BALL_STORAGE = 5;
+
     // Drive Train
     public static Spark leftDrive;
     public static Spark rightDrive;
@@ -56,6 +63,9 @@ public class RobotMap {
     public static Talon projectileStorage;
     public static Talon projectileTilt;
     public static Talon controlPanelSpinner;
+
+    public static DigitalInput enableShooter;
+    public static DigitalInput disableShooter;
 
     public enum Position {
         Intake (0.0),
@@ -91,6 +101,9 @@ public class RobotMap {
         projectileStorage = new Talon(PROJECTILE_STORAGE_PORT);
         projectileEjector = new Talon(PROJECTILE_EJECTION_PORT);
         controlPanelSpinner = new Talon(CONTROL_PANEL_SPINNER_PORT);
+
+        enableShooter = new DigitalInput(LIMIT_SWITCH_ENABLE_SHOOTER_PORT);
+        disableShooter = new DigitalInput(LIMIT_SWITCH_DISABLE_SHOOTER_PORT);
 
         linearActuatorEncoder = new AnalogEncoder(new AnalogInput(TILT_LINEAR_ACTUATOR_ENCODER));
 

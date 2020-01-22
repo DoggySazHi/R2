@@ -3,6 +3,7 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,11 @@ public class IntakeShooter extends SubsystemBase {
     private Talon angleMotor = RobotMap.projectileTilt;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
+
+    private DigitalInput enableSwitch = RobotMap.enableShooter;
+    private DigitalInput disableSwitch = RobotMap.disableShooter;
+
+    private int ballsStored;
 
     public void intake() {
         intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
@@ -53,6 +59,24 @@ public class IntakeShooter extends SubsystemBase {
     public double getAngle() {
         //TODO haoyan doesn't know how to write code
         return 0;
+    }
+
+    public boolean getEnableSwitch() {
+        return enableSwitch.get();
+    }
+
+    public boolean getDisableSwitch() {
+        return disableSwitch.get();
+    }
+
+    public void setBallsStored(int ballsStored)
+    {
+        this.ballsStored = ballsStored;
+    }
+
+    public int getBallsStored()
+    {
+        return ballsStored;
     }
 
     public RobotMap.Position getPosition()

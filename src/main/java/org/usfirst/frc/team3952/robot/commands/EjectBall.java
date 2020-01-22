@@ -19,6 +19,8 @@ public class EjectBall extends CommandBase {
     public void initialize() {
         // Set shooter to the downward position. Possibly run shared code from GoToPosition?
         ballDetectionEntry = NetworkTableInstance.getDefault().getTable("LimeLightLite").getEntry("Ball Detected");
+
+        //TODO use limit switches.
     }
 
     @Override
