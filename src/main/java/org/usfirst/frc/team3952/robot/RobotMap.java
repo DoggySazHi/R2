@@ -64,9 +64,14 @@ public class RobotMap {
     public static Spark rightDrive;
 
     // Shooter Superstructure
+
+    // Used to move balls in and out of the ball holder.
     public static Talon projectileEjector;
+
+    // Rotate the ball holder to switch to a different holder.
     public static Talon projectileStorage;
     public static Talon projectileTilt;
+    public static Servo projectileAimer;
     public static Talon controlPanelSpinner;
 
     public static DigitalInput enableShooter;
