@@ -9,12 +9,16 @@ import edu.wpi.first.wpilibj.util.Color;
 //It's sparks, not talons lucas, ya dumbie
 
 public class RobotMap {
+    // ---------------
     // Robot Values
+    // ---------------
 
     // Milliseconds before re-checking for controllers.
     public static final long CONTROLLER_CHECK_DELAY = 5000;
 
+    // ---------------
     // Control Panel Values
+    // ---------------
 
     // Colors represented by the color sensor.
     public static final Color CP_RED = ColorMatch.makeColor(0.475, 0.370, 0.150);
@@ -54,36 +58,54 @@ public class RobotMap {
         }
     }
 
+    // ---------------
     // Shooter Values
+    // ---------------
 
     // The amount of balls that can be stored in the shooter.
     public static final int MAX_BALL_STORAGE = 5;
+
+    // The speed to run the storage motor at.
+    public static final double STORAGE_MOTOR_SPEED = 0.4;
 
     // Drive Train (wheels are bundled together on the same PWM)
     public static Spark leftDrive;
     public static Spark rightDrive;
 
+    // ---------------
     // Shooter Superstructure
+    // ---------------
 
     // Used to move balls in and out of the ball holder.
     public static Talon projectileEjector;
 
     // Rotate the ball holder to switch to a different holder.
     public static Talon projectileStorage;
+
+    // Tilt the shooter up or down for shooting, or to operate the control panel spinner. Operated via a linear actuator.
     public static Talon projectileTilt;
+
+    // Get the current position/angle of the shooter
+    public static AnalogEncoder linearActuatorEncoder;
+
+    // Aim the shooter a bit left or right to shoot balls at a slight angle.
     public static Servo projectileAimer;
+
+    // Spin the control panel using a wheel attached to this motor, powered by friction.
     public static Talon controlPanelSpinner;
 
-    public static DigitalInput enableShooter;
-    public static DigitalInput disableShooter;
-    public static DigitalInput spinnerLocked;
-
-    // Misc
-    public static AnalogEncoder linearActuatorEncoder;
+    // The two motors used to actually grab and shoot the balls from the outside.
     public static VictorSPX intake;
     public static VictorSPX intake2;
 
-    // Vision
+    // Check if the spinner is on a valid position.
+    public static DigitalInput spinnerLocked;
+
+    // ---------------
+    // Misc
+    // ---------------
+
+    // A color sensor to detect the current position of the Control Panel.
     public static ColorSensorV3 colorSensor;
 
     public static void init() {
@@ -97,22 +119,18 @@ public class RobotMap {
         projectileTilt = new Talon(5);
         controlPanelSpinner = new Talon(6);
 
-        // DIO (Limit switches)
+        // DIO (Limit switches, Ultrasonic)
 
-        enableShooter = new DigitalInput(0);
-        disableShooter = new DigitalInput(1);
-        spinnerLocked = new DigitalInput(2);
+        spinnerLocked = new DigitalInput(0);
 
-
+        // AI (Encoders, Potentiometers, Photo Resistors)
         linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
 
-        // CAN
-
+        // CAN (Motors)
         intake = new VictorSPX(0);
         intake2 = new VictorSPX(1);
 
-        // Other sensors
-
+        // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     }
 }

@@ -19,11 +19,11 @@ public class IntakeShooter extends SubsystemBase {
     private VictorSPX intakeRight = RobotMap.intake2;
 
     private Talon angleMotor = RobotMap.projectileTilt;
+    private Talon spinnerMotor = RobotMap.projectileStorage;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
 
-    private DigitalInput enableSwitch = RobotMap.enableShooter;
-    private DigitalInput disableSwitch = RobotMap.disableShooter;
+    private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
 
     private int ballsStored;
 
@@ -51,8 +51,7 @@ public class IntakeShooter extends SubsystemBase {
         tiltServos.set(speed);
     }
 
-    public double getPositionRaw()
-    {
+    public double getPositionRaw() {
         return linearActuatorEncoder.get();
     }
 
@@ -61,21 +60,15 @@ public class IntakeShooter extends SubsystemBase {
         return 0;
     }
 
-    public boolean getEnableSwitch() {
-        return enableSwitch.get();
+    public boolean isLocked() {
+        return spinnerLocked.get();
     }
 
-    public boolean getDisableSwitch() {
-        return disableSwitch.get();
-    }
-
-    public void setBallsStored(int ballsStored)
-    {
+    public void setBallsStored(int ballsStored) {
         this.ballsStored = ballsStored;
     }
 
-    public int getBallsStored()
-    {
+    public int getBallsStored() {
         return ballsStored;
     }
 
