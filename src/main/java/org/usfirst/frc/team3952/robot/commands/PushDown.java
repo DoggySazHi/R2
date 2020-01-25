@@ -33,7 +33,7 @@ public class PushDown extends CommandBase {
     @Override
     public boolean isFinished() {
         Climber climber = subsystems.getClimber();
-        if(Duration.between(startTime, Instant.now()).toMillis() >= DEACTIVATION_TIMER)
+        if(Duration.between(startTime, Instant.now()).toMillis() >= CLIMBER_DEACTIVATION_TIMER)
         {
             climber.retract();
             return true;

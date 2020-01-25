@@ -6,24 +6,29 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.*;
-//----------------------------------------------------------------------------------------------------------------------------------------------------------
-//
-//
-//might want to consider merge with shooter superstructure since the spinner is at the top of the shooter mechanism and utilizes one of the shooter motors
-//
-//
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+import static org.usfirst.frc.team3952.robot.RobotMap.CP_RED;
+import static org.usfirst.frc.team3952.robot.RobotMap.CP_GREEN;
+import static org.usfirst.frc.team3952.robot.RobotMap.CP_BLUE;
+import static org.usfirst.frc.team3952.robot.RobotMap.CP_YELLOW;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+
+/**
+ * A subsystem to handle the spinning of the Control Panel.
+ */
 public class ControlWheel extends SubsystemBase
 {
     private Talon motor = RobotMap.controlPanelSpinner;
-    private ColorSensorV3 sensor = RobotMap.colorSensor;
+    private ColorSensorV3 colorSensor = RobotMap.colorSensor;
+    private Ultrasonic distanceSensor = RobotMap.controlPanelUltraSonic;
+    private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
 
     private NetworkTableEntry color;
     private NetworkTableEntry colorValue;
@@ -56,13 +61,13 @@ public class ControlWheel extends SubsystemBase
     }
 
     public Color getColor() {
-        Color c = sensor.getColor();
+        Color c = colorSensor.getColor();
         colorValue.setDoubleArray(new double[] {c.red, c.green, c.blue});
-        return sensor.getColor();
+        return colorSensor.getColor();
     }
 
     public ColorMatchResult getClosestColor() {
-        ColorMatchResult output = colorMatch.matchClosestColor(sensor.getColor());
+        ColorMatchResult output = colorMatch.matchClosestColor(colorSensor.getColor());
         if (CP_RED.equals(output.color))
             color.setString("RED");
         else if (CP_GREEN.equals(output.color))
@@ -114,5 +119,20 @@ public class ControlWheel extends SubsystemBase
         getClosestColor();
         getFMSColor();
         this.rotations.setDouble(rotations);
+    }
+
+    public void enable()
+    {
+        enableSolenoid.set(kForward);
+    }
+
+    public void disable()
+    {
+        enableSolenoid.set(kReverse);
+    }
+
+    public double getDistance()
+    {
+        return distanceSensor.getRangeMM();
     }
 }

@@ -3,7 +3,7 @@ package org.usfirst.frc.team3952.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.Climber;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-import static org.usfirst.frc.team3952.robot.RobotMap.ACTIVATION_TIMER;
+import static org.usfirst.frc.team3952.robot.RobotMap.CLIMBER_ACTIVATION_TIMER;
 import static org.usfirst.frc.team3952.robot.RobotMap.CLIMB_MOTOR_SPEED;
 
 import java.time.Duration;
@@ -29,7 +29,7 @@ public class PullUp extends CommandBase {
     @Override
     public void execute() {
         Climber climber = subsystems.getClimber();
-        if(Duration.between(startTime, Instant.now()).toMillis() < ACTIVATION_TIMER) return;
+        if(Duration.between(startTime, Instant.now()).toMillis() < CLIMBER_ACTIVATION_TIMER) return;
         climber.lift(CLIMB_MOTOR_SPEED);
     }
 

@@ -65,7 +65,8 @@ public class RobotMap {
         }
     }
 
-    // States which directions to spin the storage wheel.
+    // The time to wait after activating the control panel before spinning it.
+    public static final long CP_ACTIVATION_TIMER = 1000;
 
     // ---------------
     // Shooter Values
@@ -88,10 +89,10 @@ public class RobotMap {
     public static final double DESCEND_MOTOR_SPEED = -0.50;
 
     // The time to wait after activating the climber to actually climbing (in millseconds).
-    public static final long ACTIVATION_TIMER = 2000;
+    public static final long CLIMBER_ACTIVATION_TIMER = 2000;
 
     // The time to wait after climbing down to deactivate the climber (in millseconds).
-    public static final long DEACTIVATION_TIMER = 3000;
+    public static final long CLIMBER_DEACTIVATION_TIMER = 3000;
 
     // ---------------
     // DriveTrain Superstructure
@@ -114,6 +115,9 @@ public class RobotMap {
     // A distance sensor to calculate the distance between the control panel and the wall.
     public static Ultrasonic controlPanelUltraSonic;
 
+    // Spin the control panel using a wheel attached to this motor, powered by friction.
+    public static Talon controlPanelSpinner;
+
     // ---------------
     // IntakeShooter Superstructure
     // ---------------
@@ -132,9 +136,6 @@ public class RobotMap {
 
     // Aim the shooter a bit left or right to shoot balls at a slight angle.
     public static Servo projectileAimer;
-
-    // Spin the control panel using a wheel attached to this motor, powered by friction.
-    public static Talon controlPanelSpinner;
 
     // The two motors used to actually grab and shoot the balls from the outside.
     public static VictorSPX intake;
