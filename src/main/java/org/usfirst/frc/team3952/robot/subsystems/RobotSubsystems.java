@@ -13,6 +13,7 @@ public class RobotSubsystems
     private DriveTrain driveTrain;
     private IntakeShooter intakeShooter;
     private ControlWheel controlWheel;
+    private Climber climber;
 
     private MainController mainController;
     private SecondaryController secondaryController;
@@ -63,5 +64,13 @@ public class RobotSubsystems
 
     public void setSecondaryController(SecondaryController secondaryController) {
         this.secondaryController = secondaryController;
+    }
+
+    public void setClimber(Climber climber) {
+        this.climber = climber;
+    }
+
+    public Climber getClimber() {
+        return climber;
     }
 }
