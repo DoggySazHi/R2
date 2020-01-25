@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.RobotMap.Position;
+import org.usfirst.frc.team3952.robot.RobotMap.Direction;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.MAX_BALL_STORAGE;
 
@@ -81,6 +82,16 @@ public class IntakeShooter extends SubsystemBase {
     // Advance the counter. NOTE: You should be running the motor before this is called!
     public void advance() {
         ballPosition = (ballPosition + 1) % ballsStored.length;
+    }
+
+    public Direction getDirectionToEmpty()
+    {
+        return Direction.Right;
+    }
+
+    public Direction getDirectionToFull()
+    {
+        return Direction.Left;
     }
 
     // Rewind the counter. NOTE: You should be running the motor before this is called!

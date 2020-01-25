@@ -21,7 +21,6 @@ public class ManualIntakeShooter extends CommandBase {
     }
 
     private boolean isIntaking = false;
-    private boolean chuteReady = true;
 
     @Override
     public void execute() {
@@ -36,12 +35,6 @@ public class ManualIntakeShooter extends CommandBase {
             intakeShooter.stop();
 
         intakeShooter.setTiltServos(secondaryController.getLateralMovement());
-
-        if(intakeShooter.getEnableSwitch() && intakeShooter.getBallsStored() < MAX_BALL_STORAGE) {
-            if(isIntaking) {
-                intakeShooter.intake();
-            }
-        }
     }
 
     @Override

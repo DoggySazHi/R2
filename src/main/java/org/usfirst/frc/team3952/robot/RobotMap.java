@@ -39,6 +39,9 @@ public class RobotMap {
     // Tiles to start slowing down, if not using a linear ramping function.
     public static final int SLOWDOWN_TILES = 5;
 
+    // Holds the possible directions to rotate the storage mechanism. May be used for other motor functions.
+    public enum Direction { Left, Right }
+
     // Holds the possible positions for the shooter's angle with given names.
     public enum Position {
         Intake (0.0),
@@ -57,6 +60,8 @@ public class RobotMap {
             return distance;
         }
     }
+
+    // States which directions to spin the storage wheel.
 
     // ---------------
     // Shooter Values

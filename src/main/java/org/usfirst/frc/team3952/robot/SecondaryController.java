@@ -28,8 +28,6 @@ public class SecondaryController extends AbstractController
             throw new ArrayIndexOutOfBoundsException("Uh oh, the ladder controller seems to not have enough buttons!");
         }
         wheelOfFortune = new PlayWheelOfFortune(subsystems);
-        //TODO Remove me!
-        buttons[0].whenPressed(new IntakeBall(subsystems));
         buttons[2].whenPressed(wheelOfFortune);
         buttons[3].cancelWhenPressed(wheelOfFortune);
     }
