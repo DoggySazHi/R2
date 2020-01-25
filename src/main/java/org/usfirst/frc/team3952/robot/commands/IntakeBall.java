@@ -17,7 +17,7 @@ public class IntakeBall extends CommandBase {
     }
     @Override
     public void initialize() {
-        // Set shooter to the downward position. Possibly run shared code from GoToPosition?
+        // TODO Set shooter to the downward position. Possibly run shared code from GoToPosition?
         System.out.println("Button success!");
         ballDetectionEntry = NetworkTableInstance.getDefault().getTable("LimeLightLite").getEntry("Ball Detected");
     }

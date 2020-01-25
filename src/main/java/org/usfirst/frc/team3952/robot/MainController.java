@@ -26,8 +26,6 @@ public class MainController extends AbstractController
     protected void init()
     {
         // Place all button bindings here.
-        //TODO Remove me!
-        buttons[0].whenPressed(new IntakeBall(subsystems));
     }
 
     public double getRotation() {
