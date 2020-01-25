@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 public class ManualIntakeShooter extends CommandBase {
 

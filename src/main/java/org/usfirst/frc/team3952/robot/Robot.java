@@ -15,6 +15,9 @@ import java.time.Instant;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.CONTROLLER_CHECK_DELAY;
 
+/**
+ * The actual main of the robot.
+ */
 public class Robot extends TimedRobot {
     private RobotSubsystems subsystems;
 
