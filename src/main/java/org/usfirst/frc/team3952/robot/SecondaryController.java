@@ -3,6 +3,7 @@ package org.usfirst.frc.team3952.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team3952.robot.commands.IntakeBall;
 import org.usfirst.frc.team3952.robot.commands.PlayWheelOfFortune;
+import org.usfirst.frc.team3952.robot.commands.PullUp;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class SecondaryController extends AbstractController
@@ -28,8 +29,9 @@ public class SecondaryController extends AbstractController
             throw new ArrayIndexOutOfBoundsException("Uh oh, the ladder controller seems to not have enough buttons!");
         }
         wheelOfFortune = new PlayWheelOfFortune(subsystems);
-        buttons[2].whenPressed(wheelOfFortune);
-        buttons[3].cancelWhenPressed(wheelOfFortune);
+        buttons[7].whenPressed(wheelOfFortune);
+        buttons[6].cancelWhenPressed(wheelOfFortune);
+        buttons[3].whenPressed(new PullUp(subsystems));
     }
 
     //it's not really a deadzone, but eh

@@ -8,16 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
-import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
-import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
-import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
+import org.usfirst.frc.team3952.robot.subsystems.*;
 
 import java.time.Duration;
 import java.time.Instant;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.CONTROLLER_CHECK_DELAY;
 
+/**
+ * The actual main of the robot.
+ */
 public class Robot extends TimedRobot {
     private RobotSubsystems subsystems;
 
@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
         DriveTrain driveTrain = new DriveTrain();
         IntakeShooter intakeShooter = new IntakeShooter();
         ControlWheel controlWheel = new ControlWheel();
+        Climber climber = new Climber();
 
         // Dummy controllers.
         MainController mainController = new MainController(null, null);
@@ -49,6 +50,7 @@ public class Robot extends TimedRobot {
         subsystems.setDriveTrain(driveTrain);
         subsystems.setIntakeShooter(intakeShooter);
         subsystems.setControlWheel(controlWheel);
+        subsystems.setClimber(climber);
 
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));

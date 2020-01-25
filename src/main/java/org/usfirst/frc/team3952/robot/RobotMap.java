@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.util.Color;
 
 //It's sparks, not talons lucas, ya dumbie
 
+/**
+ * A listing of core devices and values that are used on the robot.
+ * All of these are set up in the init() method.
+ */
 public class RobotMap {
     // ---------------
     // Robot Values
@@ -61,7 +65,8 @@ public class RobotMap {
         }
     }
 
-    // States which directions to spin the storage wheel.
+    // The time to wait after activating the control panel before spinning it.
+    public static final long CP_ACTIVATION_TIMER = 1000;
 
     // ---------------
     // Shooter Values
@@ -73,12 +78,48 @@ public class RobotMap {
     // The speed to run the storage motor at.
     public static final double STORAGE_MOTOR_SPEED = 0.4;
 
+    // ---------------
+    // Climber Values
+    // ---------------
+
+    // The speed of how fast to climb.
+    public static final double CLIMB_MOTOR_SPEED = 0.75;
+
+    // The speed of how fast to descend. Should be opposite in polarity to the climbing speed.
+    public static final double DESCEND_MOTOR_SPEED = -0.50;
+
+    // The time to wait after activating the climber to actually climbing (in millseconds).
+    public static final long CLIMBER_ACTIVATION_TIMER = 2000;
+
+    // The time to wait after climbing down to deactivate the climber (in millseconds).
+    public static final long CLIMBER_DEACTIVATION_TIMER = 3000;
+
+    // ---------------
+    // DriveTrain Superstructure
+    // ---------------
+
     // Drive Train (wheels are bundled together on the same PWM)
     public static Spark leftDrive;
     public static Spark rightDrive;
 
     // ---------------
-    // Shooter Superstructure
+    // Control Panel Superstructure
+    // ---------------
+
+    // A color sensor to detect the current position of the Control Panel.
+    public static ColorSensorV3 colorSensor;
+
+    // A solenoid to push the mechanism up and down, so that we can travel under the control panel or operate it.
+    public static DoubleSolenoid controlPanelSolenoid;
+
+    // A distance sensor to calculate the distance between the control panel and the wall.
+    public static Ultrasonic controlPanelUltraSonic;
+
+    // Spin the control panel using a wheel attached to this motor, powered by friction.
+    public static Talon controlPanelSpinner;
+
+    // ---------------
+    // IntakeShooter Superstructure
     // ---------------
 
     // Used to move balls in and out of the ball holder.
@@ -96,9 +137,6 @@ public class RobotMap {
     // Aim the shooter a bit left or right to shoot balls at a slight angle.
     public static Servo projectileAimer;
 
-    // Spin the control panel using a wheel attached to this motor, powered by friction.
-    public static Talon controlPanelSpinner;
-
     // The two motors used to actually grab and shoot the balls from the outside.
     public static VictorSPX intake;
     public static VictorSPX intake2;
@@ -106,16 +144,25 @@ public class RobotMap {
     // Check if the spinner is on a valid position.
     public static DigitalInput spinnerLocked;
 
+    // A solenoid to push the ball out.
+    public static DoubleSolenoid ballShooter;
+
     // ---------------
-    // Misc
+    // Climber Superstructure
     // ---------------
 
-    // A color sensor to detect the current position of the Control Panel.
-    public static ColorSensorV3 colorSensor;
+    // The two motors used to climb the rope to the hanger (activation switch).
+    public static VictorSPX liftMotor;
+    public static VictorSPX liftMotor2;
+
+    // The solenoid to activate the climber.
+    public static DoubleSolenoid climberActivator;
+
+    // The button to check if it has hit the top.
+    public static DigitalInput hitTop;
 
     public static void init() {
         // PWM (Motors and Servos)
-
         leftDrive = new Spark(1);
         rightDrive = new Spark(0);
         projectileEjector = new Talon(2);
@@ -125,8 +172,9 @@ public class RobotMap {
         controlPanelSpinner = new Talon(6);
 
         // DIO (Limit switches, Ultrasonic)
-
         spinnerLocked = new DigitalInput(0);
+        controlPanelUltraSonic = new Ultrasonic(1, 2);
+        hitTop = new DigitalInput(3);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
         linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
@@ -134,6 +182,13 @@ public class RobotMap {
         // CAN (Motors)
         intake = new VictorSPX(0);
         intake2 = new VictorSPX(1);
+        liftMotor = new VictorSPX(2);
+        liftMotor2 = new VictorSPX(3);
+
+        // PCM (Pneumatic Pistons)
+        ballShooter = new DoubleSolenoid(0, 1);
+        controlPanelSolenoid = new DoubleSolenoid(2, 3);
+        climberActivator = new DoubleSolenoid(4, 5);
 
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);

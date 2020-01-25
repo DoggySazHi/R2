@@ -8,10 +8,16 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-
-import static org.usfirst.frc.team3952.robot.RobotMap.*;
+import static org.usfirst.frc.team3952.robot.RobotMap.CW_SPEED_SLOW;
+import static org.usfirst.frc.team3952.robot.RobotMap.CW_SPEED_FAST;
+import static org.usfirst.frc.team3952.robot.RobotMap.WHEEL;
+import static org.usfirst.frc.team3952.robot.RobotMap.MIN_COUNT;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
+
+/**
+ * A command to automatically operate the Control Panel, using the color sensor.
+ */
 public class PlayWheelOfFortune extends CommandBase {
     private RobotSubsystems subsystems;
 
@@ -53,6 +59,8 @@ public class PlayWheelOfFortune extends CommandBase {
             }
         System.out.println("We might have a problem... Couldn't find initial color!");
         currentColor = 0;
+
+        controlWheel.enable();
     }
 
     @Override
