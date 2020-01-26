@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * The subsystem to
+ * The subsystem to go up and down to hang on the activator.
  */
 public class Climber extends SubsystemBase {
     private DoubleSolenoid climberActivator = RobotMap.climberActivator;
