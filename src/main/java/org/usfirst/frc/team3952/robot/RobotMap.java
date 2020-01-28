@@ -180,7 +180,9 @@ public class RobotMap {
         hitTop = new DigitalInput(3);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
-        linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
+        if(RobotBase.isReal()) {
+            linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
+        }
 
         // CAN (Motors)
         intake = new VictorSPX(0);

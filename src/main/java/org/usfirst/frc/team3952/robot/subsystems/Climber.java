@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
+ * The subsystem to go up and down to hang on the activator.
  * The subsystem to shoot the claw in order to hang on the clothing hanger :)
  */
 public class Climber extends SubsystemBase {
@@ -29,7 +30,7 @@ public class Climber extends SubsystemBase {
    }
 
    public void postDeploy() {
-        //d  e  l  e  t  e  d   f  o  r   c  o  m        patab         ility      
+        //deleted for compatibility
     }
 
     public void retract() {
