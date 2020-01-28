@@ -6,33 +6,36 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The subsystem to go up and down to hang on the activator.
+ * The subsystem to shoot the claw in order to hang on the clothing hanger :)
  */
 public class Climber extends SubsystemBase {
-    private DoubleSolenoid climberActivator = RobotMap.climberActivator;
     private VictorSPX liftMotor = RobotMap.liftMotor;
     private VictorSPX liftMotor2 = RobotMap.liftMotor2;
     private DigitalInput hitTop = RobotMap.hitTop;
+    private Servo climberActivator = RobotMap.climberActivator;
+    private Servo climberActivator2 = RobotMap.climberActivator2;
 
     public Climber() {
-        climberActivator.set(Value.kReverse);
+        retract();
     }
 
    public void deploy(){
-       climberActivator.set(Value.kForward);
+       climberActivator.set(-1.0);
+       climberActivator2.set(1.0);
    }
 
    public void postDeploy() {
-       climberActivator.set(Value.kOff);
-   }
+        //deleted for compatibility
+    }
 
     public void retract() {
-        climberActivator.set(Value.kOff);
+        climberActivator.set(1.0);
+        climberActivator2.set(-1.0);
     }
 
    public void lift(double value){
