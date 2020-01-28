@@ -156,7 +156,8 @@ public class RobotMap {
     public static VictorSPX liftMotor2;
 
     // The solenoid to activate the climber.
-    public static DoubleSolenoid climberActivator;
+    public static Servo climberActivator;
+    public static Servo climberActivator2;
 
     // The button to check if it has hit the top.
     public static DigitalInput hitTop;
@@ -170,6 +171,8 @@ public class RobotMap {
         projectileStorage = new Talon(4);
         projectileTilt = new Talon(5);
         controlPanelSpinner = new Talon(6);
+        climberActivator = new Servo(7);
+        climberActivator2 = new Servo(8);
 
         // DIO (Limit switches, Ultrasonic)
         spinnerLocked = new DigitalInput(0);
@@ -188,7 +191,6 @@ public class RobotMap {
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
         controlPanelSolenoid = new DoubleSolenoid(2, 3);
-        climberActivator = new DoubleSolenoid(4, 5);
 
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
