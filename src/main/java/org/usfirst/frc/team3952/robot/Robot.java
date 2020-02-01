@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
         intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
+        climber.setDefaultCommand(new ManualClimber(subsystems));
     }
 
     private void checkCredits() {
@@ -78,6 +80,7 @@ public class Robot extends TimedRobot {
                         System.out.println(data);
                         data = br.readLine();
                     }
+                    br.close();
                 } catch (Exception e) {
                     // screw this
                     return;

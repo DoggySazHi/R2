@@ -38,6 +38,12 @@ public class Climber extends SubsystemBase {
         climberActivator2.set(-1.0);
     }
 
+    public void manualServo(double value)
+    {
+        climberActivator.set(value);
+        climberActivator2.set(-value);
+    }
+
    public void lift(double value){
        liftMotor.set(ControlMode.PercentOutput, value);
        liftMotor2.set(ControlMode.PercentOutput, value);

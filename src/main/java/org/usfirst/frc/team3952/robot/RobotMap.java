@@ -94,6 +94,8 @@ public class RobotMap {
     // The time to wait after climbing down to deactivate the climber (in millseconds).
     public static final long CLIMBER_DEACTIVATION_TIMER = 3000;
 
+    // The server
+
     // ---------------
     // DriveTrain Superstructure
     // ---------------
