@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -25,7 +27,7 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
  */
 public class ControlWheel extends SubsystemBase
 {
-    private Talon motor = RobotMap.controlPanelSpinner;
+    private VictorSPX motor = RobotMap.controlPanelSpinner;
     private ColorSensorV3 colorSensor = RobotMap.colorSensor;
     private Ultrasonic distanceSensor = RobotMap.controlPanelUltraSonic;
     private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
@@ -53,11 +55,11 @@ public class ControlWheel extends SubsystemBase
     }
 
     public void set(double value) {
-    	motor.set(value);
+    	motor.set(ControlMode.PercentOutput, value);
     }
     
     public void stop() {
-    	motor.set(0);
+    	motor.set(ControlMode.PercentOutput, 0);
     }
 
     public Color getColor() {

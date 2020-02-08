@@ -2,14 +2,20 @@ package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
 import org.usfirst.frc.team3952.robot.subsystems.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -28,6 +34,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         RobotMap.init();
+        //TODO remove, test if we can read from deploy folder
+        checkCredits();
 
         DriveTrain driveTrain = new DriveTrain();
         IntakeShooter intakeShooter = new IntakeShooter();
@@ -55,6 +63,29 @@ public class Robot extends TimedRobot {
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
         intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
+        climber.setDefaultCommand(new ManualClimber(subsystems));
+    }
+
+    private void checkCredits() {
+        File[] deployFiles = Filesystem.getDeployDirectory().listFiles();
+        if(deployFiles == null) return;
+        for(File f : deployFiles)
+            if(f.getName().contains("credits"))
+            {
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(f));
+                    String data = br.readLine();
+                    while(data != null)
+                    {
+                        System.out.println(data);
+                        data = br.readLine();
+                    }
+                    br.close();
+                } catch (Exception e) {
+                    // screw this
+                    return;
+                }
+            }
     }
 
     @Override

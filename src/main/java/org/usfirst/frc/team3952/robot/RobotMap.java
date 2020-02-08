@@ -5,6 +5,11 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.util.Color;
+import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
+
+import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.None;
+import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
+import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
 
 //It's sparks, not talons lucas, ya dumbie
 
@@ -37,8 +42,8 @@ public class RobotMap {
     public static final int MIN_COUNT = 24;
 
     // Speeds to set the motors when running, if not using a linear ramping function.
-    public static final double CW_SPEED_FAST = 0.5;
-    public static final double CW_SPEED_SLOW = 0.2;
+    public static final double CW_SPEED_FAST = 0.3;
+    public static final double CW_SPEED_SLOW = 0.05;
 
     // Tiles to start slowing down, if not using a linear ramping function.
     public static final int SLOWDOWN_TILES = 5;
@@ -94,6 +99,8 @@ public class RobotMap {
     // The time to wait after climbing down to deactivate the climber (in millseconds).
     public static final long CLIMBER_DEACTIVATION_TIMER = 3000;
 
+    // The server
+
     // ---------------
     // DriveTrain Superstructure
     // ---------------
@@ -116,7 +123,7 @@ public class RobotMap {
     public static Ultrasonic controlPanelUltraSonic;
 
     // Spin the control panel using a wheel attached to this motor, powered by friction.
-    public static Talon controlPanelSpinner;
+    public static VictorSPX controlPanelSpinner;
 
     // ---------------
     // IntakeShooter Superstructure
@@ -163,6 +170,7 @@ public class RobotMap {
     public static DigitalInput hitTop;
 
     public static void init() {
+        CANPWMFallback.defaultMode = PWM;
         // PWM (Motors and Servos)
         leftDrive = new Spark(1);
         rightDrive = new Spark(0);
@@ -170,9 +178,8 @@ public class RobotMap {
         projectileAimer = new Servo(3);
         projectileStorage = new Talon(4);
         projectileTilt = new Talon(5);
-        controlPanelSpinner = new Talon(6);
-        climberActivator = new Servo(7);
-        climberActivator2 = new Servo(8);
+        climberActivator = new Servo(6);
+        climberActivator2 = new Servo(7);
 
         // DIO (Limit switches, Ultrasonic)
         spinnerLocked = new DigitalInput(0);
@@ -184,11 +191,13 @@ public class RobotMap {
             linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
         }
 
+        CANPWMFallback.defaultMode = CAN;
         // CAN (Motors)
         intake = new VictorSPX(0);
         intake2 = new VictorSPX(1);
         liftMotor = new VictorSPX(2);
         liftMotor2 = new VictorSPX(3);
+        controlPanelSpinner = new VictorSPX(4);
 
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
