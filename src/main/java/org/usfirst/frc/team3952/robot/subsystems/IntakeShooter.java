@@ -102,15 +102,17 @@ public class IntakeShooter extends SubsystemBase {
 
     // Get the current "angle" of the shooter position. Might be removed in favor of Position (see RobotMap)
     public double getAngle() {
-        //TODO haoyan doesn't know how to write code
+        //TODO when we have access to encoders, we will check this
         return 0;
     }
 
     // Get the current position of the shooter's angle.
     public Position getPosition() {
+        // Use a linear search to find the closest Position (enum) to the current angle.
         Position toReturn = Position.values()[0];
         double encoder = liftMotorEncoder.get();
         for (Position p : Position.values()) {
+            // Compare the difference of the iterating Position to the encoder versus the one we saved.
             if (Math.abs(p.getDistance() - encoder) < Math.abs(toReturn.getDistance() - encoder))
                 toReturn = p;
         }

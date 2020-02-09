@@ -99,7 +99,6 @@ public class PlayWheelOfFortune extends CommandBase {
         }
         controlWheel.update(tilesPassed);
 
-        //TODO base this on linear speed drop
         if(tilesPassed < MIN_COUNT)
             controlWheel.set(CW_SPEED_FAST);
         else

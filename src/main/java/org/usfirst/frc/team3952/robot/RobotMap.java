@@ -214,6 +214,7 @@ public class RobotMap {
         liftMotor2 = new VictorSPX(3);
         controlPanelSpinner = new VictorSPX(4);
 
+
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
         controlPanelSolenoid = new DoubleSolenoid(2, 3);

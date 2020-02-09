@@ -5,13 +5,14 @@ import org.usfirst.frc.team3952.robot.RobotMap.Position;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-public class GoToPosition extends CommandBase
-{
+public class GoToPosition extends CommandBase {
     private RobotSubsystems subsystems;
 
     private Position position;
     private int deadZone;
     private double speed;
+
+    private double minSpeed;
 
     public GoToPosition(RobotSubsystems subsystems, Position pos) {
         this.subsystems = subsystems;
@@ -29,12 +30,8 @@ public class GoToPosition extends CommandBase
     //could be reversed based on situation
     public void execute() {
         IntakeShooter intakeShooter = subsystems.getIntakeShooter();
-        if(intakeShooter.getAngle() < position.getDistance()){
-            intakeShooter.setAngleMotor(speed);
-        }
-        else{
-            intakeShooter.setAngleMotor(-speed);
-        }
+        minSpeed = position.getDistance() - intakeShooter.getAngle() > 0 ? 0.1 : -0.1;
+        intakeShooter.setAngleMotor(speed * (position.getDistance() - intakeShooter.getAngle()) / 90 + minSpeed);
     }
 
     public boolean isFinished() {

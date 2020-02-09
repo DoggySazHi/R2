@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import org.usfirst.frc.team3952.robot.MainController;
+import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 

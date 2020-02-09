@@ -4,10 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-public class GoToAngle extends CommandBase
-{
+public class GoToAngle extends CommandBase {
     private IntakeShooter intakeShooter;
     private double angle;
+
+    private double minSpeed;
 
     public GoToAngle(RobotSubsystems subsystems, double angle) {
         intakeShooter = subsystems.getIntakeShooter();
@@ -16,14 +17,17 @@ public class GoToAngle extends CommandBase
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        minSpeed = angle - intakeShooter.getAngle() > 0 ? 0.1 : -0.1;
+    }
 
     @Override
     public void execute() {
-        if (intakeShooter.getPositionRaw() > angle)
-            intakeShooter.setAngleMotor(-0.5);
-        else 
-            intakeShooter.setAngleMotor(0.5);
+        //getPositionRaw() doesnt return an angle!
+        //min speed to ensure it doesnt stop shot or take waayyy too long
+
+        // Keep the number in bounds between -1.0 and 1.0.
+        intakeShooter.setAngleMotor(Math.min(1.0, Math.max(-1.0, (angle - intakeShooter.getAngle()) / 90.0 + minSpeed)));
     }
 
     public boolean isFinished() {

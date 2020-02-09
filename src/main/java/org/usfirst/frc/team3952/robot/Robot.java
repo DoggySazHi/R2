@@ -10,6 +10,8 @@ import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
+import org.usfirst.frc.team3952.robot.devices.MainController;
+import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.*;
 
 import java.io.BufferedReader;

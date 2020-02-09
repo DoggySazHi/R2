@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import org.usfirst.frc.team3952.robot.MainController;
-import org.usfirst.frc.team3952.robot.SecondaryController;
+import org.usfirst.frc.team3952.robot.devices.MainController;
+import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 
 public class RobotSubsystems
 {

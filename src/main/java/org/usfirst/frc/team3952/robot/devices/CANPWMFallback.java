@@ -2,6 +2,7 @@ package org.usfirst.frc.team3952.robot.devices;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 import edu.wpi.first.hal.CANData;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Talon;
@@ -65,18 +66,16 @@ public class CANPWMFallback {
             System.out.println("WARNING: " + (name != null ? name : "Something") + " could not be activated with any motors! Check for conflicts.");
     }
 
-    private void setMode()
-    {
-        if(pwmNum == -1 && canNum == -1) overrideMode = None;
-        if(defaultMode == PWM && pwmNum == -1) overrideMode = CAN;
-        if(defaultMode == CAN && canNum == -1) overrideMode = PWM;
+    private void setMode() {
+        if (pwmNum == -1 && canNum == -1) overrideMode = None;
+        if (defaultMode == PWM && pwmNum == -1) overrideMode = CAN;
+        if (defaultMode == CAN && canNum == -1) overrideMode = PWM;
     }
 
-    public CANPWMFallback setOverrideMode(Mode mode)
-    {
-        if(getMode() != None)
+    public CANPWMFallback setOverrideMode(Mode mode) {
+        if (getMode() != None)
             throw new IllegalStateException("You cannot set mode if a system was already setup!" + (name != null ? " - " + name : ""));
-        if(mode == CAN && canNum == -1 || mode == PWM && pwmNum == -1)
+        if (mode == CAN && canNum == -1 || mode == PWM && pwmNum == -1)
             throw new IllegalStateException("Robots should not try to use an override without valid port numbers!" + (name != null ? " - " + name : ""));
         overrideMode = mode;
         init();
@@ -84,19 +83,27 @@ public class CANPWMFallback {
         return this;
     }
 
-    public void init()
-    {
-        if(pwmDevice != null)
-        {
+    public CANPWMFallback withRamping(double time) {
+        if (getMode() != CAN) return this;
+
+        VictorSPXConfiguration rampConf = new VictorSPXConfiguration();
+        rampConf.openloopRamp = time;
+        rampConf.closedloopRamp = time;
+        canDevice.configAllSettings(rampConf);
+        return this;
+    }
+
+    public void init() {
+        if (pwmDevice != null) {
             pwmDevice.close();
             pwmDevice = null;
         }
         canDevice = null;
 
         //TODO make sure the CAN check works
-        if(overrideMode == CAN && canNum != -1 && isCANAvailable())
+        if (overrideMode == CAN && canNum != -1 && isCANAvailable())
             canDevice = new VictorSPX(canNum);
-        else if(overrideMode == PWM && pwmNum != -1)
+        else if (overrideMode == PWM && pwmNum != -1)
             pwmDevice = new Talon(pwmNum);
         // None: Don't init.
     }
