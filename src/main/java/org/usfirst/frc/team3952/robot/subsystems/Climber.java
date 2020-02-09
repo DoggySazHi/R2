@@ -2,12 +2,12 @@ package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.DigitalInput;
-import org.usfirst.frc.team3952.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.usfirst.frc.team3952.robot.RobotMap;
+
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 /**
  * The subsystem to go up and down to hang on the activator.
@@ -24,12 +24,14 @@ public class Climber extends SubsystemBase {
         retract();
     }
 
-   public void deploy(){
-       climberActivator.set(-1.0);
-       climberActivator2.set(1.0);
-   }
+    public void deploy() {
+        if (!FLIP_SERVO_START_POS)
+            servoControl(SERVO_MAXPOWER);
+        else
+            servoControl(-SERVO_MAXPOWER);
+    }
 
-   public void postDeploy() {
+    public void postDeploy() {
         //deleted for compatibility
     }
 
@@ -38,19 +40,25 @@ public class Climber extends SubsystemBase {
         climberActivator2.set(-1.0);
     }
 
-    public void manualServo(double value)
-    {
+    public void manualServo(double value) {
         climberActivator.set(value);
         climberActivator2.set(-value);
     }
 
-   public void lift(double value){
-       liftMotor.set(ControlMode.PercentOutput, value);
-       liftMotor2.set(ControlMode.PercentOutput, value);
-   }
+    public void lift(double value) {
+        liftMotor.set(ControlMode.PercentOutput, value);
+        liftMotor2.set(ControlMode.PercentOutput, value);
+    }
 
-   public boolean hasHitTop()
-   {
-       return hitTop.get();
-   }
+    public boolean hasHitTop() {
+        return hitTop.get();
+    }
+
+    private void servoControl(double value) {
+        climberActivator.set(value);
+        if (!INVERT_CLIMBER_SERVOS)
+            climberActivator2.set(value);
+        else
+            climberActivator2.set(-value);
+    }
 }

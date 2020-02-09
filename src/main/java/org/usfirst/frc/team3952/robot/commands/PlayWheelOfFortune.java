@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-import static org.usfirst.frc.team3952.robot.RobotMap.CW_SPEED_SLOW;
-import static org.usfirst.frc.team3952.robot.RobotMap.CW_SPEED_FAST;
-import static org.usfirst.frc.team3952.robot.RobotMap.WHEEL;
-import static org.usfirst.frc.team3952.robot.RobotMap.MIN_COUNT;
+
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
 
@@ -68,8 +66,8 @@ public class PlayWheelOfFortune extends CommandBase {
         ControlWheel controlWheel = subsystems.getControlWheel();
 
         ColorMatchResult match = controlWheel.getClosestColor();
-        if(match != null && !match.color.equals(WHEEL[currentColor])) {
-            if(direction == 0) {
+        if (match != null && match.confidence >= MIN_COLOR_CONFIDENCE && !match.color.equals(WHEEL[currentColor])) {
+            if (direction == 0) {
                 if (match.color.equals(WHEEL[(currentColor + 1) % WHEEL.length])) {
                     tilesPassed++;
                     direction = 1;
@@ -122,7 +120,7 @@ public class PlayWheelOfFortune extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         ControlWheel controlWheel = subsystems.getControlWheel();
-
         controlWheel.stop();
+        controlWheel.disable();
     }
 }

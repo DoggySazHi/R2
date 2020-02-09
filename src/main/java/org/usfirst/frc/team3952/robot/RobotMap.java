@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
-import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.None;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
 
@@ -34,6 +33,9 @@ public class RobotMap {
     public static final Color CP_GREEN = ColorMatch.makeColor(0.190, 0.545, 0.260);
     public static final Color CP_BLUE = ColorMatch.makeColor(0.150, 0.455, 0.385);
     public static final Color CP_YELLOW = ColorMatch.makeColor(0.300, 0.550, 0.160);
+
+    // How "close" the color sensor should read to make sure it's "sure".
+    public static final double MIN_COLOR_CONFIDENCE = 0.8;
 
     // The color pattern of the Control Panel wheel.
     public static final Color[] WHEEL = new Color[]{CP_RED, CP_GREEN, CP_BLUE, CP_YELLOW};
@@ -99,7 +101,14 @@ public class RobotMap {
     // The time to wait after climbing down to deactivate the climber (in millseconds).
     public static final long CLIMBER_DEACTIVATION_TIMER = 3000;
 
-    // The server
+    // Whether to invert the servos (are they facing opposite directions?)
+    public static final boolean INVERT_CLIMBER_SERVOS = false;
+
+    // Whether to invert the starting positions of the servos (should they start from the left or right?)
+    public static final boolean FLIP_SERVO_START_POS = false;
+
+    // Set the max (absolute) for the servos, as usually at 1.0, they pull so much current since they're fighting against themselves.
+    public static final double SERVO_MAXPOWER = 0.8;
 
     // ---------------
     // DriveTrain Superstructure

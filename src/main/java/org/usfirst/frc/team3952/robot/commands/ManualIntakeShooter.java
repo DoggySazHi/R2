@@ -17,6 +17,7 @@ public class ManualIntakeShooter extends CommandBase {
 
     @Override
     public void initialize() {
+        subsystems.getIntakeShooter().retract();
     }
 
     private boolean isIntaking = false;

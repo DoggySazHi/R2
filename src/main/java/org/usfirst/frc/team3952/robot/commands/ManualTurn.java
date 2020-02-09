@@ -17,7 +17,6 @@ public class ManualTurn extends CommandBase
 
     public ManualTurn(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
-
         addRequirements(subsystems.getControlWheel());
     }
 
@@ -26,6 +25,9 @@ public class ManualTurn extends CommandBase
         NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
         NetworkTable nTable = ntInst.getTable("Sensors");
         colorValue = nTable.getEntry("Color");
+
+        ControlWheel controlWheel = subsystems.getControlWheel();
+        controlWheel.disable();
     }
 
     @Override
@@ -47,5 +49,6 @@ public class ManualTurn extends CommandBase
     public void end(boolean interrupted) {
         ControlWheel controlWheel = subsystems.getControlWheel();
         controlWheel.stop();
+        controlWheel.disable();
     }
 }
