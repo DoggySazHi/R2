@@ -85,6 +85,12 @@ public class RobotMap {
     // The speed to run the storage motor at.
     public static final double STORAGE_MOTOR_SPEED = 0.4;
 
+    // The speed to suck the balls in.
+    public static final double INTAKE_SPEED = 1.0;
+
+    // The speed to shoot the balls out.
+    public static final double REJECT_SPEED = 1.0;
+
     // ---------------
     // Climber Values
     // ---------------

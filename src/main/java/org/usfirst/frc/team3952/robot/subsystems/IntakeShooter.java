@@ -8,15 +8,11 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
-import org.usfirst.frc.team3952.robot.RobotMap.Direction;
-import org.usfirst.frc.team3952.robot.RobotMap.Position;
+import org.usfirst.frc.team3952.robot.RobotMap.*;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.MAX_BALL_STORAGE;
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 public class IntakeShooter extends SubsystemBase {
-    public static final double INTAKE_SPEED = 1.0;
-    public static final double REJECT_SPEED = 1.0;
-
     private VictorSPX intakeLeft = RobotMap.intake;
     private VictorSPX intakeRight = RobotMap.intake2;
 
