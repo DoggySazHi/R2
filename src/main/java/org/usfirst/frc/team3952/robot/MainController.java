@@ -1,8 +1,6 @@
 package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-
-import org.usfirst.frc.team3952.robot.commands.IntakeBall;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class MainController extends AbstractController

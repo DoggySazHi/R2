@@ -10,17 +10,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.CP_RED;
-import static org.usfirst.frc.team3952.robot.RobotMap.CP_GREEN;
-import static org.usfirst.frc.team3952.robot.RobotMap.CP_BLUE;
-import static org.usfirst.frc.team3952.robot.RobotMap.CP_YELLOW;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 /**
  * A subsystem to handle the spinning of the Control Panel.
@@ -71,13 +68,13 @@ public class ControlWheel extends SubsystemBase
     public ColorMatchResult getClosestColor() {
         ColorMatchResult output = colorMatch.matchClosestColor(colorSensor.getColor());
         if (CP_RED.equals(output.color))
-            color.setString("RED");
+            color.setString("RED (" + output.confidence + ")");
         else if (CP_GREEN.equals(output.color))
-            color.setString("GREEN");
+            color.setString("GREEN (" + output.confidence + ")");
         else if (CP_BLUE.equals(output.color))
-            color.setString("BLUE");
+            color.setString("BLUE (" + output.confidence + ")");
         else if (CP_YELLOW.equals(output.color))
-            color.setString("YELLOW");
+            color.setString("YELLOW (" + output.confidence + ")");
         else
             color.setString("NO MATCH");
         return output;

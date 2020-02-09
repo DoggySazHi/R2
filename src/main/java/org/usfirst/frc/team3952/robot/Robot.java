@@ -14,7 +14,6 @@ import org.usfirst.frc.team3952.robot.subsystems.*;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.time.Duration;
 import java.time.Instant;

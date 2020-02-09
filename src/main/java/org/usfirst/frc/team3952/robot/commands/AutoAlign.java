@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3952.robot.commands;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;

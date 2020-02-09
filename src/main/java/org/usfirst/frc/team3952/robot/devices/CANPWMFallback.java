@@ -6,9 +6,7 @@ import edu.wpi.first.hal.CANData;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Talon;
 
-import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.None;
-import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
-import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
+import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.*;
 
 public class CANPWMFallback {
     public enum Mode {None, PWM, CAN}
@@ -120,6 +118,7 @@ public class CANPWMFallback {
         if (success) System.out.println("API_ID: 0x01040000");
         success = device.readPacketTimeout(0, 1000, c);
         if (success) System.out.println("API_ID: 0");
+        device.close();
         return success;
     }
 
