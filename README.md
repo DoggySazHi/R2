@@ -15,7 +15,7 @@ For Troy Robotics 3952
 
 ## What you should do everytime you start working:
 1. Open up Git Bash, run ``cd ~/Documents/R2``, then run ``git pull``.
-2. Run ``git merge master`` to get the latest stuff. If there are conflicts, you deem what is good and what isn't.
+2. Run ``git merge origin/master`` to get the latest stuff. If there are conflicts, you deem what is good and what isn't.
    Usually, the newer code is more correct, however you can combine your code with the existing code if you're working on the same section.
 3. Go to work!
 
