@@ -17,6 +17,8 @@ public abstract class AbstractController
     {
         this.subsystems = subsystems;
         this.joystick = joystick;
+        if(joystick == null)
+            return;
         buttons = new Button[joystick.getButtonCount() + 1];
         for(int i = 1; i < buttons.length; i++)
             buttons[i] =  new JoystickButton(joystick, i);
@@ -30,6 +32,8 @@ public abstract class AbstractController
 
     public boolean getRawButton(int button)
     {
+        if(!successfulInit || button >= buttons.length || button < 0 || buttons[button] == null)
+            return false;
         return buttons[button].get();
     }
 }

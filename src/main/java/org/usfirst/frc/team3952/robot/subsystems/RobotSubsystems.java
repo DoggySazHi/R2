@@ -1,37 +1,29 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import org.usfirst.frc.team3952.robot.*;
+import org.usfirst.frc.team3952.robot.MainController;
+import org.usfirst.frc.team3952.robot.SecondaryController;
 
 public class RobotSubsystems
 {
     private DriveTrain driveTrain;
-    private PneumaticPiston pneumaticPiston;
+    private IntakeShooter intakeShooter;
     private ControlWheel controlWheel;
-    private Intake intake;
-    private ShooterSS shooter;
+    private Climber climber;
 
     private MainController mainController;
     private SecondaryController secondaryController;
 
-    public RobotSubsystems(DriveTrain driveTrain, PneumaticPiston pneumaticPiston, ControlWheel controlWheel,Intake intake,ShooterSS shooter, MainController mainController, SecondaryController secondaryController)
-    {
-        this.driveTrain = driveTrain;
-        this.pneumaticPiston = pneumaticPiston;
-        this.controlWheel = controlWheel;
-        this.mainController = mainController;
-        this.secondaryController = secondaryController;
-        this.intake = intake;
-        this.shooter = shooter;
-    }
+    /*public boolean subsystemIsUsed(SubsystemBase subsystem) {
+        return subsystem.getCurrentCommand() != null;
+    }*/
 
     public DriveTrain getDriveTrain()
     {
         return driveTrain;
     }
 
-    public PneumaticPiston getPneumaticPiston()
-    {
-        return pneumaticPiston;
+    public IntakeShooter getIntakeShooter() {
+        return intakeShooter;
     }
 
     public MainController getMainController()
@@ -49,11 +41,31 @@ public class RobotSubsystems
         return controlWheel;
     }
 
-    public Intake intake(){
-        return intake;
+    public void setDriveTrain(DriveTrain driveTrain) {
+        this.driveTrain = driveTrain;
     }
 
-    public ShooterSS shooter(){
-        return shooter;
+    public void setIntakeShooter(IntakeShooter intakeShooter) {
+        this.intakeShooter = intakeShooter;
+    }
+
+    public void setControlWheel(ControlWheel controlWheel) {
+        this.controlWheel = controlWheel;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void setSecondaryController(SecondaryController secondaryController) {
+        this.secondaryController = secondaryController;
+    }
+
+    public void setClimber(Climber climber) {
+        this.climber = climber;
+    }
+
+    public Climber getClimber() {
+        return climber;
     }
 }

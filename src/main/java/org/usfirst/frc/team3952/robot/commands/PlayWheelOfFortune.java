@@ -1,50 +1,53 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import com.revrobotics.ColorMatchResult;
-
-import edu.wpi.first.networktables.*;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.MIN_COUNT;
-import static org.usfirst.frc.team3952.robot.RobotMap.WHEEL;
+import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
-public class PlayWheelOfFortune extends CommandBase
-{
-    private ControlWheel controlWheel;
 
+/**
+ * A command to automatically operate the Control Panel, using the color sensor.
+ */
+public class PlayWheelOfFortune extends CommandBase {
+    private RobotSubsystems subsystems;
+
+    // Is the robot somehow spinning the wrong way?
     private NetworkTableEntry badColor;
 
     private int tilesPassed;
+    // An index for RobotMap.WHEEL of the current color
     private int currentColor;
+
+    // States direction of rotation (+1 to the right, -1 to the left, 0 if unknown)
     private int direction;
     private boolean incorrectDirection = false;
 
     public PlayWheelOfFortune(RobotSubsystems subsystems) {
-        controlWheel = subsystems.getControlWheel();
+        this.subsystems = subsystems;
 
-        addRequirements(controlWheel);
+        addRequirements(subsystems.getControlWheel());
         //no, bad withTimeout(15);
     }
 
     @Override
     public void initialize() {
-        //NetworkTables Input From Vision System
-        //William, can you put more comments so we know what exactly these network table values are
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
         NetworkTable nTable = ntInst.getTable("Control Wheel");
         badColor = nTable.getEntry("Bad Color Spinner");
         badColor.setBoolean(false);
 
-        //varibles initialization
         tilesPassed = 0;
         direction = 0;
-
-        //terrible debug message dont imitate
-        System.out.println("AYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA!");
 
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)
@@ -54,13 +57,17 @@ public class PlayWheelOfFortune extends CommandBase
             }
         System.out.println("We might have a problem... Couldn't find initial color!");
         currentColor = 0;
+
+        controlWheel.enable();
     }
 
     @Override
     public void execute() {
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         ColorMatchResult match = controlWheel.getClosestColor();
-        if(match != null && !match.color.equals(WHEEL[currentColor])) {
-            if(direction == 0) {
+        if (match != null && match.confidence >= MIN_COLOR_CONFIDENCE && !match.color.equals(WHEEL[currentColor])) {
+            if (direction == 0) {
                 if (match.color.equals(WHEEL[(currentColor + 1) % WHEEL.length])) {
                     tilesPassed++;
                     direction = 1;
@@ -91,11 +98,19 @@ public class PlayWheelOfFortune extends CommandBase
             }
         }
         controlWheel.update(tilesPassed);
-        //.5 might seem too fast
-        controlWheel.set(0.5);
+
+        //TODO base this on linear speed drop
+        //I actually think that this code doesnt need the swap to linear speed drop
+        //idk just feel like it works better with this implementation
+        if(tilesPassed < MIN_COUNT)
+            controlWheel.set(CW_SPEED_FAST);
+        else
+            controlWheel.set(CW_SPEED_SLOW);
     }
 
     public boolean isFinished() {
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         if(tilesPassed >= MIN_COUNT && controlWheel.getClosestColor().color.equals(controlWheel.getFMSColor()))
         {
             controlWheel.stop();
@@ -106,6 +121,8 @@ public class PlayWheelOfFortune extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
-    	controlWheel.stop();
+        ControlWheel controlWheel = subsystems.getControlWheel();
+        controlWheel.stop();
+        controlWheel.disable();
     }
 }

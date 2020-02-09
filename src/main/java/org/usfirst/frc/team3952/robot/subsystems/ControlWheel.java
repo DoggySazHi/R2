@@ -1,29 +1,33 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
-//----------------------------------------------------------------------------------------------------------------------------------------------------------
-//
-//
-//might want to consider merge with shooter superstructure since the spinner is at the top of the shooter mechanism and utilizes one of the shooter motors
-//
-//
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * A subsystem to handle the spinning of the Control Panel.
+ */
 public class ControlWheel extends SubsystemBase
 {
-    private Talon motor = RobotMap.controlPanelSpinner;
-    private ColorSensorV3 sensor = RobotMap.colorSensor;
+    private VictorSPX motor = RobotMap.controlPanelSpinner;
+    private ColorSensorV3 colorSensor = RobotMap.colorSensor;
+    private Ultrasonic distanceSensor = RobotMap.controlPanelUltraSonic;
+    private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
 
     private NetworkTableEntry color;
     private NetworkTableEntry colorValue;
@@ -48,32 +52,31 @@ public class ControlWheel extends SubsystemBase
     }
 
     public void set(double value) {
-    	motor.set(value);
+    	motor.set(ControlMode.PercentOutput, value);
     }
     
     public void stop() {
-    	motor.set(0);
+    	motor.set(ControlMode.PercentOutput, 0);
     }
 
     public Color getColor() {
-        Color c = sensor.getColor();
+        Color c = colorSensor.getColor();
         colorValue.setDoubleArray(new double[] {c.red, c.green, c.blue});
-        return sensor.getColor();
+        return colorSensor.getColor();
     }
 
     public ColorMatchResult getClosestColor() {
-        ColorMatchResult output = colorMatch.matchClosestColor(sensor.getColor());
-        if (CP_RED.equals(output.color)) {
-            color.setString("RED");
-        } else if (CP_GREEN.equals(output.color)) {
-            color.setString("GREEN");
-        } else if (CP_BLUE.equals(output.color)) {
-            color.setString("BLUE");
-        } else if (CP_YELLOW.equals(output.color)) {
-            color.setString("YELLOW");
-        } else {
+        ColorMatchResult output = colorMatch.matchClosestColor(colorSensor.getColor());
+        if (CP_RED.equals(output.color))
+            color.setString("RED (" + output.confidence + ")");
+        else if (CP_GREEN.equals(output.color))
+            color.setString("GREEN (" + output.confidence + ")");
+        else if (CP_BLUE.equals(output.color))
+            color.setString("BLUE (" + output.confidence + ")");
+        else if (CP_YELLOW.equals(output.color))
+            color.setString("YELLOW (" + output.confidence + ")");
+        else
             color.setString("NO MATCH");
-        }
         return output;
     }
 
@@ -115,5 +118,20 @@ public class ControlWheel extends SubsystemBase
         getClosestColor();
         getFMSColor();
         this.rotations.setDouble(rotations);
+    }
+
+    public void enable()
+    {
+        enableSolenoid.set(kForward);
+    }
+
+    public void disable()
+    {
+        enableSolenoid.set(kReverse);
+    }
+
+    public double getDistance()
+    {
+        return distanceSensor.getRangeMM();
     }
 }

@@ -1,132 +1,139 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team3952.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
-import org.usfirst.frc.team3952.robot.commands.ManualPneumatics;
+import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
-import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
-import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team3952.robot.subsystems.PneumaticPiston;
-import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-import org.usfirst.frc.team3952.robot.subsystems.Intake;
-import org.usfirst.frc.team3952.robot.subsystems.ShooterSS;
+import org.usfirst.frc.team3952.robot.subsystems.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.time.Duration;
 import java.time.Instant;
 
+import static org.usfirst.frc.team3952.robot.RobotMap.CONTROLLER_CHECK_DELAY;
+
+/**
+ * The actual main of the robot.
+ */
 public class Robot extends TimedRobot {
-    private ControlWheel controlWheel;
-    private DriveTrain driveTrain;
-    private Intake intake;
-    private PneumaticPiston pneumaticPiston;
-    private ShooterSS shooter;
-  
-
-    private MainController mainController;
-    private SecondaryController secondaryController;
-
     private RobotSubsystems subsystems;
 
     private boolean mainControllerInit;
     private boolean secondaryControllerInit;
     private Instant checkControllerTime;
 
-    private final long CHECK_DELAY = 5000;
-
     @Override
     public void robotInit() {
         RobotMap.init();
-        controlWheel = new ControlWheel();
-        pneumaticPiston = new PneumaticPiston();
-        intake = new Intake();
-        driveTrain = new DriveTrain();
-        shooter = new ShooterSS();
+        //TODO remove, test if we can read from deploy folder
+        checkCredits();
 
-       
+        DriveTrain driveTrain = new DriveTrain();
+        IntakeShooter intakeShooter = new IntakeShooter();
+        ControlWheel controlWheel = new ControlWheel();
+        Climber climber = new Climber();
 
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, intake,shooter, mainController, secondaryController);
+        // Dummy controllers.
+        MainController mainController = new MainController(null, null);
+        SecondaryController secondaryController = new SecondaryController(null, null);
 
-        try
-        {
-            mainController = new MainController(new Joystick(0), subsystems);
-            mainControllerInit = true;
-        }
-        catch(Exception ex)
-        {
-            System.out.println("The main controller has failed to initialize. See logs.\n" +
-                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
-                "Please restart the RoboRIO after these errors are fixed.");
-        }
+        subsystems = new RobotSubsystems();
+        subsystems.setMainController(mainController);
+        subsystems.setSecondaryController(secondaryController);
 
-        try
-        {
-            secondaryController = new SecondaryController(new Joystick(1), subsystems);
-            secondaryControllerInit = true;
-        }
-        catch(Exception ex)
-        {
-            System.out.println("The ladder controller has failed to initialize. See logs.\n" +
-                "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" + 
-                "Please restart the RoboRIO after these errors are fixed.");
-        }
+        // Actually sets them to real controllers.
 
-        //all system defaulting
-        subsystems = new RobotSubsystems(driveTrain, pneumaticPiston, controlWheel, intake,shooter, mainController, secondaryController);
+        initMainController();
+        initSecondaryController();
+
+        subsystems.setDriveTrain(driveTrain);
+        subsystems.setIntakeShooter(intakeShooter);
+        subsystems.setControlWheel(controlWheel);
+        subsystems.setClimber(climber);
+
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
-        pneumaticPiston.setDefaultCommand(new ManualPneumatics(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
+        intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
+        climber.setDefaultCommand(new ManualClimber(subsystems));
+    }
 
-        // requires pi (see other code)
-        /*
-        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-        camera.setResolution(640, 480);
-        */
+    private void checkCredits() {
+        File[] deployFiles = Filesystem.getDeployDirectory().listFiles();
+        if(deployFiles == null) return;
+        for(File f : deployFiles)
+            if(f.getName().contains("credits"))
+            {
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(f));
+                    String data = br.readLine();
+                    while(data != null)
+                    {
+                        System.out.println(data);
+                        data = br.readLine();
+                    }
+                    br.close();
+                } catch (Exception e) {
+                    // screw this
+                    return;
+                }
+            }
     }
 
     @Override
     public void robotPeriodic() {
-        if(checkControllerTime == null)
+        checkControllers();
+        CommandScheduler.getInstance().run();
+    }
+
+    private void initCameras() {
+        // For testing purposes, add this to the end of robotInit()
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(640, 480);
+    }
+
+    private void checkControllers() {
+        if (checkControllerTime == null)
             checkControllerTime = Instant.now();
-        else if(!(mainControllerInit && secondaryControllerInit))
-            if(Duration.between(checkControllerTime, Instant.now()).toMillis() > CHECK_DELAY)
-            {
-                if(!mainControllerInit)
-                {
-                    try
-                    {
-                        mainController = new MainController(new Joystick(0), subsystems);
-                        mainControllerInit = true;
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("Failed to connect main controller. Retrying later.");
-                    }
-                }
-                if(!secondaryControllerInit)
-                {
-                    try
-                    {
-                        secondaryController = new SecondaryController(new Joystick(1), subsystems);
-                        secondaryControllerInit = true;
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("Failed to connect ladder controller. Retrying later.");
-                    }
-                }
+        else if (!mainControllerInit || !secondaryControllerInit)
+            if (Duration.between(checkControllerTime, Instant.now()).toMillis() > CONTROLLER_CHECK_DELAY) {
+                if (!mainControllerInit)
+                    initMainController();
+                if (!secondaryControllerInit)
+                    initSecondaryController();
                 checkControllerTime = Instant.now();
             }
-        CommandScheduler.getInstance().run();
+    }
+
+    private void initMainController() {
+        try {
+            subsystems.setMainController(new MainController(new Joystick(0), subsystems));
+            mainControllerInit = true;
+        } catch (Exception ex) {
+            System.out.println("The main controller has failed to initialize. See logs.\n" +
+                    "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" +
+                    "Please restart the RoboRIO after these errors are fixed.");
+            ex.printStackTrace();
+        }
+    }
+
+    private void initSecondaryController() {
+        try {
+            subsystems.setSecondaryController(new SecondaryController(new Joystick(1), subsystems));
+            secondaryControllerInit = true;
+        } catch (Exception ex) {
+            System.out.println("The ladder controller has failed to initialize. See logs.\n" +
+                    "Have you checked if the controller is plugged in, and has the correct joystick number in the Driver Station?\n" +
+                    "Please restart the RoboRIO after these errors are fixed.");
+            ex.printStackTrace();
+        }
     }
 
     @Override
