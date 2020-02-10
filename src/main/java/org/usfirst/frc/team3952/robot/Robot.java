@@ -10,6 +10,7 @@ import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
 import org.usfirst.frc.team3952.robot.commands.ManualTurn;
+import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.*;
@@ -50,16 +51,15 @@ public class Robot extends TimedRobot {
         subsystems = new RobotSubsystems();
         subsystems.setMainController(mainController);
         subsystems.setSecondaryController(secondaryController);
+        subsystems.setDriveTrain(driveTrain);
+        subsystems.setIntakeShooter(intakeShooter);
+        subsystems.setControlWheel(controlWheel);
+        subsystems.setClimber(climber);
 
         // Actually sets them to real controllers.
 
         initMainController();
         initSecondaryController();
-
-        subsystems.setDriveTrain(driveTrain);
-        subsystems.setIntakeShooter(intakeShooter);
-        subsystems.setControlWheel(controlWheel);
-        subsystems.setClimber(climber);
 
         driveTrain.setDefaultCommand(new ManualDrive(subsystems));
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
@@ -92,6 +92,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         checkControllers();
+        CANPWMFallback.reInit();
         CommandScheduler.getInstance().run();
     }
 

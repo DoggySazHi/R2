@@ -5,6 +5,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.util.Color;
+import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
@@ -23,6 +24,9 @@ public class RobotMap {
 
     // Milliseconds before re-checking for controllers.
     public static final long CONTROLLER_CHECK_DELAY = 5000;
+
+    // Milliseconds before re-checking for motors.
+    public static final long MOTOR_CHECK_DELAY = 1000;
 
     // ---------------
     // Control Panel Values
@@ -135,7 +139,7 @@ public class RobotMap {
     public static DoubleSolenoid controlPanelSolenoid;
 
     // A distance sensor to calculate the distance between the control panel and the wall.
-    public static Ultrasonic controlPanelUltraSonic;
+    public static AnalogUltrasonic controlPanelUltraSonic;
 
     // Spin the control panel using a wheel attached to this motor, powered by friction.
     public static CANPWMFallback controlPanelSpinner;
@@ -198,7 +202,6 @@ public class RobotMap {
 
         // DIO (Limit switches, Ultrasonic)
         spinnerLocked = new DigitalInput(0);
-        controlPanelUltraSonic = new Ultrasonic(1, 2);
         hitTop = new DigitalInput(3);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
@@ -207,6 +210,7 @@ public class RobotMap {
         }
 
         CANPWMFallback.defaultMode = CAN;
+        CANPWMFallback.forceCANConnection = true;
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5); 
@@ -221,5 +225,6 @@ public class RobotMap {
 
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+        controlPanelUltraSonic = new AnalogUltrasonic(3);
     }
 }
