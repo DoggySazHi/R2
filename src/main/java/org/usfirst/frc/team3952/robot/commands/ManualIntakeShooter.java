@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
@@ -35,6 +36,12 @@ public class ManualIntakeShooter extends CommandBase {
             intakeShooter.stop();
 
         intakeShooter.setTiltServos(secondaryController.getLateralMovement());
+
+        //TODO Remove.
+        double distance = RobotMap.controlPanelUltraSonic.getRangeMM();
+        System.out.println(distance + "mm = ");
+        System.out.println(distance/100.0 + "cm");
+        System.out.println(distance/1000.0 + "m");
     }
 
     @Override

@@ -7,6 +7,7 @@ import edu.wpi.first.hal.CANData;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Talon;
 
+import static org.usfirst.frc.team3952.robot.RobotMap.MOTOR_CHECK_DELAY;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.*;
 
 public class CANPWMFallback {
@@ -14,8 +15,10 @@ public class CANPWMFallback {
 
     public static Mode defaultMode = CAN;
 
-    public static CANPWMFallback[] usedPWM = new CANPWMFallback[10];
-    public static CANPWMFallback[] usedCAN = new CANPWMFallback[64];
+    public static boolean forceCANConnection = false;
+
+    private static CANPWMFallback[] usedPWM = new CANPWMFallback[10];
+    private static CANPWMFallback[] usedCAN = new CANPWMFallback[64];
 
     private Mode overrideMode;
 
@@ -34,11 +37,11 @@ public class CANPWMFallback {
         if(pwmNum >= 0 && pwmNum <= 9)
         {
             this.pwmNum = pwmNum;
-            if(usedPWM[pwmNum] != null)
+            if(usedPWM[pwmNum] == null)
                 usedPWM[pwmNum] = this;
             else
             {
-                System.out.println(name != null ? name : "Something" + " attempted to use the same PWM motor as " + usedPWM[pwmNum].name + "! PWM support will be disabled.");
+                System.out.println((name != null ? name : "Something") + " attempted to use the same PWM motor as " + usedPWM[pwmNum].name + "! PWM support will be disabled.");
                 this.pwmNum = -1;
             }
         }
@@ -48,11 +51,11 @@ public class CANPWMFallback {
         if(canNum >= 0 && canNum <= 63)
         {
             this.canNum = canNum;
-            if(usedCAN[canNum] != null)
+            if(usedCAN[canNum] == null)
                 usedCAN[canNum] = this;
             else
             {
-                System.out.println(name != null ? name : "Something" + " attempted to use the same CAN motor as " + usedCAN[canNum].name + "! CAN support will be disabled.");
+                System.out.println((name != null ? name : "Something") + " attempted to use the same CAN motor as " + usedCAN[canNum].name + "! CAN support will be disabled.");
                 this.canNum = -1;
             }
         }
@@ -67,6 +70,7 @@ public class CANPWMFallback {
     }
 
     private void setMode() {
+        overrideMode = defaultMode;
         if (pwmNum == -1 && canNum == -1) overrideMode = None;
         if (defaultMode == PWM && pwmNum == -1) overrideMode = CAN;
         if (defaultMode == CAN && canNum == -1) overrideMode = PWM;
@@ -101,8 +105,12 @@ public class CANPWMFallback {
         canDevice = null;
 
         //TODO make sure the CAN check works
-        if (overrideMode == CAN && canNum != -1 && isCANAvailable())
-            canDevice = new VictorSPX(canNum);
+        if (overrideMode == CAN && canNum != -1) {
+            if(isCANAvailable())
+                canDevice = new VictorSPX(canNum);
+            else
+                System.out.println("CAN device failed to connect for " + name + "!");
+        }
         else if (overrideMode == PWM && pwmNum != -1)
             pwmDevice = new Talon(pwmNum);
         // None: Don't init.
@@ -119,6 +127,7 @@ public class CANPWMFallback {
 
     private boolean isCANAvailable()
     {
+        if(forceCANConnection) return true;
         CAN device = new CAN(canNum);
         CANData c = new CANData();
         boolean success = device.readPacketTimeout(0x01040000, 1000, c);
@@ -126,6 +135,7 @@ public class CANPWMFallback {
         success = device.readPacketTimeout(0, 1000, c);
         if (success) System.out.println("API_ID: 0");
         device.close();
+        System.out.println("Attempted to fetch CAN status for " + canNum);
         return success;
     }
 
@@ -153,5 +163,21 @@ public class CANPWMFallback {
     public void stopMotor()
     {
         stop();
+    }
+
+    private static long lastCheck;
+
+    public static void reInit()
+    {
+        if(System.currentTimeMillis() - lastCheck >= MOTOR_CHECK_DELAY)
+        {
+            lastCheck = System.currentTimeMillis();
+            for(CANPWMFallback device : usedCAN)
+                if(device != null && device.getMode() == None)
+                    device.init();
+            for(CANPWMFallback device : usedPWM)
+                if(device != null && device.getMode() == None)
+                    device.init();
+        }
     }
 }
