@@ -149,4 +149,9 @@ public class CANPWMFallback {
         else
             set(0);
     }
+
+    public void stopMotor()
+    {
+        stop();
+    }
 }

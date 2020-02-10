@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3952.robot;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
@@ -10,7 +10,7 @@ import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
 
-//It's sparks, not talons lucas, ya dumbie
+//It's sparks, not CANPWMFallbacks lucas, ya dumbie
 
 /**
  * A listing of core devices and values that are used on the robot.
@@ -121,8 +121,8 @@ public class RobotMap {
     // ---------------
 
     // Drive Train (wheels are bundled together on the same PWM)
-    public static Spark leftDrive;
-    public static Spark rightDrive;
+    public static CANPWMFallback leftDrive;
+    public static CANPWMFallback rightDrive;
 
     // ---------------
     // Control Panel Superstructure
@@ -138,20 +138,20 @@ public class RobotMap {
     public static Ultrasonic controlPanelUltraSonic;
 
     // Spin the control panel using a wheel attached to this motor, powered by friction.
-    public static VictorSPX controlPanelSpinner;
+    public static CANPWMFallback controlPanelSpinner;
 
     // ---------------
     // IntakeShooter Superstructure
     // ---------------
 
     // Used to move balls in and out of the ball holder.
-    public static Talon projectileEjector;
+    public static CANPWMFallback projectileEjector;
 
     // Rotate the ball holder to switch to a different holder.
-    public static Talon projectileStorage;
+    public static CANPWMFallback projectileStorage;
 
     // Tilt the shooter up or down for shooting, or to operate the control panel spinner. Operated via a linear actuator.
-    public static Talon projectileTilt;
+    public static CANPWMFallback projectileTilt;
 
     // Get the current position/angle of the shooter
     public static AnalogEncoder linearActuatorEncoder;
@@ -160,8 +160,8 @@ public class RobotMap {
     public static Servo projectileAimer;
 
     // The two motors used to actually grab and shoot the balls from the outside.
-    public static VictorSPX intake;
-    public static VictorSPX intake2;
+    public static CANPWMFallback intake;
+    public static CANPWMFallback intake2;
 
     // Check if the spinner is on a valid position.
     public static DigitalInput spinnerLocked;
@@ -174,8 +174,8 @@ public class RobotMap {
     // ---------------
 
     // The two motors used to climb the rope to the hanger (activation switch).
-    public static VictorSPX liftMotor;
-    public static VictorSPX liftMotor2;
+    public static CANPWMFallback liftMotor;
+    public static CANPWMFallback liftMotor2;
 
     // The solenoid to activate the climber.
     public static Servo climberActivator;
@@ -187,14 +187,14 @@ public class RobotMap {
     public static void init() {
         CANPWMFallback.defaultMode = PWM;
         // PWM (Motors and Servos)
-        leftDrive = new Spark(1);
-        rightDrive = new Spark(0);
-        projectileEjector = new Talon(2);
+        leftDrive = new CANPWMFallback(1, -1, "Left Drive");
+        rightDrive = new CANPWMFallback(0, -1, "Right Drive"); 
+        projectileEjector = new CANPWMFallback(2, -1, "Projectile Ejector"); 
         projectileAimer = new Servo(3);
-        projectileStorage = new Talon(4);
-        projectileTilt = new Talon(5);
-        climberActivator = new Servo(6);
-        climberActivator2 = new Servo(7);
+        projectileStorage = new CANPWMFallback(4, -1, "Projectile Storage");  
+        projectileTilt = new CANPWMFallback(5, -1, "Projectile Tilt"); 
+        climberActivator = new Servo(6);  
+        climberActivator2 = new Servo(7); 
 
         // DIO (Limit switches, Ultrasonic)
         spinnerLocked = new DigitalInput(0);
@@ -208,11 +208,11 @@ public class RobotMap {
 
         CANPWMFallback.defaultMode = CAN;
         // CAN (Motors)
-        intake = new VictorSPX(0);
-        intake2 = new VictorSPX(1);
-        liftMotor = new VictorSPX(2);
-        liftMotor2 = new VictorSPX(3);
-        controlPanelSpinner = new VictorSPX(4);
+        intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
+        intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5); 
+        liftMotor = new CANPWMFallback(-1, 2, "Lift Motor Left").withRamping(1);
+        liftMotor2 = new CANPWMFallback(-1, 3, "Lift Motor Right").withRamping(1); 
+        controlPanelSpinner = new CANPWMFallback(-1, 4, "Control Panel Spinner").withRamping(0.5); 
 
 
         // PCM (Pneumatic Pistons)

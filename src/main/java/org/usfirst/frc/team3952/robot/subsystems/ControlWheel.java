@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
+import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
@@ -24,7 +25,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
  */
 public class ControlWheel extends SubsystemBase
 {
-    private VictorSPX motor = RobotMap.controlPanelSpinner;
+    private CANPWMFallback motor = RobotMap.controlPanelSpinner;
     private ColorSensorV3 colorSensor = RobotMap.colorSensor;
     private Ultrasonic distanceSensor = RobotMap.controlPanelUltraSonic;
     private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;

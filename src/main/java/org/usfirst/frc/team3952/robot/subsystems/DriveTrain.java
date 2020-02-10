@@ -1,14 +1,12 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.*;
 import org.usfirst.frc.team3952.robot.*;
+import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
-public class DriveTrain extends SubsystemBase
-{
-    private Spark leftDrive = RobotMap.leftDrive;
-    private Spark rightDrive = RobotMap.rightDrive;
-    
+public class DriveTrain extends SubsystemBase {
+    private CANPWMFallback leftDrive = RobotMap.leftDrive;
+    private CANPWMFallback rightDrive = RobotMap.rightDrive;
 
     //code accounts for reversing of motors no need for mechanical solution
 
