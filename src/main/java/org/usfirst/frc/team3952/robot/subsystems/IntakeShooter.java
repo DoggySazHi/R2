@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.RobotMap.*;
@@ -20,21 +22,39 @@ public class IntakeShooter extends SubsystemBase {
     private Talon spinnerMotor = RobotMap.projectileStorage;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
-
+    private DoubleSolenoid ballShooter = RobotMap.ballShooter;
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
 
     private boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
     private int ballPosition = 0;
 
-    public void intake() {
-        intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
-        intakeRight.set(ControlMode.PercentOutput, INTAKE_SPEED);
+    public void intake(boolean max) {
+        if(max)
+        {
+            intakeLeft.set(ControlMode.PercentOutput, -1.0);
+            intakeRight.set(ControlMode.PercentOutput, 1.0);
+        }
+        else 
+        {
+            intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
+            intakeRight.set(ControlMode.PercentOutput, INTAKE_SPEED);
+        }
+        retract();
     }
 
-    public void reject() {
-        intakeLeft.set(ControlMode.PercentOutput, REJECT_SPEED);
-        intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
+    public void reject(boolean max) {
+        if(max)
+        {
+            intakeLeft.set(ControlMode.PercentOutput, 1.0);
+            intakeRight.set(ControlMode.PercentOutput, -1.0);
+        }
+        else 
+        {
+            intakeLeft.set(ControlMode.PercentOutput, REJECT_SPEED);
+            intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
+        }
+        shoot();
     }
 
     public void stop() {
@@ -119,11 +139,11 @@ public class IntakeShooter extends SubsystemBase {
         return toReturn;
     }
 
-    public void shoot() {
-        //TODO Something to do with the ballShooter in RobotMap...
+    private void shoot() {
+        ballShooter.set(Value.kForward);
     }
 
     public void retract() {
-        //TODO Something to do with the ballShooter in RobotMap...
+        ballShooter.set(Value.kReverse);
     }
 }
