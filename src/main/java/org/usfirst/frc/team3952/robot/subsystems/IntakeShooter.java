@@ -1,25 +1,26 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.Talon;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.RobotMap.*;
+import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 public class IntakeShooter extends SubsystemBase {
-    private VictorSPX intakeLeft = RobotMap.intake;
-    private VictorSPX intakeRight = RobotMap.intake2;
+    private CANPWMFallback intakeLeft = RobotMap.intake;
+    private CANPWMFallback intakeRight = RobotMap.intake2;
 
-    private Talon angleMotor = RobotMap.projectileTilt;
-    private Talon spinnerMotor = RobotMap.projectileStorage;
+    private CANPWMFallback angleMotor = RobotMap.projectileTilt;
+    private CANPWMFallback spinnerMotor = RobotMap.projectileStorage;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
