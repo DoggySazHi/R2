@@ -2,6 +2,7 @@ package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.devices.MainController;
+import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.Climber;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
@@ -22,10 +23,12 @@ public class ManualClimber extends CommandBase
     public void execute() {
         Climber climber = subsystems.getClimber();
         MainController mainController = subsystems.getMainController();
+        SecondaryController secondaryController = subsystems.getSecondaryController();
         if(mainController.getRawButton(5))
             climber.deploy();
         if(mainController.getRawButton(6))
             climber.retract();
+        climber.lift(secondaryController.getLateralMovement());
     }
 
     public boolean isFinished() {

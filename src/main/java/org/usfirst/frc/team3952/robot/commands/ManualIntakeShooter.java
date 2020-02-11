@@ -35,13 +35,15 @@ public class ManualIntakeShooter extends CommandBase {
         else
             intakeShooter.stop();
 
-        intakeShooter.setTiltServos(secondaryController.getLateralMovement());
+        intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
 
+        /*
         //TODO Remove.
         double distance = RobotMap.controlPanelUltraSonic.getRangeMM();
         System.out.println(distance + "mm = ");
         System.out.println(distance/100.0 + "cm");
         System.out.println(distance/1000.0 + "m");
+         */
     }
 
     @Override
