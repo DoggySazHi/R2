@@ -177,9 +177,8 @@ public class RobotMap {
     // Climber Superstructure
     // ---------------
 
-    // The two motors used to climb the rope to the hanger (activation switch).
+    // The motor used to climb the rope to the hanger (activation switch).
     public static CANPWMFallback liftMotor;
-    public static CANPWMFallback liftMotor2;
 
     // The solenoid to activate the climber.
     public static Servo climberActivator;
@@ -215,8 +214,7 @@ public class RobotMap {
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5); 
         liftMotor = new CANPWMFallback(-1, 2, "Lift Motor Left").withRamping(1);
-        liftMotor2 = new CANPWMFallback(-1, 3, "Lift Motor Right").withRamping(1); 
-        controlPanelSpinner = new CANPWMFallback(-1, 4, "Control Panel Spinner").withRamping(0.5); 
+        controlPanelSpinner = new CANPWMFallback(-1, 4, "Control Panel Spinner").withRamping(0.5);
 
 
         // PCM (Pneumatic Pistons)

@@ -16,7 +16,6 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
  */
 public class Climber extends SubsystemBase {
     private CANPWMFallback liftMotor = RobotMap.liftMotor;
-    private CANPWMFallback liftMotor2 = RobotMap.liftMotor2;
     private DigitalInput hitTop = RobotMap.hitTop;
     private Servo climberActivator = RobotMap.climberActivator;
     private Servo climberActivator2 = RobotMap.climberActivator2;
@@ -48,7 +47,6 @@ public class Climber extends SubsystemBase {
 
     public void lift(double value) {
         liftMotor.set(ControlMode.PercentOutput, value);
-        liftMotor2.set(ControlMode.PercentOutput, value);
     }
 
     public boolean hasHitTop() {
