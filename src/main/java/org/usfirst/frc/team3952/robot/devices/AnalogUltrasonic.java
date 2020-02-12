@@ -1,14 +1,22 @@
 package org.usfirst.frc.team3952.robot.devices;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class AnalogUltrasonic {
     private AnalogInput ai;
+    private NetworkTableEntry ntStorage;
+
     public AnalogUltrasonic(int analogPin)
     {
         ai = new AnalogInput(analogPin);
+    }
+
+    public AnalogUltrasonic withNTData(String table, String entry)
+    {
+        ntStorage = NetworkTableInstance.getDefault().getTable(table).getEntry(entry);
+        return this;
     }
 
     private static final double toInch = 0.125;
@@ -17,7 +25,8 @@ public class AnalogUltrasonic {
     public double getRangeMM()
     {
         double distance = ai.getValue() * toInch * inchToCM * 100;
-        NetworkTableInstance.getDefault().getTable(":patchythink:").getEntry(":reimuthink:").setDouble(distance);
+        if(ntStorage != null)
+            ntStorage.setDouble(distance);
         return distance;
     }
 }
