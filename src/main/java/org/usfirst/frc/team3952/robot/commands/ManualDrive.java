@@ -26,6 +26,7 @@ public class ManualDrive extends CommandBase
         double hor = mainController.getHorizontalMovement();
         double lat = mainController.getLateralMovement();
         double rot = mainController.getRotation();
+        System.out.println("Hor: " + hor + " Lat: " + lat + " Rot: " + rot);
         driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
     }
 

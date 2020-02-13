@@ -5,12 +5,18 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 import edu.wpi.first.hal.CANData;
 import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.MOTOR_CHECK_DELAY;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.*;
 
-public class CANPWMFallback {
+public class CANPWMFallback implements SpeedController {
+    @Override
+    public void pidWrite(double output) {
+
+    }
+
     public enum Mode {None, PWM, CAN}
 
     public static Mode defaultMode = CAN;
@@ -145,6 +151,39 @@ public class CANPWMFallback {
             canDevice.set(ControlMode.PercentOutput, value);
         if(getMode() == PWM)
             pwmDevice.set(value);
+    }
+
+    @Override
+    public double get() {
+        if(getMode() == CAN)
+            return canDevice.getMotorOutputPercent();
+        if(getMode() == PWM)
+            return pwmDevice.get();
+        else
+            return 0;
+    }
+
+    @Override
+    public void setInverted(boolean isInverted) {
+        if(getMode() == CAN)
+            canDevice.setInverted(isInverted);
+        if(getMode() == PWM)
+            pwmDevice.setInverted(isInverted);
+    }
+
+    @Override
+    public boolean getInverted() {
+        if(getMode() == CAN)
+            return canDevice.getInverted();
+        if(getMode() == PWM)
+            return pwmDevice.getInverted();
+        else
+            return false;
+    }
+
+    @Override
+    public void disable() {
+        stop();
     }
 
     public void set(ControlMode cm, double value)

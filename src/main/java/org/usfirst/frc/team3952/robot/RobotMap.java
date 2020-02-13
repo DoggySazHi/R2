@@ -4,6 +4,7 @@ package org.usfirst.frc.team3952.robot;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
@@ -27,6 +28,12 @@ public class RobotMap {
 
     // Milliseconds before re-checking for motors.
     public static final long MOTOR_CHECK_DELAY = 1000;
+
+    // Whether to make the drive mode based on lat + hor (false), or lat + rot (true) for DifferentialDrive
+    public static final boolean CONTROLLER_DRIVE_MODE = true;
+
+    // Whether to implement ArcadeDrive (false) or CurvatureDrive (true).
+    public static final boolean ARCADE_OR_CURVATURE = false;
 
     // ---------------
     // Control Panel Values
@@ -127,6 +134,11 @@ public class RobotMap {
     // Drive Train (wheels are bundled together on the same PWM)
     public static CANPWMFallback leftDrive;
     public static CANPWMFallback rightDrive;
+    public static CANPWMFallback leftDriveRear;
+    public static CANPWMFallback rightDriveRear;
+
+    // Actually the DriveTrain
+    public static DifferentialDrive drive;
 
     // ---------------
     // Control Panel Superstructure
@@ -191,7 +203,15 @@ public class RobotMap {
         CANPWMFallback.defaultMode = PWM;
         // PWM (Motors and Servos)
         leftDrive = new CANPWMFallback(1, -1, "Left Drive");
-        rightDrive = new CANPWMFallback(0, -1, "Right Drive"); 
+        rightDrive = new CANPWMFallback(0, -1, "Right Drive");
+        leftDriveRear = new CANPWMFallback(2, -1, "Left Drive (Rear)");
+        rightDriveRear = new CANPWMFallback(3, -1, "Right Drive (Rear)");
+
+        SpeedControllerGroup left = new SpeedControllerGroup(leftDrive, leftDriveRear);
+        SpeedControllerGroup right = new SpeedControllerGroup(rightDrive, rightDriveRear);
+
+        drive = new DifferentialDrive(left, right);
+
         projectileEjector = new CANPWMFallback(2, -1, "Projectile Ejector"); 
         projectileAimer = new Servo(3);
         projectileStorage = new CANPWMFallback(4, -1, "Projectile Storage");  
