@@ -97,7 +97,10 @@ public class RobotMap {
     public static final double STORAGE_MOTOR_SPEED = 0.4;
 
     // The speed to suck the balls in.
-    public static final double INTAKE_SPEED = 1.0;
+    public static final double INTAKE_SPEED = 0.90;
+
+    // The speed for sucking using the roller.
+    public static final double INTAKE_ROLLER_SPEED = 0.2;
 
     // The speed to shoot the balls out.
     public static final double REJECT_SPEED = 1.0;
@@ -178,6 +181,7 @@ public class RobotMap {
     // The two motors used to actually grab and shoot the balls from the outside.
     public static CANPWMFallback intake;
     public static CANPWMFallback intake2;
+    public static CANPWMFallback intakeRoller;
 
     // Check if the spinner is on a valid position.
     public static DigitalInput spinnerLocked;
@@ -213,7 +217,7 @@ public class RobotMap {
         drive = new DifferentialDrive(left, right);
 
         projectileEjector = new CANPWMFallback(2, -1, "Projectile Ejector"); 
-        projectileAimer = new Servo(3);
+        projectileAimer = new Servo(9);
         projectileStorage = new CANPWMFallback(4, -1, "Projectile Storage");  
         projectileTilt = new CANPWMFallback(5, -1, "Projectile Tilt"); 
         climberActivator = new Servo(6);  
@@ -232,10 +236,10 @@ public class RobotMap {
         CANPWMFallback.forceCANConnection = true;
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
-        intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5); 
-        liftMotor = new CANPWMFallback(-1, 2, "Lift Motor Left").withRamping(1);
+        intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
+        intakeRoller = new CANPWMFallback(-1, 2, "Intake Roller");
+        liftMotor = new CANPWMFallback(-1, 3, "Lift Motor Left").withRamping(1);
         controlPanelSpinner = new CANPWMFallback(-1, 4, "Control Panel Spinner").withRamping(0.5);
-
 
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
