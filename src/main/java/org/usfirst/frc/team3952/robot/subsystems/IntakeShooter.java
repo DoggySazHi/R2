@@ -47,7 +47,7 @@ public class IntakeShooter extends SubsystemBase {
         retract();
     }
 
-    public void reject(boolean max) {
+    public void reject(boolean max, boolean shoot) {
         if(max)
         {
             intakeLeft.set(ControlMode.PercentOutput, -1.0);
@@ -59,7 +59,12 @@ public class IntakeShooter extends SubsystemBase {
             intakeRight.set(ControlMode.PercentOutput, REJECT_SPEED);
         }
         rollerMotor.set(ControlMode.PercentOutput, 0.0);
-        shoot();
+
+        // Recreating the code Haoyan found on r/FRC.
+        if(shoot)
+            shoot();
+        else
+            retract();
     }
 
     public void stop() {

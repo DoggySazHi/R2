@@ -31,7 +31,7 @@ public class ManualIntakeShooter extends CommandBase {
         if (secondaryController.getRawButton(3))
             intakeShooter.intake(secondaryController.getRawButton(5));
         else if (secondaryController.getRawButton(4))
-            intakeShooter.reject(secondaryController.getRawButton(5));
+            intakeShooter.reject(secondaryController.getRawButton(5), secondaryController.getRawButton(1));
         else
             intakeShooter.stop();
 
