@@ -21,6 +21,7 @@ public class IntakeShooter extends SubsystemBase {
 
     private CANPWMFallback angleMotor = RobotMap.projectileTilt;
     private CANPWMFallback spinnerMotor = RobotMap.projectileStorage;
+    private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
@@ -33,13 +34,15 @@ public class IntakeShooter extends SubsystemBase {
     public void intake(boolean max) {
         if(max)
         {
-            intakeLeft.set(ControlMode.PercentOutput, -1.0);
-            intakeRight.set(ControlMode.PercentOutput, 1.0);
+            intakeLeft.set(ControlMode.PercentOutput, 1.0);
+            intakeRight.set(ControlMode.PercentOutput, -1.0);
+            rollerMotor.set(ControlMode.PercentOutput, 1.0);
         }
         else 
         {
-            intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
-            intakeRight.set(ControlMode.PercentOutput, INTAKE_SPEED);
+            intakeLeft.set(ControlMode.PercentOutput, INTAKE_SPEED);
+            intakeRight.set(ControlMode.PercentOutput, -INTAKE_SPEED);
+            rollerMotor.set(ControlMode.PercentOutput, INTAKE_ROLLER_SPEED);
         }
         retract();
     }
@@ -47,14 +50,15 @@ public class IntakeShooter extends SubsystemBase {
     public void reject(boolean max) {
         if(max)
         {
-            intakeLeft.set(ControlMode.PercentOutput, 1.0);
-            intakeRight.set(ControlMode.PercentOutput, -1.0);
+            intakeLeft.set(ControlMode.PercentOutput, -1.0);
+            intakeRight.set(ControlMode.PercentOutput, 1.0);
         }
         else 
         {
-            intakeLeft.set(ControlMode.PercentOutput, REJECT_SPEED);
-            intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
+            intakeLeft.set(ControlMode.PercentOutput, -REJECT_SPEED);
+            intakeRight.set(ControlMode.PercentOutput, REJECT_SPEED);
         }
+        rollerMotor.set(ControlMode.PercentOutput, 0.0);
         shoot();
     }
 
@@ -62,6 +66,7 @@ public class IntakeShooter extends SubsystemBase {
         intakeLeft.set(ControlMode.PercentOutput, 0);
         intakeRight.set(ControlMode.PercentOutput, 0);
         angleMotor.stopMotor();
+        rollerMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
     // Control the storage motor. Should be combined with getPosition().
