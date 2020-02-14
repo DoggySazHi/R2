@@ -97,7 +97,7 @@ public class RobotMap {
     public static final double STORAGE_MOTOR_SPEED = 0.4;
 
     // The speed to suck the balls in.
-    public static final double INTAKE_SPEED = 0.90;
+    public static final double INTAKE_SPEED = 0.80;
 
     // The speed for sucking using the roller.
     public static final double INTAKE_ROLLER_SPEED = 0.2;
