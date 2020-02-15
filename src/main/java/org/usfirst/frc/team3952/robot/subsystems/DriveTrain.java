@@ -9,14 +9,15 @@ import static org.usfirst.frc.team3952.robot.RobotMap.ARCADE_OR_CURVATURE;
 import static org.usfirst.frc.team3952.robot.RobotMap.CONTROLLER_DRIVE_MODE;
 
 public class DriveTrain extends SubsystemBase {
-    private CANPWMFallback leftDrive = RobotMap.leftDrive;
-    private CANPWMFallback rightDrive = RobotMap.rightDrive;
+    private CANPWMFallback leftDrive = RobotMap.leftDriveFront;
+    private CANPWMFallback rightDrive = RobotMap.rightDriveFront;
     private DifferentialDrive drive = RobotMap.drive;
 
     //code accounts for reversing of motors no need for mechanical solution
 
     public void drive(double hor, double lat, double rot, boolean quickTurn) {
-        if(true)
+        //TODO Remove plz
+        if (true)
             return;
         if(CONTROLLER_DRIVE_MODE)
             if(ARCADE_OR_CURVATURE)
