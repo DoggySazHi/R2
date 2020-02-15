@@ -19,8 +19,8 @@ public class IntakeShooter extends SubsystemBase {
     private CANPWMFallback intakeLeft = RobotMap.intake;
     private CANPWMFallback intakeRight = RobotMap.intake2;
 
-    private CANPWMFallback angleMotor = RobotMap.projectileTilt;
-    private CANPWMFallback spinnerMotor = RobotMap.projectileStorage;
+    private CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
+    private CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
     private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;

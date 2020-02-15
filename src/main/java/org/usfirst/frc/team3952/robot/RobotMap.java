@@ -135,8 +135,8 @@ public class RobotMap {
     // ---------------
 
     // Drive Train (wheels are bundled together on the same PWM)
-    public static CANPWMFallback leftDrive;
-    public static CANPWMFallback rightDrive;
+    public static CANPWMFallback leftDriveFront;
+    public static CANPWMFallback rightDriveFront;
     public static CANPWMFallback leftDriveRear;
     public static CANPWMFallback rightDriveRear;
 
@@ -163,14 +163,11 @@ public class RobotMap {
     // IntakeShooter Superstructure
     // ---------------
 
-    // Used to move balls in and out of the ball holder.
-    public static CANPWMFallback projectileEjector;
-
     // Rotate the ball holder to switch to a different holder.
-    public static CANPWMFallback projectileStorage;
+    public static CANPWMFallback intakeShooterStorage;
 
     // Tilt the shooter up or down for shooting, or to operate the control panel spinner. Operated via a linear actuator.
-    public static CANPWMFallback projectileTilt;
+    public static CANPWMFallback intakeShooterTilt;
 
     // Get the current position/angle of the shooter
     public static AnalogEncoder linearActuatorEncoder;
@@ -189,6 +186,13 @@ public class RobotMap {
     // A solenoid to push the ball out.
     public static DoubleSolenoid ballShooter;
 
+    // A servo to lock the spinner in place.
+    public static Servo projectileLock;
+
+    // Buttons to check if the tilt is maxed out in both directions.
+    public static DigitalInput hitTop;
+    public static DigitalInput hitBottom;
+
     // ---------------
     // Climber Superstructure
     // ---------------
@@ -198,34 +202,27 @@ public class RobotMap {
 
     // The solenoid to activate the climber.
     public static Servo climberActivator;
-    public static Servo climberActivator2;
-
-    // The button to check if it has hit the top.
-    public static DigitalInput hitTop;
 
     public static void init() {
         CANPWMFallback.defaultMode = PWM;
         // PWM (Motors and Servos)
-        leftDrive = new CANPWMFallback(1, -1, "Left Drive");
-        rightDrive = new CANPWMFallback(0, -1, "Right Drive");
-        leftDriveRear = new CANPWMFallback(2, -1, "Left Drive (Rear)");
-        rightDriveRear = new CANPWMFallback(3, -1, "Right Drive (Rear)");
+        leftDriveFront = new CANPWMFallback(0, -1, "Left Drive"); //BL 3
+        rightDriveFront = new CANPWMFallback(1, -1, "Right Drive"); //G1
+        leftDriveRear = new CANPWMFallback(2, -1, "Left Drive (Rear)"); //O4
+        rightDriveRear = new CANPWMFallback(3, -1, "Right Drive (Rear)"); //B2
 
-        SpeedControllerGroup left = new SpeedControllerGroup(leftDrive, leftDriveRear);
-        SpeedControllerGroup right = new SpeedControllerGroup(rightDrive, rightDriveRear);
+        SpeedControllerGroup left = new SpeedControllerGroup(leftDriveFront, leftDriveRear);
+        SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
 
         drive = new DifferentialDrive(left, right);
 
-        projectileEjector = new CANPWMFallback(2, -1, "Projectile Ejector"); 
-        projectileAimer = new Servo(9);
-        projectileStorage = new CANPWMFallback(4, -1, "Projectile Storage");  
-        projectileTilt = new CANPWMFallback(5, -1, "Projectile Tilt"); 
-        climberActivator = new Servo(6);  
-        climberActivator2 = new Servo(7); 
+        projectileAimer = new Servo(4);
+        projectileLock = new Servo(5);
+        climberActivator = new Servo(6);
 
         // DIO (Limit switches, Ultrasonic)
-        spinnerLocked = new DigitalInput(0);
-        hitTop = new DigitalInput(3);
+        hitTop = new DigitalInput(0);
+        hitBottom = new DigitalInput(1);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
         if(RobotBase.isReal()) {
@@ -238,8 +235,10 @@ public class RobotMap {
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
         intakeRoller = new CANPWMFallback(-1, 2, "Intake Roller");
-        liftMotor = new CANPWMFallback(-1, 3, "Lift Motor Left").withRamping(1);
-        controlPanelSpinner = new CANPWMFallback(-1, 4, "Control Panel Spinner").withRamping(0.5);
+        intakeShooterStorage = new CANPWMFallback(-1, 3, "IntakeShooter Storage");
+        intakeShooterTilt = new CANPWMFallback(-1, 4, "IntakeShooter Tilt");
+        liftMotor = new CANPWMFallback(-1, 5, "Lift Motor Left").withRamping(1);
+        controlPanelSpinner = new CANPWMFallback(-1, 6, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
