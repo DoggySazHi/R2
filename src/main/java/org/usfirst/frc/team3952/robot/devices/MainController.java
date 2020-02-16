@@ -3,6 +3,11 @@ package org.usfirst.frc.team3952.robot.devices;
 import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+/**
+ * This should be the Microsoft SideWinder 2 controller.
+ * X, Y, Z (rotate stick), Throttle. POV as well.
+ * Buttons 1 (throttle) to 5 on handle, 6-11 counter-clockwise on the bottom.
+ **/
 public class MainController extends AbstractController
 {
     /*
@@ -37,6 +42,9 @@ public class MainController extends AbstractController
     public double max = 1.0;
     public double k = (max - c) / Math.log(2 - deadzone);
 
+    public double throttleZero = 0.1;
+    public double throttleMax = 0.9;
+
     public double getHorizontalMovement()
     {
         if (joystick == null) return 0;
@@ -49,6 +57,15 @@ public class MainController extends AbstractController
         if (joystick == null) return 0;
         double y = -joystick.getY();
         return Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
+    }
+
+    public double getThrottle()
+    {
+        if (joystick == null) return 0;
+        double throttle = joystick.getThrottle();
+        if (throttle < throttleZero) return 0;
+        if (throttle > throttleMax) return 1;
+        return throttle;
     }
 
     public int getPOV()

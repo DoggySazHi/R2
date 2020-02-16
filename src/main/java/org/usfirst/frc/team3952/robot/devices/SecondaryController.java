@@ -4,6 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team3952.robot.commands.PlayWheelOfFortune;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+/**
+ * This should be the Logitech Attack 3 controller.
+ * X, Y, static Z.
+ * Buttons 1 (throttle) to 5 on handle, 6-11 counter-clockwise on the bottom.
+ **/
 public class SecondaryController extends AbstractController
 {
     private PlayWheelOfFortune wheelOfFortune;
@@ -33,6 +38,8 @@ public class SecondaryController extends AbstractController
 
     //it's not really a deadzone, but eh
     public static final double DEADZONE = 0.2;
+    public double throttleZero = 0.1;
+    public double throttleMax = 0.9;
 
     public double getHorizontalMovement() {
         if (joystick == null) return 0;
@@ -42,5 +49,14 @@ public class SecondaryController extends AbstractController
     public double getLateralMovement() {
         if (joystick == null) return 0;
         return Math.abs(joystick.getY()) >= DEADZONE ? joystick.getY() : 0;
+    }
+
+    public double getThrottle()
+    {
+        if (joystick == null) return 0;
+        double throttle = joystick.getZ();
+        if (throttle < throttleZero) return 0;
+        if (throttle > throttleMax) return 1;
+        return throttle;
     }
 }

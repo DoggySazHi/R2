@@ -24,11 +24,22 @@ public class ManualClimber extends CommandBase
         Climber climber = subsystems.getClimber();
         MainController mainController = subsystems.getMainController();
         SecondaryController secondaryController = subsystems.getSecondaryController();
+
         if(mainController.getRawButton(5))
             climber.deploy();
         if(mainController.getRawButton(6))
             climber.retract();
-        climber.lift(secondaryController.getLateralMovement());
+
+        if(mainController.getPOV() == 0)
+            climber.lift(1.0);
+        else if(mainController.getPOV() == 1 || mainController.getPOV() == 7)
+            climber.lift(0.6);
+        else if(mainController.getPOV() == 2 || mainController.getPOV() == 6 || mainController.getPOV() == -1)
+            climber.lift(0.0);
+        else if(mainController.getPOV() == 3 || mainController.getPOV() == 5)
+            climber.lift(-0.6);
+        else if(mainController.getPOV() == 4)
+            climber.lift(-1.0);
     }
 
     public boolean isFinished() {
