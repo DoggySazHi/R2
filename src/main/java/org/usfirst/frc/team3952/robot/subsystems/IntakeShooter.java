@@ -33,18 +33,24 @@ public class IntakeShooter extends SubsystemBase {
 
     private int ballPosition = 0;
 
-    public void intake(boolean max) {
+    public void intake(boolean max)
+    {
+        intake(max, INTAKE_ROLLER_SPEED);
+    }
+
+    public void intake(boolean max, double rollerSpeed)
+    {
         if(max)
         {
             intakeLeft.set(ControlMode.PercentOutput, 1.0);
             intakeRight.set(ControlMode.PercentOutput, -1.0);
             rollerMotor.set(ControlMode.PercentOutput, 1.0);
         }
-        else 
+        else
         {
             intakeLeft.set(ControlMode.PercentOutput, INTAKE_SPEED);
             intakeRight.set(ControlMode.PercentOutput, -INTAKE_SPEED);
-            rollerMotor.set(ControlMode.PercentOutput, INTAKE_ROLLER_SPEED);
+            rollerMotor.set(ControlMode.PercentOutput, rollerSpeed);
         }
         retract();
     }
@@ -83,7 +89,7 @@ public class IntakeShooter extends SubsystemBase {
         angleMotor.set(speed);
     }
 
-    // Control the tilt (ball shooting) servos.
+    // Control the tilt (ball shooting) servos. Already compensates for controller input.
     public void setTiltServos(double speed) {
         tiltServos.set((speed + 1.0)/2.0);
     }
