@@ -34,7 +34,7 @@ public class MainController extends AbstractController
 
     public double c = 0.1;
     public double deadzone = 0.2;
-    public double max = 0.8;
+    public double max = 1.0;
     public double k = (max - c) / Math.log(2 - deadzone);
 
     public double getHorizontalMovement()
