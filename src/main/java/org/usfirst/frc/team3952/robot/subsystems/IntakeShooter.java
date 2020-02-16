@@ -81,7 +81,7 @@ public class IntakeShooter extends SubsystemBase {
 
     // Control the tilt (ball shooting) servos.
     public void setTiltServos(double speed) {
-        tiltServos.set(speed);
+        tiltServos.set((speed + 1.0)/2.0);
     }
 
     // Control the storage motor to find a slot. Should be combined with isLocked().

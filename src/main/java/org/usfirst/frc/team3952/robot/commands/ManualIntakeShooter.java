@@ -28,14 +28,15 @@ public class ManualIntakeShooter extends CommandBase {
         IntakeShooter intakeShooter = subsystems.getIntakeShooter();
         SecondaryController secondaryController = subsystems.getSecondaryController();
 
-        if (secondaryController.getRawButton(3))
-            intakeShooter.intake(secondaryController.getRawButton(5));
-        else if (secondaryController.getRawButton(4))
-            intakeShooter.reject(secondaryController.getRawButton(5), secondaryController.getRawButton(1));
+        if (secondaryController.getRawButton(4))
+            intakeShooter.intake(secondaryController.getRawButton(3));
+        else if (secondaryController.getRawButton(5))
+            intakeShooter.reject(secondaryController.getRawButton(3), secondaryController.getRawButton(1));
         else
             intakeShooter.stop();
 
         intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
+        intakeShooter.setAngleMotor(secondaryController.getLateralMovement());
 
         /*
         //TODO Remove.
