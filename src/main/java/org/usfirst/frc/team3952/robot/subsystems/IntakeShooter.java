@@ -26,6 +26,8 @@ public class IntakeShooter extends SubsystemBase {
     private Servo tiltServos = RobotMap.projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
+    private DigitalInput hitTop = RobotMap.hitTop;
+    private DigitalInput hitBottom = RobotMap.hitBottom;
 
     private boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
@@ -76,6 +78,8 @@ public class IntakeShooter extends SubsystemBase {
 
     // Control the storage motor. Should be combined with getPosition().
     public void setAngleMotor(double speed) {
+        if (speed < 0 && hitTop.get() || speed > 0 && hitBottom.get())
+            return;
         angleMotor.set(speed);
     }
 
