@@ -82,7 +82,7 @@ public class IntakeShooter extends SubsystemBase {
         rollerMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
-    // Control the storage motor. Should be combined with getPosition().
+    // Control how high to point the shooter at. This accepts direct control.
     public void setAngleMotor(double speed) {
         if (speed < 0 && hitTop.get() || speed > 0 && hitBottom.get())
             return;
