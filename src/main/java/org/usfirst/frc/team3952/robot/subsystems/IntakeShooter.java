@@ -3,44 +3,46 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Talon;
+
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
+import java.util.concurrent.TimeUnit;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 public class IntakeShooter extends SubsystemBase {
-    private final CANPWMFallback intakeLeft = RobotMap.intake;
-    private final CANPWMFallback intakeRight = RobotMap.intake2;
+    private CANPWMFallback intakeLeft = RobotMap.intake;
+    private CANPWMFallback intakeRight = RobotMap.intake2;
+    private CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
+    private Talon spinnerMotor = RobotMap.intakeShooterStorage;
+    private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
+    private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
+    private Servo tiltServos = RobotMap.projectileAimer;
+    private DoubleSolenoid ballShooter = RobotMap.ballShooter;
+    private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
+    private DigitalInput hitTop = RobotMap.hitTop;
+    private DigitalInput hitBottom = RobotMap.hitBottom;
+    
 
-    private final CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
-    private final CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
-    private final CANPWMFallback rollerMotor = RobotMap.intakeRoller;
-    private final CANPWMFallback tiltServos = projectileAimer;
-    private final DoubleSolenoid ballShooter = RobotMap.ballShooter;
-    private final DigitalInput spinnerLocked = RobotMap.spinnerLocked;
-
-    private final DigitalInput hitTop = RobotMap.hitTop;
-    private final DigitalInput hitBottom = RobotMap.hitBottom;
 
     private final boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
     private int ballPosition = 0;
 
-    /**
-     * The intake motors run at a set speed in order to take in the ball.
-     *
-     * @param max Checks if the motor is running at max speed.
-     */
-    public void intake(boolean max) {
+    private double speed = 0.5;
+
+    public void intake(boolean max)
+    {
         intake(max, INTAKE_ROLLER_SPEED);
     }
-    /**
-    * The intake motors run at a speed (one of the parameter) in order to take in the ball. 
-    * @param max checks if the motor is running at max speed. 
-    * @param rollerSpeed sets the intake motors to the specified speed. 
-    */
+
+    
+
     public void intake(boolean max, double rollerSpeed)
     {
         if(max)
@@ -83,9 +85,9 @@ public class IntakeShooter extends SubsystemBase {
         else
             retract();
     }
-    /**
-    * It stops everything in the subsystem. I hope.
-    */
+
+ 
+
     public void stop() {
         intakeLeft.set(ControlMode.PercentOutput, 0);
         intakeRight.set(ControlMode.PercentOutput, 0);
@@ -99,7 +101,6 @@ public class IntakeShooter extends SubsystemBase {
      * @param speed How fast to tilt up or down. Negative might be up and positive downwards.
     */ 
     public void setAngleMotor(double speed) {
-        if(speed < 0 && hitTop.get() || speed > 0 && hitBottom.get()) return;
         angleMotor.set(speed);
     }
 
@@ -117,6 +118,11 @@ public class IntakeShooter extends SubsystemBase {
      */
     public void setRotateMotor(double speed) {
         spinnerMotor.set(speed);
+    }
+    private int count = 0;
+    public void nextSlot(long time) {
+        
+      
     }
 
     /**

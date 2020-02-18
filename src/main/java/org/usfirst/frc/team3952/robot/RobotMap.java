@@ -146,7 +146,7 @@ public class RobotMap {
     // ---------------
 
     // Rotate the ball holder to switch to a different holder.
-    public static CANPWMFallback intakeShooterStorage;
+    public static Talon intakeShooterStorage;
 
     // Tilt the shooter up or down for shooting, or to operate the control panel spinner. Operated via a linear actuator.
     public static CANPWMFallback intakeShooterTilt;
@@ -168,7 +168,6 @@ public class RobotMap {
     // Buttons to check if the tilt is maxed out in both directions.
     public static DigitalInput hitTop;
     public static DigitalInput hitBottom;
-
     // ---------------
     // Climber Superstructure
     // ---------------
@@ -202,9 +201,9 @@ public class RobotMap {
         liftMotor2 = new CANPWMFallback(9, -1, "Lift Motor Right");
 
         // DIO (Limit switches, Ultrasonic)
-        spinnerLocked = new DigitalInput(1);
-        hitTop = new DigitalInput(2);
-        hitBottom = new DigitalInput(3);
+        hitTop = new DigitalInput(0);
+        hitBottom = new DigitalInput(1);
+        spinnerLocked = new DigitalInput(2);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
         // chirp chirp (they don't exist)
@@ -214,9 +213,12 @@ public class RobotMap {
 
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
-        intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
-        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage");
-        controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
+        intake2 = new CANPWMFallback(-1, 3, "Intake Right").withRamping(0.5);
+        intakeRoller = new CANPWMFallback(-1, 2, "Intake Roller");
+        intakeShooterStorage = new Talon(9);
+        intakeShooterTilt = new CANPWMFallback(-1, 4, "IntakeShooter Tilt");
+        liftMotor = new CANPWMFallback(-1, 5, "Lift Motor Left").withRamping(1);
+        controlPanelSpinner = new CANPWMFallback(-1, 6, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
