@@ -123,11 +123,13 @@ public class IntakeShooter extends SubsystemBase {
 
     public Direction getDirectionToEmpty()
     {
+        //TODO don't bs this
         return Direction.Right;
     }
 
     public Direction getDirectionToFull()
     {
+        //TODO don't bs this
         return Direction.Left;
     }
 

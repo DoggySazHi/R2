@@ -351,7 +351,7 @@ public class CANPWMFallback implements SpeedController {
     {
         stop();
     }
-    
+
     @Override
     public void pidWrite(double output) {
         if(getMode() == PWM && !isServo())
