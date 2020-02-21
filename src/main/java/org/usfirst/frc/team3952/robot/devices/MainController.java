@@ -15,7 +15,7 @@ public class MainController extends AbstractController
     public double deadzoneT = 0.08;
     public double maxT = 0.4;
     public double kT = (maxT - cT) / Math.log(2 - deadzoneT);
-
+    private boolean isInverted;
     public MainController(Joystick joystick, RobotSubsystems subsystems)
     {
         super(joystick, subsystems);
@@ -29,7 +29,8 @@ public class MainController extends AbstractController
     public double getRotation() {
         if (joystick == null) return 0;
         double t = joystick.getZ();
-        return Math.abs(t) >= deadzoneT ? kT * Math.signum(t) * (Math.log(Math.abs(t) + 1 - deadzoneT) + cT) : 0;
+        double dist = Math.abs(t) >= deadzoneT ? kT * Math.signum(t) * (Math.log(Math.abs(t) + 1 - deadzoneT) + cT) : 0;
+        return isInverted ? dist * -1 : dist;
     }
 
     public double c = 0.1;
@@ -41,14 +42,21 @@ public class MainController extends AbstractController
     {
         if (joystick == null) return 0;
         double x = joystick.getX();
-        return Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
+        double dist = Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
+        return isInverted ? dist * -1 : dist;
+    }
+
+    public void setInverted(boolean isInverted)
+    {
+        this.isInverted = isInverted;
     }
 
     public double getLateralMovement()
     {
         if (joystick == null) return 0;
         double y = -joystick.getY();
-        return Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
+        double dist = Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
+        return isInverted ? dist * -1 : dist;
     }
 
     public int getPOV()
