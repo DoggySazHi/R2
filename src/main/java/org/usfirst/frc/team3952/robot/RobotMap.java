@@ -45,6 +45,11 @@ public class RobotMap {
     public static final Color CP_GREEN = ColorMatch.makeColor(0.190, 0.545, 0.260);
     public static final Color CP_BLUE = ColorMatch.makeColor(0.150, 0.455, 0.385);
     public static final Color CP_YELLOW = ColorMatch.makeColor(0.300, 0.550, 0.160);
+    //Sets the speed of the robot as it drives to the control wheel
+    public static final double DRIVE_CONTROL_WHEEL_SPEED = 0.5;
+
+    //Sets the distance from the wall that the robot should stop
+    public static final double DISTANCE_TO_WALL = 50;
 
     // How "close" the color sensor should read to make sure it's "sure".
     public static final double MIN_COLOR_CONFIDENCE = 0.8;
