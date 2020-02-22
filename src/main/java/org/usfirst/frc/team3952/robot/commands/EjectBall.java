@@ -1,35 +1,37 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+/**
+ * Tilt the shooter to the highest position available.
+ */
 public class EjectBall extends CommandBase {
 
-    private IntakeShooter shooter;
-    private NetworkTableEntry ballDetectionEntry;
+    private RobotSubsystems subsystems;
 
     public EjectBall(RobotSubsystems subsystems) {
-        shooter = subsystems.getIntakeShooter();
+        this.subsystems = subsystems;
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+
         addRequirements(shooter);
     }
+
     @Override
     public void initialize() {
-        // Set shooter to the downward position. Possibly run shared code from GoToPosition?
-        ballDetectionEntry = NetworkTableInstance.getDefault().getTable("LimeLightLite").getEntry("Ball Detected");
 
-        //TODO use limit switches.
     }
 
     @Override
     public void execute() {
+        IntakeShooter shooter = subsystems.getIntakeShooter();
         shooter.setAngleMotor(1.0);
     }
 
     @Override
     public boolean isFinished() {
-        return ballDetectionEntry.getBoolean(false);
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+        return false;
     }
 }

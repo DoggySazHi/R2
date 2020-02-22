@@ -19,7 +19,6 @@ public class AutoAlign extends CommandBase {
     @Override
     public void execute() {
         NetworkTable ntTable = NetworkTableInstance.getDefault().getTable("LimeLightLite");
-        double currentAngle = shooter.getAngle();
         int xPos = ntTable.getEntry("X Position").getNumber(-1).intValue();
         int yPos = ntTable.getEntry("Y Position").getNumber(-1).intValue();
         if (xPos == -1 || yPos == -1) {

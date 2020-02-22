@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
+import org.usfirst.frc.team3952.robot.devices.NeoPixelLED;
 
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
@@ -69,25 +70,6 @@ public class RobotMap {
     // Holds the possible directions to rotate the storage mechanism. May be used for other motor functions.
     public enum Direction { Left, Right }
 
-    // Holds the possible positions for the shooter's angle with given names.
-    public enum Position {
-        Intake (0.0),
-        Shooting (40.0),
-        ControlPanel (100.0);
-
-        private double distance;
-
-        Position(double distance)
-        {
-            this.distance = distance;
-        }
-
-        public double getDistance()
-        {
-            return distance;
-        }
-    }
-
     // The time to wait after activating the control panel before spinning it.
     public static final long CP_ACTIVATION_TIMER = 1000;
 
@@ -99,7 +81,7 @@ public class RobotMap {
     public static final int MAX_BALL_STORAGE = 5;
 
     // The speed to run the storage motor at.
-    public static final double STORAGE_MOTOR_SPEED = 0.4;
+    public static final double STORAGE_MOTOR_SPEED = 0.5;
 
     // The speed to suck the balls in.
     public static final double INTAKE_SPEED = 0.80;
@@ -113,21 +95,6 @@ public class RobotMap {
     // ---------------
     // Climber Values
     // ---------------
-
-    // The speed of how fast to climb.
-    public static final double CLIMB_MOTOR_SPEED = 0.75;
-
-    // The speed of how fast to descend. Should be opposite in polarity to the climbing speed.
-    public static final double DESCEND_MOTOR_SPEED = -0.50;
-
-    // The time to wait after activating the climber to actually climbing (in millseconds).
-    public static final long CLIMBER_ACTIVATION_TIMER = 2000;
-
-    // The time to wait after climbing down to deactivate the climber (in millseconds).
-    public static final long CLIMBER_DEACTIVATION_TIMER = 3000;
-
-    // Whether to invert the servos (are they facing opposite directions?)
-    public static final boolean INVERT_CLIMBER_SERVOS = false;
 
     // Whether to invert the starting positions of the servos (should they start from the left or right?)
     public static final boolean FLIP_SERVO_START_POS = false;
@@ -185,7 +152,7 @@ public class RobotMap {
     public static CANPWMFallback intake2;
     public static CANPWMFallback intakeRoller;
 
-    // Check if the spinner is on a valid position.
+    // Check if the spinner is on a valid position. This is the metal detector.
     public static DigitalInput spinnerLocked;
 
     // A solenoid to push the ball out.
@@ -208,6 +175,9 @@ public class RobotMap {
     // The solenoid to activate the climber.
     public static Servo climberActivator;
 
+    // Light.
+    public static NeoPixelLED light;
+
     public static void init() {
         CANPWMFallback.defaultMode = PWM;
         // PWM (Motors and Servos)
@@ -220,6 +190,7 @@ public class RobotMap {
         SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
 
         drive = new DifferentialDrive(left, right);
+        light = new NeoPixelLED(9, 24);
 
         projectileAimer = new Servo(4);
         projectileLock = new Servo(5);

@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 //"The Wheel of Fortune Turning Over" - Sagume Kishin
@@ -28,6 +31,9 @@ public class PlayWheelOfFortune extends CommandBase {
 
     // States direction of rotation (+1 to the right, -1 to the left, 0 if unknown)
     private int direction;
+
+    private Instant startTime;
+
     private boolean incorrectDirection = false;
 
     public PlayWheelOfFortune(RobotSubsystems subsystems) {
@@ -59,10 +65,13 @@ public class PlayWheelOfFortune extends CommandBase {
         currentColor = 0;
 
         controlWheel.enable();
+        startTime = Instant.now();
     }
 
     @Override
     public void execute() {
+        if (Duration.between(startTime, Instant.now()).toMillis() < CP_ACTIVATION_TIMER)
+            return;
         ControlWheel controlWheel = subsystems.getControlWheel();
 
         ColorMatchResult match = controlWheel.getClosestColor();
@@ -99,7 +108,7 @@ public class PlayWheelOfFortune extends CommandBase {
         }
         controlWheel.update(tilesPassed);
 
-        if(tilesPassed < MIN_COUNT)
+        if (tilesPassed < MIN_COUNT - SLOWDOWN_TILES)
             controlWheel.set(CW_SPEED_FAST);
         else
             controlWheel.set(CW_SPEED_SLOW);
