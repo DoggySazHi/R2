@@ -10,10 +10,10 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
+import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
@@ -27,7 +27,7 @@ public class ControlWheel extends SubsystemBase
 {
     private CANPWMFallback motor = RobotMap.controlPanelSpinner;
     private ColorSensorV3 colorSensor = RobotMap.colorSensor;
-    private Ultrasonic distanceSensor = RobotMap.controlPanelUltraSonic;
+    private AnalogUltrasonic controlPanelUltrasonic = RobotMap.controlPanelUltraSonic;
     private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
 
     private NetworkTableEntry color;
@@ -133,6 +133,6 @@ public class ControlWheel extends SubsystemBase
 
     public double getDistance()
     {
-        return distanceSensor.getRangeMM();
+        return controlPanelUltrasonic.getRangeMM();
     }
 }

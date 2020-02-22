@@ -19,18 +19,43 @@ public class IntakeShooter extends SubsystemBase {
     private CANPWMFallback intakeLeft = RobotMap.intake;
     private CANPWMFallback intakeRight = RobotMap.intake2;
 
-    private CANPWMFallback angleMotor = RobotMap.projectileTilt;
-    private CANPWMFallback spinnerMotor = RobotMap.projectileStorage;
+    private CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
+    private CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
+    private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
     private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
+    private DigitalInput hitTop = RobotMap.hitTop;
+    private DigitalInput hitBottom = RobotMap.hitBottom;
 
     private boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
     private int ballPosition = 0;
 
-    public void intake(boolean max) {
+    public void intake(boolean max)
+    {
+        intake(max, INTAKE_ROLLER_SPEED);
+    }
+
+    public void intake(boolean max, double rollerSpeed)
+    {
+        if(max)
+        {
+            intakeLeft.set(ControlMode.PercentOutput, 1.0);
+            intakeRight.set(ControlMode.PercentOutput, -1.0);
+            rollerMotor.set(ControlMode.PercentOutput, 1.0);
+        }
+        else
+        {
+            intakeLeft.set(ControlMode.PercentOutput, INTAKE_SPEED);
+            intakeRight.set(ControlMode.PercentOutput, -INTAKE_SPEED);
+            rollerMotor.set(ControlMode.PercentOutput, rollerSpeed);
+        }
+        retract();
+    }
+
+    public void reject(boolean max, boolean shoot) {
         if(max)
         {
             intakeLeft.set(ControlMode.PercentOutput, -1.0);
@@ -38,40 +63,35 @@ public class IntakeShooter extends SubsystemBase {
         }
         else 
         {
-            intakeLeft.set(ControlMode.PercentOutput, -1.0 * INTAKE_SPEED);
-            intakeRight.set(ControlMode.PercentOutput, INTAKE_SPEED);
+            intakeLeft.set(ControlMode.PercentOutput, -REJECT_SPEED);
+            intakeRight.set(ControlMode.PercentOutput, REJECT_SPEED);
         }
-        retract();
-    }
+        rollerMotor.set(ControlMode.PercentOutput, 0.0);
 
-    public void reject(boolean max) {
-        if(max)
-        {
-            intakeLeft.set(ControlMode.PercentOutput, 1.0);
-            intakeRight.set(ControlMode.PercentOutput, -1.0);
-        }
-        else 
-        {
-            intakeLeft.set(ControlMode.PercentOutput, REJECT_SPEED);
-            intakeRight.set(ControlMode.PercentOutput, -1.0 * REJECT_SPEED);
-        }
-        shoot();
+        // Recreating the code Haoyan found on r/FRC.
+        if(shoot)
+            shoot();
+        else
+            retract();
     }
 
     public void stop() {
         intakeLeft.set(ControlMode.PercentOutput, 0);
         intakeRight.set(ControlMode.PercentOutput, 0);
         angleMotor.stopMotor();
+        rollerMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
     // Control the storage motor. Should be combined with getPosition().
     public void setAngleMotor(double speed) {
+        if (speed < 0 && hitTop.get() || speed > 0 && hitBottom.get())
+            return;
         angleMotor.set(speed);
     }
 
-    // Control the tilt (ball shooting) servos.
+    // Control the tilt (ball shooting) servos. Already compensates for controller input.
     public void setTiltServos(double speed) {
-        tiltServos.set(speed);
+        tiltServos.set((speed + 1.0)/2.0);
     }
 
     // Control the storage motor to find a slot. Should be combined with isLocked().
