@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
-import org.usfirst.frc.team3952.robot.devices.Light;
+import org.usfirst.frc.team3952.robot.devices.NeoPixelLED;
 
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
@@ -176,7 +176,7 @@ public class RobotMap {
     public static Servo climberActivator;
 
     // Light.
-    public static Light light;
+    public static NeoPixelLED light;
 
     public static void init() {
         CANPWMFallback.defaultMode = PWM;
@@ -190,7 +190,7 @@ public class RobotMap {
         SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
 
         drive = new DifferentialDrive(left, right);
-        light = new Light(9, 24);
+        light = new NeoPixelLED(9, 24);
 
         projectileAimer = new Servo(4);
         projectileLock = new Servo(5);
