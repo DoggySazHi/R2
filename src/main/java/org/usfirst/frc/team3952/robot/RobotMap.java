@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3952.robot;
 
-
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
@@ -66,9 +65,6 @@ public class RobotMap {
 
     // Tiles to start slowing down, if not using a linear ramping function.
     public static final int SLOWDOWN_TILES = 5;
-
-    // Holds the possible directions to rotate the storage mechanism. May be used for other motor functions.
-    public enum Direction { Left, Right }
 
     // The time to wait after activating the control panel before spinning it.
     public static final long CP_ACTIVATION_TIMER = 1000;
@@ -141,9 +137,6 @@ public class RobotMap {
     // Tilt the shooter up or down for shooting, or to operate the control panel spinner. Operated via a linear actuator.
     public static CANPWMFallback intakeShooterTilt;
 
-    // Get the current position/angle of the shooter
-    public static AnalogEncoder linearActuatorEncoder;
-
     // Aim the shooter a bit left or right to shoot balls at a slight angle.
     public static Servo projectileAimer;
 
@@ -201,9 +194,7 @@ public class RobotMap {
         hitBottom = new DigitalInput(1);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
-        if(RobotBase.isReal()) {
-            linearActuatorEncoder = new AnalogEncoder(new AnalogInput(0));
-        }
+        // chirp chirp
 
         CANPWMFallback.defaultMode = CAN;
         CANPWMFallback.forceCANConnection = true;

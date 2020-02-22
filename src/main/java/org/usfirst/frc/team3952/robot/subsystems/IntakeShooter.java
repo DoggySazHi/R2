@@ -1,14 +1,12 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
-import org.usfirst.frc.team3952.robot.RobotMap.*;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
@@ -20,7 +18,6 @@ public class IntakeShooter extends SubsystemBase {
     private CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
     private CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
     private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
-    private AnalogEncoder liftMotorEncoder = RobotMap.linearActuatorEncoder;
     private Servo tiltServos = RobotMap.projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
@@ -117,23 +114,6 @@ public class IntakeShooter extends SubsystemBase {
     // Advance the counter. NOTE: You should be running the motor before this is called!
     public void advance() {
         ballPosition = (ballPosition + 1) % ballsStored.length;
-    }
-
-    public Direction getDirectionToEmpty()
-    {
-        //TODO don't bs this
-        return Direction.Right;
-    }
-
-    public Direction getDirectionToFull()
-    {
-        //TODO don't bs this
-        return Direction.Left;
-    }
-
-    // Rewind the counter. NOTE: You should be running the motor before this is called!
-    public void rewind() {
-        ballPosition = (ballPosition + ballsStored.length - 1) % ballsStored.length;
     }
 
     private void shoot() {
