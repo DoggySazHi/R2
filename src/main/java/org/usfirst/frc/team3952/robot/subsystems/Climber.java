@@ -17,36 +17,46 @@ public class Climber extends SubsystemBase {
     private CANPWMFallback liftMotor = RobotMap.liftMotor;
     private Servo climberActivator = RobotMap.climberActivator;
     //private Servo climberActivator2 = RobotMap.climberActivator2;
-
+    /**
+    * It is the constructor for the climber subsystem
+    */
     public Climber() {
         retract();
     }
-
+    /**
+    * It toggles the deploy mechanisms that deploys the claw
+    */
     public void deploy() {
         if (!FLIP_SERVO_START_POS)
             servoControl(SERVO_MAXPOWER);
         else
             servoControl(-SERVO_MAXPOWER);
     }
-
+    /**
+    * Nothing :))))
+    */
     public void postDeploy() {
         //deleted for compatibility
     }
-
+    /**
+    * Opposite of deploy. See deploy <code>org.usfirst.frc.team3952.robot.subsystems.Climber.deploy()</code>
+    */
     public void retract() {
-        climberActivator.set(1.0);
-        //climberActivator2.set(-1.0);
+        if (!FLIP_SERVO_START_POS)
+            servoControl(-SERVO_MAXPOWER);
+        else
+            servoControl(SERVO_MAXPOWER);
     }
 
-    public void manualServo(double value) {
-        climberActivator.set(value);
-        //climberActivator2.set(-value);
-    }
-
+    /**
+    * It turns the motor that lifts the robot up on
+    */
     public void lift(double value) {
         liftMotor.set(ControlMode.PercentOutput, value);
     }
-
+    /**
+    * It is a way to control the climber activater servo. climberActivator.set(value);
+    */
     private void servoControl(double value) {
         climberActivator.set(value);
         /*

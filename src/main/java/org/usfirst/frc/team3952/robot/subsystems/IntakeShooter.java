@@ -23,16 +23,26 @@ public class IntakeShooter extends SubsystemBase {
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
     private DigitalInput hitTop = RobotMap.hitTop;
     private DigitalInput hitBottom = RobotMap.hitBottom;
-
+    // first check the type of the method
+    //if it is a void just say what it does
+    // if its not a void then it returns something
+    // see what it returns and say what are the possible outcomes ex: range, values, ect
+    //what does the parameter do
+    
     private boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
     private int ballPosition = 0;
-
+    /**
+    * The intake motors run at a set speed in order to take in the ball. The boolean parameter checks if the motor is running at max speed.
+    */
     public void intake(boolean max)
     {
         intake(max, INTAKE_ROLLER_SPEED);
     }
-
+    /**
+    * The intake motors run at a speed (one of the parameter) in order to take in the ball. The boolean parameter checks if the motor is running at max speed. 
+    * The double parameter sets the intake motors to the specified speed. 
+    */
     public void intake(boolean max, double rollerSpeed)
     {
         if(max)
@@ -50,7 +60,10 @@ public class IntakeShooter extends SubsystemBase {
         setBallAtCurrentPosition(true);
         retract();
     }
-
+    /**
+    * The intake motors run at a speed in order to shoot out the ball. The boolean value max checks if the motor is running at full speed. 
+    * The boolean shoot checks if you want to shoot the ball or just reject the ball
+    */
     public void reject(boolean max, boolean shoot) {
         if(max)
         {
@@ -71,7 +84,9 @@ public class IntakeShooter extends SubsystemBase {
         else
             retract();
     }
-
+    /**
+    * It stops everything in the subsystem. I hope.
+    */
     public void stop() {
         intakeLeft.set(ControlMode.PercentOutput, 0);
         intakeRight.set(ControlMode.PercentOutput, 0);
@@ -79,53 +94,80 @@ public class IntakeShooter extends SubsystemBase {
         rollerMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
-    // Control how high to point the shooter at. This accepts direct control.
+    /**
+    * Control how high to point the shooter at. This accepts direct control. The double parameter sets the speed of the angler of the shooter.
+     * @param speed How fast to tilt up or down. Negative might be up and positive downwards.
+    */ 
     public void setAngleMotor(double speed) {
         if (speed < 0 && hitTop.get() || speed > 0 && hitBottom.get())
             return;
         angleMotor.set(speed);
     }
 
-    // Control the tilt (ball shooting) servos. Already compensates for controller input.
+    /**
+     * Control the tilt (ball shooting) servos. Already compensates for controller input. The double parameter sets the speed at which the the shooter tilts
+     * @param speed At what position the servos are tilted at.
+     */
     public void setTiltServos(double speed) {
         tiltServos.set((speed + 1.0)/2.0);
     }
 
-    // Control the storage motor to find a slot. Should be combined with isLocked().
+    /**
+     * Control the storage motor to find a slot. Should be combined with isLocked(). The double parameter sets the rotating speed of the shooter.
+     * @param speed At how fast the rotation motor spins.
+     */
     public void setRotateMotor(double speed) {
         spinnerMotor.set(speed);
     }
 
-    // Check if the ball holder is currently on a valid position (not half open)
+    /**
+     * Check if the ball holder is currently on a valid position (not half open). 
+     */
     public boolean isLocked() {
         return spinnerLocked.get();
     }
 
-    // Check if there's a ball stored in the current position.
+    /**
+     * Check if there's a ball stored in the current position.
+     */
     public boolean ballInPosition() {
         return ballsStored[ballPosition];
     }
 
-    // Count the amount of balls that are in the IntakeShooter.
+    /**
+     * Count the amount of balls that are in the IntakeShooter.
+     */
     public int getBalls() {
         int balls = 0;
         for(boolean b : ballsStored) if(b) balls++;
         return balls;
     }
 
-    // Advance the counter. NOTE: You should be running the motor before this is called!
+    /**
+     * Advance the counter. NOTE: You should be running the motor before this is called!
+     */
     public void advance() {
         ballPosition = (ballPosition + 1) % ballsStored.length;
     }
 
+    /**
+     * Set if at the current position, there is a ball.
+     * @param hasBall If there is a ball (true) or not (false).
+     */
     public void setBallAtCurrentPosition(boolean hasBall) {
         ballsStored[ballPosition] = hasBall;
     }
 
+    /**
+     * It sets the pneumatic piston to move forward which therefore shoots the ball out 
+     */
     private void shoot() {
         ballShooter.set(Value.kForward);
     }
 
+    /**
+     * It sets the pneumatic piston to move backwards which therefore allows the shooter to shoot again
+     */
     public void retract() {
         ballShooter.set(Value.kReverse);
     }
