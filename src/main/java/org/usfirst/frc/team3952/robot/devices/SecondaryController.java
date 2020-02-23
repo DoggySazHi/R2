@@ -1,6 +1,9 @@
 package org.usfirst.frc.team3952.robot.devices;
 
 import edu.wpi.first.wpilibj.Joystick;
+
+import org.usfirst.frc.team3952.robot.commands.GoToEmptySpot;
+import org.usfirst.frc.team3952.robot.commands.GoToOpenSpot;
 import org.usfirst.frc.team3952.robot.commands.PlayWheelOfFortune;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
@@ -34,6 +37,8 @@ public class SecondaryController extends AbstractController
         wheelOfFortune = new PlayWheelOfFortune(subsystems);
         buttons[7].whenPressed(wheelOfFortune);
         buttons[6].cancelWhenPressed(wheelOfFortune);
+        buttons[8].whenPressed(new GoToOpenSpot(subsystems));
+        buttons[9].whenPressed(new GoToEmptySpot(subsystems));
     }
 
     //it's not really a deadzone, but eh
