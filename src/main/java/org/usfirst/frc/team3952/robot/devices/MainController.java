@@ -30,7 +30,9 @@ public class MainController extends AbstractController
     {
         // Place all button bindings here.
     }
-
+    /**
+    * This will return the rotation of the joystick, it is a double value and this correspond to how much you twist the controller
+    */
     public double getRotation() {
         if (joystick == null) return 0;
         double t = joystick.getZ();
@@ -45,7 +47,9 @@ public class MainController extends AbstractController
 
     public double throttleZero = 0.1;
     public double throttleMax = 0.9;
-
+    /**
+    * It returns how much the joystick is turned left or right, it returns a double value. it ranges from -1 to 1
+    */
     public double getHorizontalMovement()
     {
         if (joystick == null) return 0;
@@ -53,12 +57,16 @@ public class MainController extends AbstractController
         double dist = Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
         return isInverted ? dist * -1 : dist;
     }
-
+    /**
+    * Sometimes during the match we need to drive backwards and that is HARD, so we basically inverse all the controlls, ex. turnLeft turns right, moveForward goes backwards. 
+    */
     public void setInverted(boolean isInverted)
     {
         this.isInverted = isInverted;
     }
-
+    /**
+    * It returns how much the joystick is turned forward or backward, it returns a double value. It ranges from -1 to 1
+    */
     public double getLateralMovement()
     {
         if (joystick == null) return 0;
@@ -66,7 +74,9 @@ public class MainController extends AbstractController
         double dist = Math.abs(y) >= deadzone ? k * Math.signum(y) * (Math.log(Math.abs(y) + 1 - deadzone) + c) : 0;
         return isInverted ? dist * -1 : dist;
     }
-
+    /**
+    * It is like an airplane throttle, just returns a double value that shows how much the throttle is turned. It returns 0 or 1
+    */
     public double getThrottle()
     {
         if (joystick == null) return 0;
@@ -75,14 +85,18 @@ public class MainController extends AbstractController
         if (throttle > throttleMax) return 1;
         return throttle;
     }
-
+    /**
+    * Returns an integer from 0 to 7. It is the white circular button that you can turn. It represents what angle/direction it is turned towards
+    */
     public int getPOV()
     {
         //0 - top, going clockwise to 7
         if (joystick == null) return -1;
         return joystick.getPOV(0) == -1 ? -1 : (int) Math.round(joystick.getPOV(0) / 45.0);
     }
-
+    /**
+    * It returns if button 1 is pressed on the controller. boolean value. used to enable quickTurn
+    */
     public boolean getQuickTurn()
     {
         if (joystick == null) return false;
