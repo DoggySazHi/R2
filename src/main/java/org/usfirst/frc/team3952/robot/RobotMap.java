@@ -183,11 +183,13 @@ public class RobotMap {
         SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
 
         drive = new DifferentialDrive(left, right);
-        light = new NeoPixelLED(9, 24);
 
-        projectileAimer = new Servo(4);
-        projectileLock = new Servo(5);
-        climberActivator = new Servo(6);
+        intakeRoller = new CANPWMFallback(4, -1, "Intake Roller");
+        intakeShooterTilt = new CANPWMFallback(5, -1, "IntakeShooter Tilt");
+        projectileAimer = new Servo(6);
+
+        liftMotor = new CANPWMFallback(7, -1, "Lift Motor Left");
+        climberActivator = new Servo(8);
 
         // DIO (Limit switches, Ultrasonic)
         hitTop = new DigitalInput(0);
@@ -201,11 +203,8 @@ public class RobotMap {
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
-        intakeRoller = new CANPWMFallback(-1, 2, "Intake Roller");
-        intakeShooterStorage = new CANPWMFallback(-1, 3, "IntakeShooter Storage");
-        intakeShooterTilt = new CANPWMFallback(-1, 4, "IntakeShooter Tilt");
-        liftMotor = new CANPWMFallback(-1, 5, "Lift Motor Left").withRamping(1);
-        controlPanelSpinner = new CANPWMFallback(-1, 6, "Control Panel Spinner").withRamping(0.5);
+        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage").withRamping(0.5);
+        controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
         ballShooter = new DoubleSolenoid(0, 1);
