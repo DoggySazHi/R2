@@ -47,6 +47,7 @@ public class IntakeShooter extends SubsystemBase {
             intakeRight.set(ControlMode.PercentOutput, -INTAKE_SPEED);
             rollerMotor.set(ControlMode.PercentOutput, rollerSpeed);
         }
+        setBallAtCurrentPosition(true);
         retract();
     }
 
@@ -61,6 +62,7 @@ public class IntakeShooter extends SubsystemBase {
             intakeLeft.set(ControlMode.PercentOutput, -REJECT_SPEED);
             intakeRight.set(ControlMode.PercentOutput, REJECT_SPEED);
         }
+        setBallAtCurrentPosition(false);        
         rollerMotor.set(ControlMode.PercentOutput, 0.0);
 
         // Recreating the code Haoyan found on r/FRC.
@@ -114,6 +116,10 @@ public class IntakeShooter extends SubsystemBase {
     // Advance the counter. NOTE: You should be running the motor before this is called!
     public void advance() {
         ballPosition = (ballPosition + 1) % ballsStored.length;
+    }
+
+    public void setBallAtCurrentPosition(boolean hasBall) {
+        ballsStored[ballPosition] = hasBall;
     }
 
     private void shoot() {
