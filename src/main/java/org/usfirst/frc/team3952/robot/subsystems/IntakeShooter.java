@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
@@ -18,7 +17,7 @@ public class IntakeShooter extends SubsystemBase {
     private CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
     private CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
     private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
-    private Servo tiltServos = RobotMap.projectileAimer;
+    private CANPWMFallback tiltServos = projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
     private DigitalInput hitTop = RobotMap.hitTop;

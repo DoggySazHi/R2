@@ -157,7 +157,7 @@ public class CANPWMFallback implements SpeedController {
      * @param useFullRange Whether to set using full-range values or regular values.
      * @return Itself. Useful for daisy-chaining in the RobotMap.
      */
-    public CANPWMFallback fullRange(boolean useFullRange) {
+    public CANPWMFallback useFullRange(boolean useFullRange) {
         this.useFullRange = useFullRange;
         return this;
     }

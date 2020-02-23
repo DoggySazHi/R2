@@ -1,13 +1,12 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.*;
+import static org.usfirst.frc.team3952.robot.RobotMap.FLIP_SERVO_START_POS;
+import static org.usfirst.frc.team3952.robot.RobotMap.SERVO_MAXPOWER;
 
 /**
  * The subsystem to go up and down to hang on the activator.
@@ -15,7 +14,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
  */
 public class Climber extends SubsystemBase {
     private CANPWMFallback liftMotor = RobotMap.liftMotor;
-    private Servo climberActivator = RobotMap.climberActivator;
+    private CANPWMFallback climberActivator = RobotMap.climberActivator;
     //private Servo climberActivator2 = RobotMap.climberActivator2;
     /**
     * It is the constructor for the climber subsystem
