@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3952.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import static org.usfirst.frc.team3952.robot.RobotMap.STORAGE_MOTOR_SPEED;
+
+import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
@@ -16,23 +18,21 @@ public class GoToEmptySpot extends CommandBase {
     public void initialize() {
     }
 
+    public boolean off = true;
+
     @Override
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-            shooter.setRotateMotor(STORAGE_MOTOR_SPEED);   
-            if(shooter.isLocked() && !wasLocked)  
-            {
-                shooter.advance();
-                wasLocked = true;
-            }
-            else if(!shooter.isLocked() && wasLocked)
-            {
-                wasLocked = false;   
-            }
+        SecondaryController secondaryController = subsystems.getSecondaryController();
+            
+            
+         
+
+
     }
 
     @Override
     public boolean isFinished() {
-        return !subsystems.getIntakeShooter().ballInPosition();
+        return false;
     }
 }

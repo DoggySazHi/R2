@@ -20,14 +20,10 @@ public class IntakeShooter extends SubsystemBase {
     private CANPWMFallback tiltServos = projectileAimer;
     private DoubleSolenoid ballShooter = RobotMap.ballShooter;
     private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
+
     private DigitalInput hitTop = RobotMap.hitTop;
     private DigitalInput hitBottom = RobotMap.hitBottom;
-    // first check the type of the method
-    //if it is a void just say what it does
-    // if its not a void then it returns something
-    // see what it returns and say what are the possible outcomes ex: range, values, ect
-    //what does the parameter do
-    
+
     private boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
     private int ballPosition = 0;
@@ -98,8 +94,7 @@ public class IntakeShooter extends SubsystemBase {
      * @param speed How fast to tilt up or down. Negative might be up and positive downwards.
     */ 
     public void setAngleMotor(double speed) {
-        if (speed < 0 && hitTop.get() || speed > 0 && hitBottom.get())
-            return;
+        if(speed < 0 && hitTop.get() || speed > 0 && hitBottom.get()) return;
         angleMotor.set(speed);
     }
 

@@ -31,11 +31,18 @@ public class ManualIntakeShooter extends CommandBase {
         else
             intakeShooter.stop();
 
+        if (secondaryController.getRawButton(1)){
+            while (intakeShooter.isLocked()){
+                intakeShooter.setRotateMotor(0.5);   
+            }
+        }
+        intakeShooter.setRotateMotor(0);
+
         // Already compensated. Sets the tilt servo.
         intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
 
         // Sets the up/down movement.
-        intakeShooter.setAngleMotor(secondaryController.getLateralMovement());
+        intakeShooter.setAngleMotor(0 - secondaryController.getLateralMovement());
     }
 
     @Override
