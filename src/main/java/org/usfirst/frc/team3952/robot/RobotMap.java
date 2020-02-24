@@ -178,7 +178,7 @@ public class RobotMap {
         rightDriveFront = new CANPWMFallback(1, -1, "Right Drive"); //G1
         leftDriveRear = new CANPWMFallback(2, -1, "Left Drive (Rear)"); //O4
         rightDriveRear = new CANPWMFallback(3, -1, "Right Drive (Rear)"); //B2
-
+        spinnerLocked = new DigitalInput(1);
         SpeedControllerGroup left = new SpeedControllerGroup(leftDriveFront, leftDriveRear);
         SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
 
@@ -192,8 +192,6 @@ public class RobotMap {
         climberActivator = new Servo(8);
 
         // DIO (Limit switches, Ultrasonic)
-        hitTop = new DigitalInput(0);
-        hitBottom = new DigitalInput(1);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
         // chirp chirp

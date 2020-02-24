@@ -16,17 +16,9 @@ public class DriveTrain extends SubsystemBase {
     //code accounts for reversing of motors no need for mechanical solution
 
     public void drive(double hor, double lat, double rot, boolean quickTurn) {
-        // System.out.println("Hor: " + hor + " Lat: " + lat + " Rot: " + rot);
-        if(CONTROLLER_DRIVE_MODE)
-            if(ARCADE_OR_CURVATURE)
-                drive.curvatureDrive(lat, rot, quickTurn);
-            else
+       
                 drive.arcadeDrive(lat, rot, quickTurn);
-        else
-            if(ARCADE_OR_CURVATURE)
-                drive.curvatureDrive(lat, hor, quickTurn);
-            else
-                drive.arcadeDrive(lat, hor, quickTurn);
+        
         /*
     	if (quickTurn){
             leftDrive.set(rot);
