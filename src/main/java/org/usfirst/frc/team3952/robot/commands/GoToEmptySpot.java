@@ -24,15 +24,18 @@ public class GoToEmptySpot extends CommandBase {
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
         SecondaryController secondaryController = subsystems.getSecondaryController();
-            
-            
-         
 
+        intakeShooter.setRotateMotor(0.5);   
+             
+    }
 
+    @Override
+    public void end(boolean interrupted) {
+        shooter.stop();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return shooter.isLocked();
     }
 }

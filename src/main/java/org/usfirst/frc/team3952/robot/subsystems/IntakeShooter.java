@@ -75,6 +75,7 @@ public class IntakeShooter extends SubsystemBase {
         intakeRight.set(ControlMode.PercentOutput, 0);
         angleMotor.stopMotor();
         rollerMotor.set(ControlMode.PercentOutput, 0.0);
+        spinnerMotor.set(0);
     }
 
     // Control how high to point the shooter at. This accepts direct control.

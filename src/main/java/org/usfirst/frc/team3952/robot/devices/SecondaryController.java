@@ -37,6 +37,7 @@ public class SecondaryController extends AbstractController
         wheelOfFortune = new PlayWheelOfFortune(subsystems);
         buttons[7].whenPressed(wheelOfFortune);
         buttons[6].cancelWhenPressed(wheelOfFortune);
+        button[8].whenPressed(GoToEmptySpot);
     }
 
     //it's not really a deadzone, but eh
