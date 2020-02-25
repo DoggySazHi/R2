@@ -8,7 +8,10 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 //
 public class AutoAlign extends CommandBase {
     private IntakeShooter shooter;
-
+    /**
+     * automatically aligns the shooter to the targetted region
+     * @param subsystems 
+     */
     public AutoAlign(RobotSubsystems subsystems) {
         shooter = subsystems.getIntakeShooter();
         addRequirements(shooter);
