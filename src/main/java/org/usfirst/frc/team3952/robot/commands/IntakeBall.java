@@ -10,7 +10,9 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class IntakeBall extends CommandBase {
 
     private RobotSubsystems subsystems;
-
+/**
+* Intakes the ball into the magazine/shooter
+*/
     public IntakeBall(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();

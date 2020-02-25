@@ -7,6 +7,10 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class GoToEmptySpot extends CommandBase {
     private RobotSubsystems subsystems;
     private boolean wasLocked;
+    /**
+    * rotates magazine to next spot for loading
+    * @param subsystems gets subsystem
+    */
     public GoToEmptySpot(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
@@ -19,16 +23,16 @@ public class GoToEmptySpot extends CommandBase {
     @Override
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-            shooter.setRotateMotor(STORAGE_MOTOR_SPEED);   
-            if(shooter.isLocked() && !wasLocked)  
-            {
-                shooter.advance();
-                wasLocked = true;
-            }
-            else if(!shooter.isLocked() && wasLocked)
-            {
-                wasLocked = false;   
-            }
+        shooter.setRotateMotor(STORAGE_MOTOR_SPEED);   
+        if(shooter.isLocked() && !wasLocked)  
+        {
+            shooter.advance();
+            wasLocked = true;
+        }
+        else if(!shooter.isLocked() && wasLocked)
+        {
+            wasLocked = false;   
+        }
     }
 
     @Override
@@ -37,7 +41,7 @@ public class GoToEmptySpot extends CommandBase {
     }
 
     @Override
-    public void end(boolean interruptable) {
+    public void end(boolean interrupted) {
         IntakeShooter shooter = subsystems.getIntakeShooter();
         shooter.stop();
     }

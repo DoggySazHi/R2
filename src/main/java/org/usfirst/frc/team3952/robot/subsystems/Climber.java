@@ -49,12 +49,14 @@ public class Climber extends SubsystemBase {
 
     /**
     * It turns the motor that lifts the robot up on
+    * @param value  It sets the speed at which the motors will turn in order to lift the robot up
     */
     public void lift(double value) {
         liftMotor.set(ControlMode.PercentOutput, value);
     }
     /**
     * It is a way to control the climber activater servo. climberActivator.set(value);
+    * @param value Sets the position for the servos, range from 0.0 to 1.0
     */
     private void servoControl(double value) {
         climberActivator.set(value);

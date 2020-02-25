@@ -5,12 +5,14 @@ import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 /**
- * Tilt the shooter to the highest position available.
- */
+* Tilt the shooter to the highest position available.
+*/
 public class EjectBall extends CommandBase {
 
     private RobotSubsystems subsystems;
-
+    /**
+    * shoots balls from magazine
+    */
     public EjectBall(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
