@@ -32,15 +32,17 @@ public class IntakeShooter extends SubsystemBase {
 
     private int ballPosition = 0;
     /**
-    * The intake motors run at a set speed in order to take in the ball. The boolean parameter checks if the motor is running at max speed.
+    * The intake motors run at a set speed in order to take in the ball. 
+    * @param max Checks if the motor is running at max speed.
     */
     public void intake(boolean max)
     {
         intake(max, INTAKE_ROLLER_SPEED);
     }
     /**
-    * The intake motors run at a speed (one of the parameter) in order to take in the ball. The boolean parameter checks if the motor is running at max speed. 
-    * The double parameter sets the intake motors to the specified speed. 
+    * The intake motors run at a speed (one of the parameter) in order to take in the ball. 
+    * @param max checks if the motor is running at max speed. 
+    * @param rollerSpeed sets the intake motors to the specified speed. 
     */
     public void intake(boolean max, double rollerSpeed)
     {
@@ -60,8 +62,9 @@ public class IntakeShooter extends SubsystemBase {
         retract();
     }
     /**
-    * The intake motors run at a speed in order to shoot out the ball. The boolean value max checks if the motor is running at full speed. 
-    * The boolean shoot checks if you want to shoot the ball or just reject the ball
+    * The intake motors run at a speed in order to shoot out the ball. 
+    * @param max checks if the motor is running at full speed. 
+    * @param shoot checks if you want to shoot the ball or just reject the ball
     */
     public void reject(boolean max, boolean shoot) {
         if(max)

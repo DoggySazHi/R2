@@ -10,7 +10,7 @@ public class AutoAlign extends CommandBase {
     private IntakeShooter shooter;
     /**
      * automatically aligns the shooter to the targetted region
-     * @param subsystems 
+     * @param subsystems a subsystem
      */
     public AutoAlign(RobotSubsystems subsystems) {
         shooter = subsystems.getIntakeShooter();

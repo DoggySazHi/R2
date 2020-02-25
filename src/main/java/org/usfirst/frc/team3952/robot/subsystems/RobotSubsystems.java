@@ -17,9 +17,6 @@ public class RobotSubsystems
         return subsystem.getCurrentCommand() != null;
     }*/
 
-    /**
-     * gets the most 
-     */
     public DriveTrain getDriveTrain()
     {
         return driveTrain;
@@ -37,7 +34,7 @@ public class RobotSubsystems
     public SecondaryController getSecondaryController()
     {
         return secondaryController;
-    }0
+    }
 
     public ControlWheel getControlWheel()
     {
