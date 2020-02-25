@@ -168,4 +168,20 @@ public class IntakeShooter extends SubsystemBase {
     public void retract() {
         ballShooter.set(Value.kReverse);
     }
+
+    /**
+     * Check if the <code>IntakeShooter</code> hit the top limit switch.
+     * @return Whether the top is hit.
+     */
+    public boolean hitTop() {
+        return hitTop.get();
+    }
+
+    /**
+     * Check if the <code>IntakeShooter</code> hit the bottom limit switch.
+     * @return Whether the bottom is hit.
+     */
+    public boolean hitBottom() {
+        return hitBottom.get();
+    }
 }

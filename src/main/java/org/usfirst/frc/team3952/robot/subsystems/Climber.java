@@ -67,4 +67,9 @@ public class Climber extends SubsystemBase {
             climberActivator2.set(-value);
          */
     }
+
+    public void stop()
+    {
+        liftMotor.stop();
+    }
 }

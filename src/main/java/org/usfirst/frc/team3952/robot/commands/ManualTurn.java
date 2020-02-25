@@ -9,6 +9,9 @@ import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+/**
+ * Doesn't actually allow the user to manually turn, but rather update all values into NetworkTables.
+ */
 public class ManualTurn extends CommandBase
 {
     private RobotSubsystems subsystems;

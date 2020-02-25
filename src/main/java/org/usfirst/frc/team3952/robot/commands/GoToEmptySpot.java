@@ -1,8 +1,9 @@
 package org.usfirst.frc.team3952.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import static org.usfirst.frc.team3952.robot.RobotMap.MAX_BALL_STORAGE;
 import static org.usfirst.frc.team3952.robot.RobotMap.STORAGE_MOTOR_SPEED;
 
-import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
@@ -39,9 +40,14 @@ public class GoToEmptySpot extends CommandBase {
         }
     }
 
+    /**
+     * Ends whenever it detects that the current position is empty, or if the shooter is full.
+     * @return If the command is finished.
+     */
     @Override
     public boolean isFinished() {
-        return false;
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+        return !shooter.ballInPosition() || shooter.getBalls() == MAX_BALL_STORAGE;
     }
 
     @Override

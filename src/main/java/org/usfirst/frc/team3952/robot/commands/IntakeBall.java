@@ -10,9 +10,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class IntakeBall extends CommandBase {
 
     private RobotSubsystems subsystems;
-/**
-* Intakes the ball into the magazine/shooter
-*/
+
     public IntakeBall(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
@@ -25,6 +23,9 @@ public class IntakeBall extends CommandBase {
 
     }
 
+    /**
+     * Sets the motor to the fastest speed downwards. NOTE: Might be inverted.
+     */
     @Override
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
@@ -34,6 +35,13 @@ public class IntakeBall extends CommandBase {
     @Override
     public boolean isFinished() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        return false;
+        return shooter.hitBottom();
+    }
+
+    @Override
+    public void end(boolean interrupted)
+    {
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+        shooter.stop();
     }
 }
