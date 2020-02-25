@@ -8,7 +8,6 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class GoToControlPanel extends CommandBase {
     private RobotSubsystems subsystems;
-    
 
     public GoToControlPanel(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
