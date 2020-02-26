@@ -6,10 +6,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.usfirst.frc.team3952.robot.commands.ManualClimber;
-import org.usfirst.frc.team3952.robot.commands.ManualDrive;
-import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
-import org.usfirst.frc.team3952.robot.commands.ManualTurn;
+import org.usfirst.frc.team3952.robot.commands.*;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
@@ -159,7 +156,9 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() { }
 
     @Override
-    public void autonomousInit() { /* TODO AutoAlign should be .schedule()ed */ }
+    public void autonomousInit() {
+        CommandScheduler.getInstance().schedule(new PseudoAutonomous(subsystems));
+    }
 
     @Override
     public void autonomousPeriodic() {  }

@@ -35,6 +35,9 @@ public class RobotMap {
     // Whether to implement ArcadeDrive (false) or CurvatureDrive (true).
     public static final boolean ARCADE_OR_CURVATURE = false;
 
+    // Which file to load for the PseudoAutonomous.
+    public static final String AUTON_SCRIPT = "left.json";
+
     // ---------------
     // Control Panel Values
     // ---------------

@@ -16,7 +16,9 @@ public class AutoAlign extends CommandBase {
         this.subsystems = subsystems;
 
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        addRequirements(shooter);
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+        
+        addRequirements(shooter, driveTrain);
     }
     @Override
     public void initialize() {
