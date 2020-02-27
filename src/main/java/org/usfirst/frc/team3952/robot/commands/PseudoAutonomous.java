@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3952.robot.commands;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.devices.Path;
 import org.usfirst.frc.team3952.robot.subsystems.*;
@@ -36,7 +35,6 @@ public class PseudoAutonomous extends CommandBase {
     @Override
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        DriveTrain driveTrain = subsystems.getDriveTrain();
         Climber climber = subsystems.getClimber();
         ControlWheel controlWheel = subsystems.getControlWheel();
 
@@ -48,22 +46,15 @@ public class PseudoAutonomous extends CommandBase {
         }
 
         String[] cmd = list.getCurrentInstruction().split(" ");
-        if(cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 5)
-        {
-            var x = tryParseDouble(cmd[0]);
-            var y = tryParseDouble(cmd[0]);
-            var z = tryParseDouble(cmd[0]);
-            var quickTurn = tryParseDouble(cmd[0]);
 
-            if(x.isPresent())
-            driveTrain.drive(x, y, z, quickTurn);
-        }
+        if(cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 5)
+            drive(cmd);
     }
 
     @Override
     public void end(boolean interrupted) {
-        IntakeShooter shooter = subsystems.getIntakeShooter();
         DriveTrain driveTrain = subsystems.getDriveTrain();
+        IntakeShooter shooter = subsystems.getIntakeShooter();
         Climber climber = subsystems.getClimber();
         ControlWheel controlWheel = subsystems.getControlWheel();
 
@@ -73,12 +64,31 @@ public class PseudoAutonomous extends CommandBase {
         controlWheel.stop();
     }
 
-    public Optional<Double> tryParseDouble(String input)
-    {
+    private void drive(String[] cmd) {
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+
+        var x = tryParseDouble(cmd[1]);
+        var y = tryParseDouble(cmd[2]);
+        var z = tryParseDouble(cmd[3]);
+        var quickTurn = tryParseDouble(cmd[4]);
+
+        if (x.isEmpty() || y.isEmpty() || z.isEmpty() || quickTurn.isEmpty()) {
+            System.out.println("Error: invalid MOVE command! Must be in the form of \"MOVE [-1.0, 1.0] [-1.0, 1.0] [-1.0, 1.0] [0/1]\".");
+            return;
+        }
+
+        var xNum = x.get();
+        var yNum = y.get();
+        var zNum = z.get();
+        var quickTurnBool = quickTurn.get() == 1;
+
+        driveTrain.drive(xNum, yNum, zNum, quickTurnBool);
+    }
+
+    public Optional<Double> tryParseDouble(String input) {
         try {
             return Optional.of(Double.parseDouble(input));
-        }
-        catch (NumberFormatException ignore) {
+        } catch (NumberFormatException ignore) {
             return Optional.empty();
         }
     }
