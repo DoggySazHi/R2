@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.devices.Path;
 import org.usfirst.frc.team3952.robot.subsystems.*;
 
+import java.util.Optional;
+
 import static org.usfirst.frc.team3952.robot.RobotMap.AUTON_SCRIPT;
 
 /**
@@ -13,6 +15,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.AUTON_SCRIPT;
 public class PseudoAutonomous extends CommandBase {
     private RobotSubsystems subsystems;
     private Path list;
+    private boolean ready;
 
     public PseudoAutonomous(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
@@ -32,8 +35,29 @@ public class PseudoAutonomous extends CommandBase {
 
     @Override
     public void execute() {
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+        Climber climber = subsystems.getClimber();
+        ControlWheel controlWheel = subsystems.getControlWheel();
+
         if(list.getStatus() != Path.PathStatus.Ready) return;
-        
+        else if(list.getStatus() == Path.PathStatus.Ready && !ready)
+        {
+            list.start();
+            ready = true;
+        }
+
+        String[] cmd = list.getCurrentInstruction().split(" ");
+        if(cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 5)
+        {
+            var x = tryParseDouble(cmd[0]);
+            var y = tryParseDouble(cmd[0]);
+            var z = tryParseDouble(cmd[0]);
+            var quickTurn = tryParseDouble(cmd[0]);
+
+            if(x.isPresent())
+            driveTrain.drive(x, y, z, quickTurn);
+        }
     }
 
     @Override
@@ -47,5 +71,15 @@ public class PseudoAutonomous extends CommandBase {
         driveTrain.stop();
         climber.stop();
         controlWheel.stop();
+    }
+
+    public Optional<Double> tryParseDouble(String input)
+    {
+        try {
+            return Optional.of(Double.parseDouble(input));
+        }
+        catch (NumberFormatException ignore) {
+            return Optional.empty();
+        }
     }
 }
