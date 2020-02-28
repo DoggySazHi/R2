@@ -15,6 +15,7 @@ public class PseudoAutonomous extends CommandBase {
     private RobotSubsystems subsystems;
     private Path list;
     private boolean ready;
+    private boolean end;
 
     public PseudoAutonomous(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
@@ -49,6 +50,10 @@ public class PseudoAutonomous extends CommandBase {
 
         if(cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 5)
             drive(cmd);
+        else if(cmd[0].equalsIgnoreCase("LIFT") && cmd.length == 5)
+            drive(cmd);
+        else if(cmd[0].equalsIgnoreCase("END"))
+            end = true;
     }
 
     @Override
@@ -91,5 +96,10 @@ public class PseudoAutonomous extends CommandBase {
         } catch (NumberFormatException ignore) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return end;
     }
 }

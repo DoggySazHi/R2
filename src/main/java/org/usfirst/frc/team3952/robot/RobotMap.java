@@ -215,5 +215,6 @@ public class RobotMap {
         controlPanelUltraSonic = new AnalogUltrasonic(3);
         gyro = new ADXRS450_Gyro();
         accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k2G);
+        gyro.calibrate();
     }
 }
