@@ -2,11 +2,9 @@ package org.usfirst.frc.team3952.robot;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
@@ -34,6 +32,9 @@ public class RobotMap {
 
     // Whether to implement ArcadeDrive (false) or CurvatureDrive (true).
     public static final boolean ARCADE_OR_CURVATURE = false;
+
+    // Which file to load for the PseudoAutonomous.
+    public static final String AUTON_SCRIPT = "left.json";
 
     // ---------------
     // Control Panel Values
@@ -78,7 +79,7 @@ public class RobotMap {
     public static final int MAX_BALL_STORAGE = 5;
 
     // The speed to run the storage motor at.
-    public static final double STORAGE_MOTOR_SPEED = 0.5;
+    public static final double STORAGE_MOTOR_SPEED = 0.15;
 
     // The speed to suck the balls in.
     public static final double INTAKE_SPEED = 0.80;
@@ -111,6 +112,10 @@ public class RobotMap {
 
     // Actually the DriveTrain
     public static DifferentialDrive drive;
+
+    // Sensors used for the DriveTrain, however are not used always.
+    public static ADXRS450_Gyro gyro;
+    public static BuiltInAccelerometer accelerometer;
 
     // ---------------
     // Control Panel Superstructure
@@ -208,5 +213,8 @@ public class RobotMap {
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
         controlPanelUltraSonic = new AnalogUltrasonic(3);
+        gyro = new ADXRS450_Gyro();
+        accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k2G);
+        gyro.calibrate();
     }
 }

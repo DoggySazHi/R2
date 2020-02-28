@@ -16,7 +16,11 @@ public class ManualClimber extends CommandBase
 
     public ManualClimber(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
-        addRequirements(subsystems.getClimber());
+
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+        Climber climber = subsystems.getClimber();
+
+        addRequirements(driveTrain, climber);
     }
 
     @Override
