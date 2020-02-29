@@ -185,10 +185,10 @@ public class RobotMap {
         drive = new DifferentialDrive(left, right);
 
         intakeRoller = new CANPWMFallback(4, -1, "Intake Roller");
-        intakeShooterTilt = new CANPWMFallback(5, -1, "IntakeShooter Tilt");
+        intakeShooterTilt = new CANPWMFallback(7, -1, "IntakeShooter Tilt");
         projectileAimer = new Servo(6);
 
-        liftMotor = new CANPWMFallback(7, -1, "Lift Motor Left");
+        liftMotor = new CANPWMFallback(5, -1, "Lift Motor Left");
         climberActivator = new Servo(8);
 
         // DIO (Limit switches, Ultrasonic)
@@ -201,7 +201,7 @@ public class RobotMap {
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
-        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage").withRamping(0.5);
+        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage");
         controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
