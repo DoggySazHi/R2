@@ -2,6 +2,8 @@ package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -175,5 +177,12 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testPeriodic() { }
+    public void testPeriodic() {
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("GyroAccelTest");
+        table.getEntry("AccelX").setDouble(RobotMap.accelerometer.getX());
+        table.getEntry("AccelY").setDouble(RobotMap.accelerometer.getY());
+        table.getEntry("AccelZ").setDouble(RobotMap.accelerometer.getZ());
+        table.getEntry("GyroAngle").setDouble(RobotMap.gyro.getAngle());
+        table.getEntry("GyroRate").setDouble(RobotMap.gyro.getRate());
+    }
 }
