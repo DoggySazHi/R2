@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.Climber;
-import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 /**
@@ -17,10 +16,9 @@ public class ManualClimber extends CommandBase
     public ManualClimber(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
 
-        DriveTrain driveTrain = subsystems.getDriveTrain();
         Climber climber = subsystems.getClimber();
 
-        addRequirements(driveTrain, climber);
+        addRequirements(climber);
     }
 
     @Override
@@ -58,10 +56,8 @@ public class ManualClimber extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
-        DriveTrain driveTrain = subsystems.getDriveTrain();
         Climber climber = subsystems.getClimber();
 
         climber.stop();
-        driveTrain.stop();
     }
 }
