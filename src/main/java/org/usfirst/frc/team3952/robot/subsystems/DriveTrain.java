@@ -1,15 +1,13 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.usfirst.frc.team3952.robot.*;
+import org.usfirst.frc.team3952.robot.NetworkTableMap;
+import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.ARCADE_OR_CURVATURE;
-import static org.usfirst.frc.team3952.robot.RobotMap.CONTROLLER_DRIVE_MODE;
+import static org.usfirst.frc.team3952.robot.RobotMap.ACCELEROMETER_THRESHOLD_ACCELERATION;
 
 public class DriveTrain extends SubsystemBase {
     private CANPWMFallback leftDrive = RobotMap.leftDriveFront;
@@ -31,19 +29,21 @@ public class DriveTrain extends SubsystemBase {
         drive.arcadeDrive(lat, rot, quickTurn);
         BuiltInAccelerometer accelerometer = RobotMap.accelerometer;
 
-        long deltaTime = System.currentTimeMillis()-lastCheck;
+        long deltaTime = System.currentTimeMillis() - lastCheck;
         lastCheck = System.currentTimeMillis();
-        if(deltaTime >= 1000) return;
-        xVel += accelerometer.getX() * deltaTime / 1000.0 * GRAVITY;
-        yVel += accelerometer.getY() * deltaTime / 1000.0 * GRAVITY;
-        xPos += xVel * deltaTime/1000.0;
-        yPos += yVel * deltaTime/1000.0;
+        if (deltaTime >= 1000) return;
+        double xAccel = accelerometer.getX() < ACCELEROMETER_THRESHOLD_ACCELERATION ? 0 : accelerometer.getX();
+        double yAccel = accelerometer.getY() < ACCELEROMETER_THRESHOLD_ACCELERATION ? 0 : accelerometer.getY();
 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("AcceLTest");
-        table.getEntry("XPos").setDouble(xPos);
-        table.getEntry("YPos").setDouble(yPos);
-        table.getEntry("XVel").setDouble(xVel);
-        table.getEntry("YVel").setDouble(yVel);
+        xVel += xAccel * deltaTime / 1000.0 * GRAVITY;
+        yVel += yAccel * deltaTime / 1000.0 * GRAVITY;
+        xPos += xVel * deltaTime / 1000.0;
+        yPos += yVel * deltaTime / 1000.0;
+
+        NetworkTableMap.xPosition.setDouble(xPos);
+        NetworkTableMap.yPosition.setDouble(yPos);
+        NetworkTableMap.xVelocity.setDouble(xVel);
+        NetworkTableMap.yVelocity.setDouble(yVel);
     }
 
     /**

@@ -42,6 +42,8 @@ public class RobotMap {
     //Rotation for the gyro on turn left/turn right
     public static final double GYRO_ROTATION = 0.25;
 
+    //threshold for acceleration
+    public static final double ACCELEROMETER_THRESHOLD_ACCELERATION = 0.02;
     // ---------------
     // Control Panel Values
     // ---------------
