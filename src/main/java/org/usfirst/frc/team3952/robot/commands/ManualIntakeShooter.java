@@ -45,7 +45,7 @@ public class ManualIntakeShooter extends CommandBase {
         intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
 
         // Sets the up/down movement.
-        intakeShooter.setAngleMotor(0 - secondaryController.getLateralMovement());
+        intakeShooter.setAngleMotor(-secondaryController.getLateralMovement());
     }
 
     @Override

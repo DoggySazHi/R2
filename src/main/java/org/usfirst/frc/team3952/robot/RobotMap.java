@@ -96,6 +96,9 @@ public class RobotMap {
     // The speed to shoot the balls out.
     public static final double REJECT_SPEED = 1.0;
 
+    // The value to "trim" the servos at (center).
+    public static final double TILT_SERVO_TRIM = -0.05;
+
     // ---------------
     // Climber Values
     // ---------------

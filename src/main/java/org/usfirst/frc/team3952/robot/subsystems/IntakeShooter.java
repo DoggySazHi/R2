@@ -106,7 +106,7 @@ public class IntakeShooter extends SubsystemBase {
      * @param speed At what position the servos are tilted at.
      */
     public void setTiltServos(double speed) {
-        tiltServos.set((speed + 1.0)/2.0);
+        tiltServos.set(Math.min(1.0, Math.max(-1.0, speed + TILT_SERVO_TRIM)));
     }
 
     /**
