@@ -36,6 +36,14 @@ public class RobotMap {
     // Which file to load for the PseudoAutonomous.
     public static final String AUTON_SCRIPT = "left.json";
 
+    // Threshold for the gyro
+    public static final double GYRO_THRESHOLD = 3;
+
+    //Rotation for the gyro on turn left/turn right
+    public static final double GYRO_ROTATION = 0.25;
+
+    //threshold for acceleration
+    public static final double ACCELEROMETER_THRESHOLD_ACCELERATION = 0.02;
     // ---------------
     // Control Panel Values
     // ---------------

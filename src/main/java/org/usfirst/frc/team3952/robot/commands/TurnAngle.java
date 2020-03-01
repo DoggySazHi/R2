@@ -8,12 +8,14 @@ import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+import static org.usfirst.frc.team3952.robot.RobotMap.GYRO_ROTATION;
+import static org.usfirst.frc.team3952.robot.RobotMap.GYRO_THRESHOLD;
+
 public class TurnAngle extends CommandBase {
 
     private RobotSubsystems subsystems;
     private ADXRS450_Gyro gyro;
 
-    private static final double THRESHOLD = 3.0;
     private double endingAngle;
     public TurnAngle(RobotSubsystems subsystems, double turnAngle) {
         this.subsystems = subsystems;
@@ -32,11 +34,17 @@ public class TurnAngle extends CommandBase {
     public void execute() {
         DriveTrain driveTrain = subsystems.getDriveTrain();
         driveTrain.drive(0, 0, 1, false);
+        if(endingAngle < gyro.getAngle()) {
+            driveTrain.drive(0, 0, -GYRO_ROTATION, false);
+        }
+        else {
+            driveTrain.drive(0,0, GYRO_ROTATION, false);
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(endingAngle - gyro.getAngle()) <= THRESHOLD;
+        return Math.abs(endingAngle - gyro.getAngle()) <= GYRO_THRESHOLD;
     }
 
     @Override
