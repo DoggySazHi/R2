@@ -8,12 +8,26 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class NetworkTableMap {
     private static NetworkTableInstance instance;
 
-    private static NetworkTable r2Table;
-    public NetworkTableEntry calibrateGyro;
+    public static NetworkTableEntry xPosition;
+    public static NetworkTableEntry yPosition;
+    public static NetworkTableEntry xVelocity;
+    public static NetworkTableEntry yVelocity;
+    public static NetworkTableEntry color;
+    public static NetworkTableEntry colorValue;
+    public static NetworkTableEntry fmsColor;
+    public static NetworkTableEntry rotations;
+    public static NetworkTableEntry autoAlignX;
+    public static NetworkTableEntry autoAlignY;
+    public static NetworkTableEntry calibrateGyro;
+    private static NetworkTable accelTable;
+    private static NetworkTable controlWheelTable;
 
-    public void init()
-    {
+    private static NetworkTable r2Table;
+    private static NetworkTable limeLiteTable;
+
+    public static void init() {
         instance = NetworkTableInstance.getDefault();
+
         r2Table = instance.getTable("R2");
 
         calibrateGyro = r2Table.getEntry("Calibrate Gyro");
@@ -21,5 +35,21 @@ public class NetworkTableMap {
         calibrateGyro.addListener(event -> {
             RobotMap.gyro.calibrate();
         }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+
+        accelTable = NetworkTableInstance.getDefault().getTable("AccelTest");
+        xPosition = accelTable.getEntry("XPos");
+        yPosition = accelTable.getEntry("YPos");
+        xVelocity = accelTable.getEntry("XVel");
+        yVelocity = accelTable.getEntry("YVel");
+
+        controlWheelTable = instance.getTable("Control Wheel");
+        color = controlWheelTable.getEntry("Color");
+        colorValue = controlWheelTable.getEntry("Color Value");
+        fmsColor = controlWheelTable.getEntry("FMS Color");
+        rotations = controlWheelTable.getEntry("Rotations");
+
+        limeLiteTable = instance.getTable("LimeLightLite");
+        autoAlignX = limeLiteTable.getEntry("X Position");
+        autoAlignY = limeLiteTable.getEntry("Y Position");
     }
 }

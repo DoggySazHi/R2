@@ -1,23 +1,21 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.usfirst.frc.team3952.robot.NetworkTableMap;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
+import static org.usfirst.frc.team3952.robot.NetworkTableMap.*;
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 /**
@@ -30,21 +28,10 @@ public class ControlWheel extends SubsystemBase
     private AnalogUltrasonic controlPanelUltrasonic = RobotMap.controlPanelUltraSonic;
     private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
 
-    private NetworkTableEntry color;
-    private NetworkTableEntry colorValue;
-    private NetworkTableEntry fmsColor;
-    private NetworkTableEntry rotations;
     private ColorMatch colorMatch;
 
     public ControlWheel()
     {
-        NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
-        NetworkTable nTable = ntInst.getTable("Control Wheel");
-        color = nTable.getEntry("Color");
-        colorValue = nTable.getEntry("Color Value");
-        fmsColor = nTable.getEntry("FMS Color");
-        rotations = nTable.getEntry("Rotations");
-
         colorMatch = new ColorMatch();
         colorMatch.addColorMatch(CP_RED);
         colorMatch.addColorMatch(CP_GREEN);
@@ -118,7 +105,7 @@ public class ControlWheel extends SubsystemBase
         getColor();
         getClosestColor();
         getFMSColor();
-        this.rotations.setDouble(rotations);
+        NetworkTableMap.rotations.setDouble(rotations);
     }
 
     public void enable()
