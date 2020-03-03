@@ -1,11 +1,12 @@
 package org.usfirst.frc.team3952.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.subsystems.ControlWheel;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
+
+import static org.usfirst.frc.team3952.robot.NetworkTableMap.colorValue;
 
 /**
  * Doesn't actually allow the user to manually turn, but rather update all values into NetworkTables.
@@ -13,8 +14,6 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class ManualTurn extends CommandBase
 {
     private RobotSubsystems subsystems;
-
-    private NetworkTableEntry colorValue;
 
     public ManualTurn(RobotSubsystems subsystems) {
         this.subsystems = subsystems;

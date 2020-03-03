@@ -26,6 +26,10 @@ public class DriveTrain extends SubsystemBase {
      * This method changes its drive method based on RobotMap settings. See wpilib documentation for what each drive methods takes.
      */
     public void drive(double hor, double lat, double rot, boolean quickTurn) {
+        if(quickTurn)
+            System.out.print("mukyu");
+        if(quickTurn)
+            rot = Math.min(1.0, Math.max(-1.0, Math.pow(rot, 2)));
         drive.arcadeDrive(lat, rot, quickTurn);
         BuiltInAccelerometer accelerometer = RobotMap.accelerometer;
 
