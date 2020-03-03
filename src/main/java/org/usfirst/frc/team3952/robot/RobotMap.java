@@ -87,7 +87,7 @@ public class RobotMap {
     public static final int MAX_BALL_STORAGE = 5;
 
     // The speed to run the storage motor at.
-    public static final double STORAGE_MOTOR_SPEED = 0.15;
+    public static final double STORAGE_MOTOR_SPEED = 0.5;
 
     // The speed to suck the balls in.
     public static final double INTAKE_SPEED = 0.80;
@@ -214,7 +214,7 @@ public class RobotMap {
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
-        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage").withRamping(0.5);
+        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage");
         controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
