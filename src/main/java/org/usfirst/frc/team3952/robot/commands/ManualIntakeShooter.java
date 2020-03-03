@@ -5,6 +5,9 @@ import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+/**
+ * Allows the drivers to control the IntakeShooter, including the aimer, tilt, and piston/storage.
+ */
 public class ManualIntakeShooter extends CommandBase {
 
     private RobotSubsystems subsystems;
@@ -41,5 +44,12 @@ public class ManualIntakeShooter extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public void end(boolean interrupted)
+    {
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+        shooter.stop();
     }
 }

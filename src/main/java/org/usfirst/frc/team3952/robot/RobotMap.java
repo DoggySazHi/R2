@@ -4,15 +4,13 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
-import org.usfirst.frc.team3952.robot.devices.NeoPixelLED;
 
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.CAN;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.PWM;
-
-//It's sparks, not CANPWMFallbacks lucas, ya dumbie
 
 /**
  * A listing of core devices and values that are used on the robot.
@@ -35,6 +33,9 @@ public class RobotMap {
     // Whether to implement ArcadeDrive (false) or CurvatureDrive (true).
     public static final boolean ARCADE_OR_CURVATURE = false;
 
+    // Which file to load for the PseudoAutonomous.
+    public static final String AUTON_SCRIPT = "left.json";
+
     // ---------------
     // Control Panel Values
     // ---------------
@@ -44,6 +45,7 @@ public class RobotMap {
     public static final Color CP_GREEN = ColorMatch.makeColor(0.190, 0.545, 0.260);
     public static final Color CP_BLUE = ColorMatch.makeColor(0.150, 0.455, 0.385);
     public static final Color CP_YELLOW = ColorMatch.makeColor(0.300, 0.550, 0.160);
+
     //Sets the speed of the robot as it drives to the control wheel
     public static final double DRIVE_CONTROL_WHEEL_SPEED = 0.5;
 
@@ -111,6 +113,10 @@ public class RobotMap {
     // Actually the DriveTrain
     public static DifferentialDrive drive;
 
+    // Sensors used for the DriveTrain, however are not used always.
+    public static ADXRS450_Gyro gyro;
+    public static BuiltInAccelerometer accelerometer;
+
     // ---------------
     // Control Panel Superstructure
     // ---------------
@@ -138,7 +144,7 @@ public class RobotMap {
     public static CANPWMFallback intakeShooterTilt;
 
     // Aim the shooter a bit left or right to shoot balls at a slight angle.
-    public static Servo projectileAimer;
+    public static CANPWMFallback projectileAimer;
 
     // The two motors used to actually grab and shoot the balls from the outside.
     public static CANPWMFallback intake;
@@ -150,9 +156,6 @@ public class RobotMap {
 
     // A solenoid to push the ball out.
     public static DoubleSolenoid ballShooter;
-
-    // A servo to lock the spinner in place.
-    public static Servo projectileLock;
 
     // Buttons to check if the tilt is maxed out in both directions.
     public static DigitalInput hitTop;
@@ -166,13 +169,11 @@ public class RobotMap {
     public static CANPWMFallback liftMotor;
 
     // The solenoid to activate the climber.
-    public static Servo climberActivator;
-
-    // Light.
-    public static NeoPixelLED light;
+    public static CANPWMFallback climberActivator;
 
     public static void init() {
         CANPWMFallback.defaultMode = PWM;
+
         // PWM (Motors and Servos)
         leftDriveFront = new CANPWMFallback(0, -1, "Left Drive"); //BL 3
         rightDriveFront = new CANPWMFallback(1, -1, "Right Drive"); //G1
@@ -185,19 +186,20 @@ public class RobotMap {
         drive = new DifferentialDrive(left, right);
 
         intakeRoller = new CANPWMFallback(4, -1, "Intake Roller");
-        intakeShooterTilt = new CANPWMFallback(7, -1, "IntakeShooter Tilt");
-        projectileAimer = new Servo(6);
+        intakeShooterTilt = new CANPWMFallback(5, -1, "IntakeShooter Tilt");
+        projectileAimer = new CANPWMFallback(6, -1, "Projectile Aimer", true).useFullRange(true);
 
-        liftMotor = new CANPWMFallback(5, -1, "Lift Motor Left");
-        climberActivator = new Servo(8);
+        liftMotor = new CANPWMFallback(7, -1, "Lift Motor Left");
+        climberActivator = new CANPWMFallback(8, -1, "Climber Activator(s)", true).useFullRange(true);
 
         // DIO (Limit switches, Ultrasonic)
 
         // AI (Encoders, Potentiometers, Photo Resistors)
-        // chirp chirp
+        // chirp chirp (they don't exist)
 
         CANPWMFallback.defaultMode = CAN;
         CANPWMFallback.forceCANConnection = true;
+
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
@@ -211,5 +213,8 @@ public class RobotMap {
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
         controlPanelUltraSonic = new AnalogUltrasonic(3);
+        gyro = new ADXRS450_Gyro();
+        accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k2G);
+        gyro.calibrate();
     }
 }

@@ -23,6 +23,9 @@ public class IntakeBall extends CommandBase {
 
     }
 
+    /**
+     * Sets the motor to the fastest speed downwards. NOTE: Might be inverted.
+     */
     @Override
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
@@ -32,6 +35,13 @@ public class IntakeBall extends CommandBase {
     @Override
     public boolean isFinished() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        return false;
+        return shooter.hitBottom();
+    }
+
+    @Override
+    public void end(boolean interrupted)
+    {
+        IntakeShooter shooter = subsystems.getIntakeShooter();
+        shooter.stop();
     }
 }

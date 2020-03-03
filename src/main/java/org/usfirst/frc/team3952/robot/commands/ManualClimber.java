@@ -7,18 +7,27 @@ import org.usfirst.frc.team3952.robot.subsystems.Climber;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+/**
+ * Handle the climber from the <code>MainController</code>, where the climber can be activated and the robot moving.
+ */
 public class ManualClimber extends CommandBase
 {
     private RobotSubsystems subsystems;
 
     public ManualClimber(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
-        addRequirements(subsystems.getClimber());
+
+        Climber climber = subsystems.getClimber();
+
+        addRequirements(climber);
     }
 
     @Override
     public void initialize() {}
 
+    /**
+     * Check for controller input and climb based on it.
+     */
     @Override
     public void execute() {
         Climber climber = subsystems.getClimber();
@@ -49,6 +58,9 @@ public class ManualClimber extends CommandBase
     @Override
     public void end(boolean interrupted) {
         DriveTrain driveTrain = subsystems.getDriveTrain();
+        Climber climber = subsystems.getClimber();
+
+        climber.stop();
         driveTrain.stop();
     }
 }

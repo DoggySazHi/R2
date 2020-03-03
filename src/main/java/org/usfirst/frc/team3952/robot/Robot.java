@@ -2,14 +2,13 @@ package org.usfirst.frc.team3952.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.usfirst.frc.team3952.robot.commands.ManualClimber;
-import org.usfirst.frc.team3952.robot.commands.ManualDrive;
-import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
-import org.usfirst.frc.team3952.robot.commands.ManualTurn;
+import org.usfirst.frc.team3952.robot.commands.*;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
@@ -36,7 +35,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         RobotMap.init();
-        //TODO remove, test if we can read from deploy folder
         checkCredits();
 
         DriveTrain driveTrain = new DriveTrain();
@@ -67,17 +65,18 @@ public class Robot extends TimedRobot {
         climber.setDefaultCommand(new ManualClimber(subsystems));
     }
 
+    /**
+     * More of a test, it reads a file in the RoboRIO and then spits it out.
+     */
     private void checkCredits() {
         File[] deployFiles = Filesystem.getDeployDirectory().listFiles();
-        if(deployFiles == null) return;
-        for(File f : deployFiles)
-            if(f.getName().contains("credits"))
-            {
+        if (deployFiles == null) return;
+        for (File f : deployFiles)
+            if (f.getName().contains("credits")) {
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(f));
                     String data = br.readLine();
-                    while(data != null)
-                    {
+                    while (data != null) {
                         System.out.println(data);
                         data = br.readLine();
                     }
@@ -96,12 +95,19 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
     }
 
+    /**
+     * Enable a USB camera on the RoboRIO itself.
+     */
     private void initCameras() {
         // For testing purposes, add this to the end of robotInit()
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
         camera.setResolution(640, 480);
     }
 
+    /**
+     * Check if the controllers are connected to the Driver Station, and then init them if necessary.
+     * This is usually called periodically in robotPeriodic().
+     */
     private void checkControllers() {
         if (checkControllerTime == null)
             checkControllerTime = Instant.now();
@@ -115,6 +121,9 @@ public class Robot extends TimedRobot {
             }
     }
 
+    /**
+     * (Re)Initialize the main controller.
+     */
     private void initMainController() {
         try {
             subsystems.setMainController(new MainController(new Joystick(0), subsystems));
@@ -127,6 +136,9 @@ public class Robot extends TimedRobot {
         }
     }
 
+    /**
+     * (Re)Initialize the secondary controller.
+     */
     private void initSecondaryController() {
         try {
             subsystems.setSecondaryController(new SecondaryController(new Joystick(1), subsystems));
@@ -146,7 +158,9 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() { }
 
     @Override
-    public void autonomousInit() { /* TODO autoalign should be .schedule()ed */ }
+    public void autonomousInit() {
+        CommandScheduler.getInstance().schedule(new PseudoAutonomous(subsystems));
+    }
 
     @Override
     public void autonomousPeriodic() {  }
@@ -163,5 +177,12 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testPeriodic() { }
+    public void testPeriodic() {
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("GyroAccelTest");
+        table.getEntry("AccelX").setDouble(RobotMap.accelerometer.getX());
+        table.getEntry("AccelY").setDouble(RobotMap.accelerometer.getY());
+        table.getEntry("AccelZ").setDouble(RobotMap.accelerometer.getZ());
+        table.getEntry("GyroAngle").setDouble(RobotMap.gyro.getAngle());
+        table.getEntry("GyroRate").setDouble(RobotMap.gyro.getRate());
+    }
 }

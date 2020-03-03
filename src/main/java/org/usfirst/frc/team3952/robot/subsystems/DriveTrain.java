@@ -15,6 +15,10 @@ public class DriveTrain extends SubsystemBase {
 
     //code accounts for reversing of motors no need for mechanical solution
 
+    /**
+    * It is the method that moves the robot, it takes in 4 parameters. There are deadzones in each parameter. Quickturn amplifies the rot value.
+    * This method changes its drive method based on RobotMap settings. See wpilib documentation for what each drive methods takes.
+    */
     public void drive(double hor, double lat, double rot, boolean quickTurn) {
        
                 drive.arcadeDrive(lat, rot, quickTurn);
@@ -31,7 +35,9 @@ public class DriveTrain extends SubsystemBase {
         }
          */
     }
-    
+    /**
+    * It stops the drivetrain
+    */
     public void stop() {
         drive.stopMotor();
     }
