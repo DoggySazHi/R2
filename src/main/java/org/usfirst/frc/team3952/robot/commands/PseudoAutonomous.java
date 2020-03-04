@@ -6,7 +6,7 @@ import org.usfirst.frc.team3952.robot.subsystems.*;
 
 import java.util.Optional;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.AUTON_SCRIPT;
+import static org.usfirst.frc.team3952.robot.RobotMap.AUTONOMOUS_SCRIPT;
 
 /**
  * A way to read path directions from a file, it should simplify operations on a fake autonomous without encoders.
@@ -30,7 +30,7 @@ public class PseudoAutonomous extends CommandBase {
 
     @Override
     public void initialize() {
-        list = new Path(AUTON_SCRIPT);
+        list = new Path(AUTONOMOUS_SCRIPT);
     }
 
     @Override

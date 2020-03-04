@@ -14,6 +14,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.SERVO_MAXPOWER;
  */
 public class Climber extends SubsystemBase {
     private CANPWMFallback liftMotor = RobotMap.liftMotor;
+    private CANPWMFallback liftMotor2 = RobotMap.liftMotor2;
     private CANPWMFallback climberActivator = RobotMap.climberActivator;
     //private Servo climberActivator2 = RobotMap.climberActivator2;
     /**
