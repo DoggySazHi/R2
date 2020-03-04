@@ -1,6 +1,8 @@
-package org.usfirst.frc.team3952.robot.commands;
+package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandGroupBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.usfirst.frc.team3952.robot.devices.Path;
 import org.usfirst.frc.team3952.robot.subsystems.*;
 
@@ -11,45 +13,37 @@ import static org.usfirst.frc.team3952.robot.RobotMap.AUTONOMOUS_SCRIPT;
 /**
  * A way to read path directions from a file, it should simplify operations on a fake autonomous without encoders.
  */
-public class PseudoAutonomous extends CommandBase {
+public class AutonBuilder extends CommandBase {
     private RobotSubsystems subsystems;
     private Path list;
     private boolean ready;
     private boolean end;
+    private SequentialCommandGroup commandGroup;
 
-    public PseudoAutonomous(RobotSubsystems subsystems) {
+    public AutonBuilder(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
-
-        IntakeShooter shooter = subsystems.getIntakeShooter();
-        DriveTrain driveTrain = subsystems.getDriveTrain();
-        Climber climber = subsystems.getClimber();
-        ControlWheel controlWheel = subsystems.getControlWheel();
-
-        addRequirements(shooter, driveTrain, climber, controlWheel);
     }
 
     @Override
     public void initialize() {
         list = new Path(AUTONOMOUS_SCRIPT);
+        commandGroup = new SequentialCommandGroup();
     }
 
     @Override
     public void execute() {
-        IntakeShooter shooter = subsystems.getIntakeShooter();
-        Climber climber = subsystems.getClimber();
-        ControlWheel controlWheel = subsystems.getControlWheel();
-
         if(list.getStatus() != Path.PathStatus.Ready) return;
         else if(list.getStatus() == Path.PathStatus.Ready && !ready)
         {
             list.start();
             ready = true;
         }
+        //TODO Run this in a new thread, processing. And do DriveTime.
 
         String[] cmd = list.getCurrentInstruction().split(" ");
 
         if(cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 5)
-            drive(cmd);
+            commandGroup.addCommands(drive(cmd));
         else if(cmd[0].equalsIgnoreCase("LIFT") && cmd.length == 5)
             drive(cmd);
         else if(cmd[0].equalsIgnoreCase("END"))
@@ -69,7 +63,7 @@ public class PseudoAutonomous extends CommandBase {
         controlWheel.stop();
     }
 
-    private void drive(String[] cmd) {
+    private DriveTime drive(String[] cmd) {
         DriveTrain driveTrain = subsystems.getDriveTrain();
 
         var x = tryParseDouble(cmd[1]);
@@ -79,7 +73,7 @@ public class PseudoAutonomous extends CommandBase {
 
         if (x.isEmpty() || y.isEmpty() || z.isEmpty() || quickTurn.isEmpty()) {
             System.out.println("Error: invalid MOVE command! Must be in the form of \"MOVE [-1.0, 1.0] [-1.0, 1.0] [-1.0, 1.0] [0/1]\".");
-            return;
+            return new DriveTime(subsystems);
         }
 
         var xNum = x.get();
@@ -87,7 +81,7 @@ public class PseudoAutonomous extends CommandBase {
         var zNum = z.get();
         var quickTurnBool = quickTurn.get() == 1;
 
-        driveTrain.drive(xNum, yNum, zNum, quickTurnBool);
+        return new DriveTime(subsystems/* , xNum, yNum, zNum, quickTurnBool */);
     }
 
     public Optional<Double> tryParseDouble(String input) {

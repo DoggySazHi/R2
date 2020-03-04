@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.usfirst.frc.team3952.robot.commands.*;
+import org.usfirst.frc.team3952.robot.commands.ManualTurn;
+import org.usfirst.frc.team3952.robot.commands.autonomous.AutonBuilder;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
@@ -160,7 +162,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        CommandScheduler.getInstance().schedule(new PseudoAutonomous(subsystems));
+        CommandScheduler.getInstance().schedule(new AutonBuilder(subsystems));
     }
 
     @Override
