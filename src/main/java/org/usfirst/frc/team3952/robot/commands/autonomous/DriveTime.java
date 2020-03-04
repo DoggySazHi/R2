@@ -1,43 +1,52 @@
 package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-/**
- * Oh my, you remember this lab?
- * https://drive.google.com/drive/u/2/folders/1LTU0j3dl_jQ-gvhfyn8F5cIc2QuDd8AT
- * See BasicCommandLab.
- */
-public class DriveTime extends CommandBase
-{
+public class DriveTime extends CommandBase {
+    private long time;
+    private long startTime;
     private RobotSubsystems subsystems;
+    private double speedX;
+    private double speedY;
+    private double speedZ;
+    private boolean quickTurn;
 
-    public DriveTime(RobotSubsystems subsystems)
-    {
+    public DriveTime(RobotSubsystems subsystems, long time, double speedX, double speedY, double speedZ, boolean quickTurn) {
+        this.time = time;
         this.subsystems = subsystems;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.speedZ = speedZ;
+        this.quickTurn = quickTurn;
+
+        addRequirements(subsystems.getDriveTrain());
+    }
+    
+
+    @Override
+    public void initialize() {
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+        startTime = System.currentTimeMillis();
+        driveTrain.drive(speedX, speedY, speedZ, quickTurn);
     }
 
     @Override
-    public void execute()
-    {
-
+    public void execute() {
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+        driveTrain.drive(speedX, speedY, speedZ, quickTurn);
     }
 
     @Override
-    public void initialize()
-    {
-
+    public boolean isFinished() {
+        return System.currentTimeMillis() - startTime >= time;
     }
 
     @Override
-    public boolean isFinished()
-    {
-        return false;
-    }
-
-    @Override
-    public void end(boolean interrupted)
-    {
-
+    public void end(boolean interrupted) {
+        DriveTrain driveTrain = subsystems.getDriveTrain();
+        driveTrain.stop();
     }
 }
