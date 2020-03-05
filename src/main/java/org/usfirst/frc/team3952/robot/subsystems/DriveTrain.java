@@ -12,7 +12,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.ACCELEROMETER_THRESHOLD_AC
 public class DriveTrain extends SubsystemBase {
     private CANPWMFallback leftDrive = RobotMap.leftDriveFront;
     private CANPWMFallback rightDrive = RobotMap.rightDriveFront;
-    private DifferentialDrive drive = RobotMap.drive;
+    private final DifferentialDrive drive = RobotMap.drive;
     private double xPos;
     private double yPos;
     private static final double GRAVITY = 9.80665;
@@ -26,6 +26,8 @@ public class DriveTrain extends SubsystemBase {
      * This method changes its drive method based on RobotMap settings. See wpilib documentation for what each drive methods takes.
      */
     public void drive(double hor, double lat, double rot, boolean quickTurn) {
+        if(quickTurn)
+            rot = Math.min(1.0, Math.max(-1.0, Math.pow(rot, 2)));
         drive.arcadeDrive(lat, rot, quickTurn);
         BuiltInAccelerometer accelerometer = RobotMap.accelerometer;
 

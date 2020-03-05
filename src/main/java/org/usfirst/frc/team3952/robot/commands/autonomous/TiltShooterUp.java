@@ -1,17 +1,17 @@
-package org.usfirst.frc.team3952.robot.commands;
+package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 /**
-* Tilt the shooter to the highest position available.
-*/
-public class EjectBall extends CommandBase {
+ * Tilt the shooter to the highest position available.
+ */
+public class TiltShooterUp extends CommandBase {
 
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
-    public EjectBall(RobotSubsystems subsystems) {
+    public TiltShooterUp(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
 

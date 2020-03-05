@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3952.robot.commands;
+package org.usfirst.frc.team3952.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
@@ -11,7 +11,7 @@ import static org.usfirst.frc.team3952.robot.NetworkTableMap.autoAlignY;
  * The core for the AutoAlign system, where the robot will drive around by itself based on the RPi.
  */
 public class AutoAlign extends CommandBase {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public AutoAlign(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
@@ -32,6 +32,11 @@ public class AutoAlign extends CommandBase {
         if (xPos == -1 || yPos == -1) {
             return;
         }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override

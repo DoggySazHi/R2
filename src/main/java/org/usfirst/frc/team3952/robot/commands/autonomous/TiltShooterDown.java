@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3952.robot.commands;
+package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
@@ -7,11 +7,11 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 /**
  * Tilt the shooter to the lowest position available.
  */
-public class IntakeBall extends CommandBase {
+public class TiltShooterDown extends CommandBase {
 
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
-    public IntakeBall(RobotSubsystems subsystems) {
+    public TiltShooterDown(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
 

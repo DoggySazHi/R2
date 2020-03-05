@@ -10,7 +10,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
  */
 public class ManualIntakeShooter extends CommandBase {
 
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public ManualIntakeShooter(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
@@ -33,13 +33,6 @@ public class ManualIntakeShooter extends CommandBase {
             intakeShooter.reject(secondaryController.getRawButton(3), secondaryController.getRawButton(1));
         else
             intakeShooter.stop();
-
-        if (secondaryController.getRawButton(1)){
-            while (intakeShooter.isLocked()){
-                intakeShooter.setRotateMotor(0.5);   
-            }
-        }
-        intakeShooter.setRotateMotor(0);
 
         // Already compensated. Sets the tilt servo.
         intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());

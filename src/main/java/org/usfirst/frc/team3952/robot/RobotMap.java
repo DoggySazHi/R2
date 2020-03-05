@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3952.robot;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
@@ -27,23 +29,18 @@ public class RobotMap {
     // Milliseconds before re-checking for motors.
     public static final long MOTOR_CHECK_DELAY = 1000;
 
-    // Whether to make the drive mode based on lat + hor (false), or lat + rot (true) for DifferentialDrive
-    public static final boolean CONTROLLER_DRIVE_MODE = true;
-
-    // Whether to implement ArcadeDrive (false) or CurvatureDrive (true).
-    public static final boolean ARCADE_OR_CURVATURE = false;
-
     // Which file to load for the PseudoAutonomous.
-    public static final String AUTON_SCRIPT = "left.json";
+    public static final String AUTONOMOUS_SCRIPT = "left.json";
 
     // Threshold for the gyro
     public static final double GYRO_THRESHOLD = 3;
 
-    //Rotation for the gyro on turn left/turn right
+    // Rotation speed when turning in TurnAngle.
     public static final double GYRO_ROTATION = 0.25;
 
-    //threshold for acceleration
+    // Minimum acceleration required before counting it towards velocity/position.
     public static final double ACCELEROMETER_THRESHOLD_ACCELERATION = 0.02;
+
     // ---------------
     // Control Panel Values
     // ---------------
@@ -87,7 +84,7 @@ public class RobotMap {
     public static final int MAX_BALL_STORAGE = 5;
 
     // The speed to run the storage motor at.
-    public static final double STORAGE_MOTOR_SPEED = 0.15;
+    public static final double STORAGE_MOTOR_SPEED = 0.5;
 
     // The speed to suck the balls in.
     public static final double INTAKE_SPEED = 0.80;
@@ -178,6 +175,7 @@ public class RobotMap {
 
     // The motor used to climb the rope to the hanger (activation switch).
     public static CANPWMFallback liftMotor;
+    public static CANPWMFallback liftMotor2;
 
     // The solenoid to activate the climber.
     public static CANPWMFallback climberActivator;
@@ -190,20 +188,23 @@ public class RobotMap {
         rightDriveFront = new CANPWMFallback(1, -1, "Right Drive"); //G1
         leftDriveRear = new CANPWMFallback(2, -1, "Left Drive (Rear)"); //O4
         rightDriveRear = new CANPWMFallback(3, -1, "Right Drive (Rear)"); //B2
-        spinnerLocked = new DigitalInput(1);
         SpeedControllerGroup left = new SpeedControllerGroup(leftDriveFront, leftDriveRear);
         SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
 
         drive = new DifferentialDrive(left, right);
 
         intakeRoller = new CANPWMFallback(4, -1, "Intake Roller");
-        intakeShooterTilt = new CANPWMFallback(5, -1, "IntakeShooter Tilt");
+        climberActivator = new CANPWMFallback(5, -1, "Climber Activator(s)", true).useFullRange(true);
         projectileAimer = new CANPWMFallback(6, -1, "Projectile Aimer", true).useFullRange(true);
 
-        liftMotor = new CANPWMFallback(7, -1, "Lift Motor Left");
-        climberActivator = new CANPWMFallback(8, -1, "Climber Activator(s)", true).useFullRange(true);
+        intakeShooterTilt = new CANPWMFallback(7, -1, "IntakeShooter Tilt");
+        liftMotor = new CANPWMFallback(8, -1, "Lift Motor Left");
+        liftMotor2 = new CANPWMFallback(9, -1, "Lift Motor Right");
 
         // DIO (Limit switches, Ultrasonic)
+        spinnerLocked = new DigitalInput(1);
+        hitTop = new DigitalInput(2);
+        hitBottom = new DigitalInput(3);
 
         // AI (Encoders, Potentiometers, Photo Resistors)
         // chirp chirp (they don't exist)
@@ -214,7 +215,7 @@ public class RobotMap {
         // CAN (Motors)
         intake = new CANPWMFallback(-1, 0, "Intake Left").withRamping(0.5);
         intake2 = new CANPWMFallback(-1, 1, "Intake Right").withRamping(0.5);
-        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage").withRamping(0.5);
+        intakeShooterStorage = new CANPWMFallback(-1, 2, "IntakeShooter Storage");
         controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
@@ -227,5 +228,72 @@ public class RobotMap {
         gyro = new ADXRS450_Gyro();
         accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k2G);
         gyro.calibrate();
+    }
+
+    public static class SerializerPrimitive implements ExclusionStrategy
+    {
+        @Override
+        public boolean shouldSkipClass(Class<?> clazz) {
+            return false;
+        }
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes f) {
+            var type = f.getDeclaredType();
+            return !(type == String.class || type == int.class || type == long.class || type == double.class || type == boolean.class || type == Color.class);
+        }
+    }
+
+    static {
+        /*
+        GsonBuilder gsonBuilder  = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithModifiers(java.lang.reflect.Modifier.TRANSIENT);
+        gsonBuilder.setExclusionStrategies( new SerializerPrimitive() );
+        Gson gsonInstance = gsonBuilder.create();
+
+        File[] files = Filesystem.getDeployDirectory().listFiles();
+
+        File jsonFile = null;
+        for(File f : files)
+            if(f.getName().equals("RobotMap.json"))
+            {
+                jsonFile = f;
+                break;
+            }
+
+        Path path = Paths.get(Filesystem.getDeployDirectory().getAbsolutePath().concat("RobotMap.json"));
+        if(jsonFile == null)
+        {
+            String data = gsonInstance.toJson(RobotMap.class, RobotMap.class);
+            try(BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
+            {
+                writer.write(data);
+            }
+            catch(IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        else
+        {
+            try(BufferedReader reader = Files.newBufferedReader(path))
+            {
+                StringBuilder finalInput = new StringBuilder();
+                while (true)
+                {
+                    String s = reader.readLine();
+                    if(s == null || s.equals(""))
+                        break;
+                    finalInput.append(s);
+                }
+                RobotMap r = gsonInstance.fromJson(finalInput.toString(), RobotMap.class);
+                
+            }
+            catch(IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+         */
     }
 }

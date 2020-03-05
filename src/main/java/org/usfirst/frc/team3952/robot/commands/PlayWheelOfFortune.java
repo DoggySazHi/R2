@@ -20,7 +20,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
  * A command to automatically operate the Control Panel, using the color sensor.
  */
 public class PlayWheelOfFortune extends CommandBase {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     // Is the robot somehow spinning the wrong way?
     private NetworkTableEntry badColor;

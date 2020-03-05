@@ -11,28 +11,29 @@ import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 import static org.usfirst.frc.team3952.robot.RobotMap.*;
 
 public class IntakeShooter extends SubsystemBase {
-    private CANPWMFallback intakeLeft = RobotMap.intake;
-    private CANPWMFallback intakeRight = RobotMap.intake2;
+    private final CANPWMFallback intakeLeft = RobotMap.intake;
+    private final CANPWMFallback intakeRight = RobotMap.intake2;
 
-    private CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
-    private CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
-    private CANPWMFallback rollerMotor = RobotMap.intakeRoller;
-    private CANPWMFallback tiltServos = projectileAimer;
-    private DoubleSolenoid ballShooter = RobotMap.ballShooter;
-    private DigitalInput spinnerLocked = RobotMap.spinnerLocked;
+    private final CANPWMFallback angleMotor = RobotMap.intakeShooterTilt;
+    private final CANPWMFallback spinnerMotor = RobotMap.intakeShooterStorage;
+    private final CANPWMFallback rollerMotor = RobotMap.intakeRoller;
+    private final CANPWMFallback tiltServos = projectileAimer;
+    private final DoubleSolenoid ballShooter = RobotMap.ballShooter;
+    private final DigitalInput spinnerLocked = RobotMap.spinnerLocked;
 
-    private DigitalInput hitTop = RobotMap.hitTop;
-    private DigitalInput hitBottom = RobotMap.hitBottom;
+    private final DigitalInput hitTop = RobotMap.hitTop;
+    private final DigitalInput hitBottom = RobotMap.hitBottom;
 
-    private boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
+    private final boolean[] ballsStored = new boolean[MAX_BALL_STORAGE];
 
     private int ballPosition = 0;
+
     /**
-    * The intake motors run at a set speed in order to take in the ball. 
-    * @param max Checks if the motor is running at max speed.
-    */
-    public void intake(boolean max)
-    {
+     * The intake motors run at a set speed in order to take in the ball.
+     *
+     * @param max Checks if the motor is running at max speed.
+     */
+    public void intake(boolean max) {
         intake(max, INTAKE_ROLLER_SPEED);
     }
     /**
@@ -90,6 +91,7 @@ public class IntakeShooter extends SubsystemBase {
         intakeRight.set(ControlMode.PercentOutput, 0);
         angleMotor.stopMotor();
         rollerMotor.set(ControlMode.PercentOutput, 0.0);
+        spinnerMotor.set(0);
     }
 
     /**

@@ -7,10 +7,10 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public abstract class AbstractController
 {
-    RobotSubsystems subsystems;
+    final RobotSubsystems subsystems;
 
     boolean successfulInit;
-    Joystick joystick;
+    final Joystick joystick;
     Button[] buttons;
 
     public AbstractController(Joystick joystick, RobotSubsystems subsystems)

@@ -1,11 +1,9 @@
-package org.usfirst.frc.team3952.robot.commands;
+package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.GYRO_ROTATION;
@@ -13,7 +11,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.GYRO_THRESHOLD;
 
 public class TurnAngle extends CommandBase {
 
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
     private ADXRS450_Gyro gyro;
 
     private double endingAngle;

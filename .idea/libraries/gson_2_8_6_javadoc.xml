@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="gson-2.8.6-javadoc">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../Public/wpilib/2020/maven/com/google/code/gson/gson/2.8.6" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../../Public/wpilib/2020/maven/com/google/code/gson/gson/2.8.6" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../../../Public/wpilib/2020/maven/com/google/code/gson/gson/2.8.6" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../../../Public/wpilib/2020/maven/com/google/code/gson/gson/2.8.6" recursive="false" type="SOURCES" />
+  </library>
+</component>
