@@ -51,16 +51,16 @@ public class AutonBuilder extends CommandBase {
                     else if (cmd[0].equalsIgnoreCase("LIFT") && cmd.length == 2)
                         c = lift(cmd);
                     else if (cmd[0].equalsIgnoreCase("TILT") && cmd.length == 2)
-                        end = true;
+                        end = true; //TODO
                     else if (cmd[0].equalsIgnoreCase("TURN") && cmd.length == 3)
-                        end = true;
-                    else if (cmd[0].equalsIgnoreCase("AUTOALIGN") && cmd.length == 3)
-                        end = true;
-                    else if (cmd[0].equalsIgnoreCase("PARALLEL"))
+                        end = true; //TODO
+                    else if (cmd[0].equalsIgnoreCase("AUTOALIGN") && cmd.length == 1)
+                        c = new AutoAlign(subsystems);
+                    else if (cmd[0].equalsIgnoreCase("PARALLEL") && cmd.length == 2)
                         c = handleParallel(cmd);
-                    else if (cmd[0].equalsIgnoreCase("DELAY"))
+                    else if (cmd[0].equalsIgnoreCase("DELAY") && cmd.length == 2)
                         end = true;
-                    else if (cmd[0].equalsIgnoreCase("END"))
+                    else if (cmd[0].equalsIgnoreCase("END") && cmd.length == 1)
                         return;
                     if (c != null) {
                         if (parallelCommands.size() != 0)
