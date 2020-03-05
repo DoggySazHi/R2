@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
@@ -14,7 +13,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.SERVO_MAXPOWER;
  */
 public class Climber extends SubsystemBase {
     private final CANPWMFallback liftMotor = RobotMap.liftMotor;
-    private CANPWMFallback liftMotor2 = RobotMap.liftMotor2;
+    private final CANPWMFallback liftMotor2 = RobotMap.liftMotor2;
     private final CANPWMFallback climberActivator = RobotMap.climberActivator;
     //private Servo climberActivator2 = RobotMap.climberActivator2;
     /**
@@ -48,7 +47,8 @@ public class Climber extends SubsystemBase {
     * @param value  It sets the speed at which the motors will turn in order to lift the robot up
     */
     public void lift(double value) {
-        liftMotor.set(ControlMode.PercentOutput, value);
+        liftMotor.set(value);
+        liftMotor2.set(value);
     }
     /**
     * It is a way to control the climber activater servo. climberActivator.set(value);
@@ -67,5 +67,6 @@ public class Climber extends SubsystemBase {
     public void stop()
     {
         liftMotor.stop();
+        liftMotor2.stop();
     }
 }
