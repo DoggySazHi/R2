@@ -2,7 +2,7 @@ package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.*;
 import org.usfirst.frc.team3952.robot.devices.Path;
-import org.usfirst.frc.team3952.robot.subsystems.*;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 import java.util.Optional;
 import java.util.Stack;
@@ -51,15 +51,15 @@ public class AutonBuilder extends CommandBase {
                     else if (cmd[0].equalsIgnoreCase("LIFT") && cmd.length == 2)
                         c = lift(cmd);
                     else if (cmd[0].equalsIgnoreCase("TILT") && cmd.length == 2)
-                        end = true; //TODO
+                        c = tilt(cmd);
                     else if (cmd[0].equalsIgnoreCase("TURN") && cmd.length == 3)
-                        end = true; //TODO
+                        c = turn(cmd);
                     else if (cmd[0].equalsIgnoreCase("AUTOALIGN") && cmd.length == 1)
                         c = new AutoAlign(subsystems);
                     else if (cmd[0].equalsIgnoreCase("PARALLEL") && cmd.length == 2)
                         c = handleParallel(cmd);
                     else if (cmd[0].equalsIgnoreCase("DELAY") && cmd.length == 2)
-                        end = true;
+                        c = delay(cmd);
                     else if (cmd[0].equalsIgnoreCase("END") && cmd.length == 1)
                         return;
                     if (c != null) {
@@ -110,9 +110,9 @@ public class AutonBuilder extends CommandBase {
     private Command lift(String[] cmd)
     {
         if(cmd[1].equalsIgnoreCase("TOP"))
-            return new EjectBall(subsystems);
+            return new TiltShooterUp(subsystems);
         else if(cmd[1].equalsIgnoreCase("BOTTOM"))
-            return new IntakeBall(subsystems);
+            return new TiltShooterDown(subsystems);
         else
         {
             System.out.println("Error: invalid LIFT command! Must be in the form of \"LIFT [TOP/BOTTOM]\".");
@@ -120,29 +120,58 @@ public class AutonBuilder extends CommandBase {
         }
     }
 
-    private ParallelCommandGroup handleParallel(String[] cmd)
-    {
-        if(cmd[1].equalsIgnoreCase("START")) {
+    private Command handleParallel(String[] cmd) {
+        if (cmd[1].equalsIgnoreCase("START")) {
             parallelCommands.push(new ParallelCommandGroup());
             return null;
-        }
-        else if(cmd[1].equalsIgnoreCase("END"))
-        {
-            if(parallelCommands.size() == 0)
-            {
+        } else if (cmd[1].equalsIgnoreCase("END")) {
+            if (parallelCommands.size() == 0) {
                 System.out.println("Error: Unmatched open parallel starts to ends!");
             }
             return parallelCommands.pop();
-        }
-        else
-        {
+        } else {
             System.out.println("Error: invalid LIFT command! Must be in the form of \"LIFT [TOP/BOTTOM]\".");
             return null;
         }
     }
 
-    public Optional<Double> tryParseDouble(String input)
-    {
+    //TODO
+    private Command tilt(String[] cmd) {
+        if (cmd[1].equalsIgnoreCase("A")) {
+            return null;
+        } else if (cmd[1].equalsIgnoreCase("B")) {
+            return null;
+        } else {
+            System.out.println("Error: invalid ??? command! Must be in the form of \"??? [???/???]\".");
+            return null;
+        }
+    }
+
+    //TODO
+    private Command turn(String[] cmd) {
+        if (cmd[1].equalsIgnoreCase("A")) {
+            return null;
+        } else if (cmd[1].equalsIgnoreCase("B")) {
+            return null;
+        } else {
+            System.out.println("Error: invalid ??? command! Must be in the form of \"??? [???/???]\".");
+            return null;
+        }
+    }
+
+    //TODO
+    private Command delay(String[] cmd) {
+        if (cmd[1].equalsIgnoreCase("A")) {
+            return null;
+        } else if (cmd[1].equalsIgnoreCase("B")) {
+            return null;
+        } else {
+            System.out.println("Error: invalid ??? command! Must be in the form of \"??? [???/???]\".");
+            return null;
+        }
+    }
+
+    public Optional<Double> tryParseDouble(String input) {
         try {
             return Optional.of(Double.parseDouble(input));
         } catch (NumberFormatException ignore) {

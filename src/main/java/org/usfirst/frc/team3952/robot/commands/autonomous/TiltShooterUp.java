@@ -5,13 +5,13 @@ import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 /**
- * Tilt the shooter to the lowest position available.
+ * Tilt the shooter to the highest position available.
  */
-public class IntakeBall extends CommandBase {
+public class TiltShooterUp extends CommandBase {
 
     private RobotSubsystems subsystems;
 
-    public IntakeBall(RobotSubsystems subsystems) {
+    public TiltShooterUp(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
 
@@ -24,23 +24,22 @@ public class IntakeBall extends CommandBase {
     }
 
     /**
-     * Sets the motor to the fastest speed downwards. NOTE: Might be inverted.
+     * Set the motor to the highest power upwards. NOTE: Might be inverted.
      */
     @Override
     public void execute() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        shooter.setAngleMotor(1.0);
+        shooter.setAngleMotor(-1.0);
     }
 
     @Override
     public boolean isFinished() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        return shooter.hitBottom();
+        return shooter.hitTop();
     }
 
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
         IntakeShooter shooter = subsystems.getIntakeShooter();
         shooter.stop();
     }
