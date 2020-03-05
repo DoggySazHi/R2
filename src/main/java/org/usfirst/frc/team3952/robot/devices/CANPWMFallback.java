@@ -27,15 +27,15 @@ public class CANPWMFallback implements SpeedController {
 
     public static boolean forceCANConnection = false;
 
-    private static CANPWMFallback[] usedPWM = new CANPWMFallback[10];
-    private static CANPWMFallback[] usedCAN = new CANPWMFallback[64];
+    private static final CANPWMFallback[] usedPWM = new CANPWMFallback[10];
+    private static final CANPWMFallback[] usedCAN = new CANPWMFallback[64];
 
     private Mode overrideMode;
 
-    private String name;
+    private final String name;
     private int pwmNum;
     private int canNum;
-    private boolean isServo;
+    private final boolean isServo;
     private boolean servoInverted;
     private boolean useFullRange = true;
 

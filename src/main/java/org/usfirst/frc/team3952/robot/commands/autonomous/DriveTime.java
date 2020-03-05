@@ -1,18 +1,17 @@
 package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class DriveTime extends CommandBase {
-    private long time;
+    private final long time;
     private long startTime;
-    private RobotSubsystems subsystems;
-    private double speedX;
-    private double speedY;
-    private double speedZ;
-    private boolean quickTurn;
+    private final RobotSubsystems subsystems;
+    private final double speedX;
+    private final double speedY;
+    private final double speedZ;
+    private final boolean quickTurn;
 
     public DriveTime(RobotSubsystems subsystems, long time, double speedX, double speedY, double speedZ, boolean quickTurn) {
         this.time = time;

@@ -11,7 +11,7 @@ import static org.usfirst.frc.team3952.robot.NetworkTableMap.autoAlignY;
  * The core for the AutoAlign system, where the robot will drive around by itself based on the RPi.
  */
 public class AutoAlign extends CommandBase {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public AutoAlign(RobotSubsystems subsystems) {
         this.subsystems = subsystems;

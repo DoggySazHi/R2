@@ -9,7 +9,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
  */
 public class TiltShooterDown extends CommandBase {
 
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public TiltShooterDown(RobotSubsystems subsystems) {
         this.subsystems = subsystems;

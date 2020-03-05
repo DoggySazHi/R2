@@ -13,7 +13,7 @@ import static org.usfirst.frc.team3952.robot.NetworkTableMap.colorValue;
  */
 public class ManualTurn extends CommandBase
 {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public ManualTurn(RobotSubsystems subsystems) {
         this.subsystems = subsystems;

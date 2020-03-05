@@ -21,17 +21,15 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
 /**
  * A subsystem to handle the spinning of the Control Panel.
  */
-public class ControlWheel extends SubsystemBase
-{
-    private CANPWMFallback motor = RobotMap.controlPanelSpinner;
-    private ColorSensorV3 colorSensor = RobotMap.colorSensor;
-    private AnalogUltrasonic controlPanelUltrasonic = RobotMap.controlPanelUltraSonic;
-    private DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
+public class ControlWheel extends SubsystemBase {
+    private final CANPWMFallback motor = RobotMap.controlPanelSpinner;
+    private final ColorSensorV3 colorSensor = RobotMap.colorSensor;
+    private final AnalogUltrasonic controlPanelUltrasonic = RobotMap.controlPanelUltraSonic;
+    private final DoubleSolenoid enableSolenoid = RobotMap.controlPanelSolenoid;
 
-    private ColorMatch colorMatch;
+    private final ColorMatch colorMatch;
 
-    public ControlWheel()
-    {
+    public ControlWheel() {
         colorMatch = new ColorMatch();
         colorMatch.addColorMatch(CP_RED);
         colorMatch.addColorMatch(CP_GREEN);

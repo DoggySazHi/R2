@@ -10,7 +10,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.DISTANCE_TO_WALL;
 import static org.usfirst.frc.team3952.robot.RobotMap.DRIVE_CONTROL_WHEEL_SPEED;
 
 public class GoToControlPanel extends CommandBase {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public GoToControlPanel(RobotSubsystems subsystems) {
         this.subsystems = subsystems;

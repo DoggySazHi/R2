@@ -5,7 +5,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class AnalogUltrasonic {
-    private AnalogInput ai;
+    private final AnalogInput ai;
     private NetworkTableEntry ntStorage;
 
     public AnalogUltrasonic(int analogPin)

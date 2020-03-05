@@ -32,9 +32,7 @@ public class NetworkTableMap {
 
         calibrateGyro = r2Table.getEntry("Calibrate Gyro");
         calibrateGyro.setBoolean(false);
-        calibrateGyro.addListener(event -> {
-            RobotMap.gyro.calibrate();
-        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        calibrateGyro.addListener(event -> RobotMap.gyro.calibrate(), EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 
         accelTable = NetworkTableInstance.getDefault().getTable("AccelTest");
         xPosition = accelTable.getEntry("XPos");

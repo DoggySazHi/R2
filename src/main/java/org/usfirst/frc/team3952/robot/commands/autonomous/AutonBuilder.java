@@ -14,7 +14,7 @@ import static org.usfirst.frc.team3952.robot.devices.Path.PathStatus.*;
  * A way to read path directions from a file, it should simplify operations on a fake autonomous without encoders.
  */
 public class AutonBuilder extends CommandBase {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
     private Path list;
     private boolean end;
     private SequentialCommandGroup commandGroup;

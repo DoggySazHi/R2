@@ -8,31 +8,30 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
  * X, Y, Z (rotate stick), Throttle. POV as well.
  * Buttons 1 (throttle) to 5 on handle, 6-11 counter-clockwise on the bottom.
  **/
-public class MainController extends AbstractController
-{
+public class MainController extends AbstractController {
     /*
     Each button can be accessed via buttons[number], where number is an integer starting from 1.
     Why do they start from 1 and not 0? Good question.
     Why was this written with buttons[0] being pointed to buttons[1]? Good question too.
      */
 
-    public double cT = 0.08;
-    public double deadzoneT = 0.08;
-    public double maxT = 0.4;
-    public double kT = (maxT - cT) / Math.log(2 - deadzoneT);
+    public final double cT = 0.08;
+    public final double deadzoneT = 0.08;
+    public final double maxT = 0.4;
+    public final double kT = (maxT - cT) / Math.log(2 - deadzoneT);
     private boolean isInverted;
-    public MainController(Joystick joystick, RobotSubsystems subsystems)
-    {
+
+    public MainController(Joystick joystick, RobotSubsystems subsystems) {
         super(joystick, subsystems);
     }
 
-    protected void init()
-    {
+    protected void init() {
         // Place all button bindings here.
     }
+
     /**
-    * This will return the rotation of the joystick, it is a double value and this correspond to how much you twist the controller
-    */
+     * This will return the rotation of the joystick, it is a double value and this correspond to how much you twist the controller
+     */
     public double getRotation() {
         if (joystick == null) return 0;
         double t = joystick.getZ();
@@ -40,18 +39,18 @@ public class MainController extends AbstractController
         return isInverted ? dist * -1 : dist;
     }
 
-    public double c = 0.1;
-    public double deadzone = 0.2;
-    public double max = 1.0;
-    public double k = (max - c) / Math.log(2 - deadzone);
+    public final double c = 0.1;
+    public final double deadzone = 0.2;
+    public final double max = 1.0;
+    public final double k = (max - c) / Math.log(2 - deadzone);
 
-    public double throttleZero = 0.1;
-    public double throttleMax = 0.9;
+    public final double throttleZero = 0.1;
+    public final double throttleMax = 0.9;
+
     /**
-    * It returns how much the joystick is turned left or right, it returns a double value. it ranges from -1 to 1
-    */
-    public double getHorizontalMovement()
-    {
+     * It returns how much the joystick is turned left or right, it returns a double value. it ranges from -1 to 1
+     */
+    public double getHorizontalMovement() {
         if (joystick == null) return 0;
         double x = joystick.getX();
         double dist = Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;

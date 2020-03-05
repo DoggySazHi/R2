@@ -13,9 +13,9 @@ import static org.usfirst.frc.team3952.robot.RobotMap.SERVO_MAXPOWER;
  * The subsystem to shoot the claw in order to hang on the clothing hanger :)
  */
 public class Climber extends SubsystemBase {
-    private CANPWMFallback liftMotor = RobotMap.liftMotor;
+    private final CANPWMFallback liftMotor = RobotMap.liftMotor;
     private CANPWMFallback liftMotor2 = RobotMap.liftMotor2;
-    private CANPWMFallback climberActivator = RobotMap.climberActivator;
+    private final CANPWMFallback climberActivator = RobotMap.climberActivator;
     //private Servo climberActivator2 = RobotMap.climberActivator2;
     /**
     * It is the constructor for the climber subsystem
@@ -32,12 +32,7 @@ public class Climber extends SubsystemBase {
         else
             servoControl(-SERVO_MAXPOWER);
     }
-    /**
-    * Nothing :))))
-    */
-    public void postDeploy() {
-        //deleted for compatibility
-    }
+
     /**
     * Opposite of deploy. See deploy <code>org.usfirst.frc.team3952.robot.subsystems.Climber.deploy()</code>
     */

@@ -6,7 +6,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class Delay extends CommandBase {
 
     private long startTime;
-    private long delayMillis;
+    private final long delayMillis;
 
     public Delay(RobotSubsystems subsystems, long delayMillis) {
         this.delayMillis = delayMillis;

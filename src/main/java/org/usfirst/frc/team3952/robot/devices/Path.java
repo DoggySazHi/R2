@@ -6,8 +6,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Dictionary;
-import java.util.*;
+import java.util.List;
 
 import static org.usfirst.frc.team3952.robot.devices.Path.PathStatus.*;
 
@@ -17,7 +16,7 @@ import static org.usfirst.frc.team3952.robot.devices.Path.PathStatus.*;
  * @author DoggySazHi (touhou addict)
  */
 public class Path implements Runnable {
-    private static Gson gson;
+    private static final Gson gson;
 
     /**
      * Instructions available are:

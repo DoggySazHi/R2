@@ -11,7 +11,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
  */
 public class ManualClimber extends CommandBase
 {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public ManualClimber(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
