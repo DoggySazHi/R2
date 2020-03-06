@@ -99,7 +99,9 @@ public class IntakeShooter extends SubsystemBase {
      * @param speed How fast to tilt up or down. Negative might be up and positive downwards.
     */ 
     public void setAngleMotor(double speed) {
-        if(speed < 0 && hitTop.get() || speed > 0 && hitBottom.get()) return;
+        // System.out.println(speed + " " + hitTop.get() + " " + hitBottom.get());
+        // System.out.println("Self canceling: " + (speed < 0 && hitTop.get() || speed > 0 && hitBottom.get()));
+        if(speed < 0 && hitTop.get() || speed > 0 && !hitBottom.get()) return;
         angleMotor.set(speed);
     }
 
