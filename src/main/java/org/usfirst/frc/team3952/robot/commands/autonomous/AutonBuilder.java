@@ -31,6 +31,7 @@ public class AutonBuilder extends CommandBase {
         parallelCommands = new Stack<>();
 
         new Thread(() -> {
+            System.out.println("Starting builder...");
             try {
                 // Wait for it, so we spin on a bool (shouldn't take that long)
                 while(list.getStatus() == Unloaded || list.getStatus() == Loading) {}
@@ -135,14 +136,15 @@ public class AutonBuilder extends CommandBase {
         }
     }
 
-    //TODO
     private Command tilt(String[] cmd) {
-        if (cmd[1].equalsIgnoreCase("A")) {
-            return null;
-        } else if (cmd[1].equalsIgnoreCase("B")) {
-            return null;
-        } else {
-            System.out.println("Error: invalid ??? command! Must be in the form of \"??? [???/???]\".");
+        var position = tryParseDouble(cmd[1]);
+
+        if (position.isPresent()) {
+            var positionNum = position.get();
+            return new TiltShooterHorizontal(subsystems, positionNum);
+        }
+        else {
+            System.out.println("Error: invalid TILT command! Must be in the form of \"TILT [-1.0 - 1.0]\".");
             return null;
         }
     }
@@ -159,14 +161,13 @@ public class AutonBuilder extends CommandBase {
         }
     }
 
-    //TODO
     private Command delay(String[] cmd) {
-        if (cmd[1].equalsIgnoreCase("A")) {
-            return null;
-        } else if (cmd[1].equalsIgnoreCase("B")) {
-            return null;
-        } else {
-            System.out.println("Error: invalid ??? command! Must be in the form of \"??? [???/???]\".");
+        var delay = tryParseLong(cmd[1]);
+        if (delay.isPresent()) {
+            return new Delay(subsystems, delay.get());
+        }
+        else {
+            System.out.println("Error: invalid DELAY command! Must be in the form of \"DELAY [0-???]\".");
             return null;
         }
     }
