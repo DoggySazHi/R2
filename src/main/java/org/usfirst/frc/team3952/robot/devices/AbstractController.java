@@ -24,11 +24,9 @@ public abstract class AbstractController
             buttons[i] =  new JoystickButton(joystick, i);
         if(buttons.length >= 2)
             buttons[0] = buttons[1];
-        init();
+     
         successfulInit = true;
     }
-
-    protected abstract void init();
 
     public boolean getRawButton(int button)
     {
@@ -36,4 +34,6 @@ public abstract class AbstractController
             return false;
         return buttons[button].get();
     }
+
+    protected abstract void init();
 }

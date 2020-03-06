@@ -25,8 +25,9 @@ public class MainController extends AbstractController {
         super(joystick, subsystems);
     }
 
-    protected void init() {
-        // Place all button bindings here.
+    protected void init()
+    {
+        // Place your button bindings here.
     }
 
     /**

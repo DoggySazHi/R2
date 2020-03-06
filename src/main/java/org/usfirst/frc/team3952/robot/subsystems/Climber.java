@@ -3,6 +3,7 @@ package org.usfirst.frc.team3952.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
+import org.usfirst.frc.team3952.robot.devices.MainController;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.FLIP_SERVO_START_POS;
 import static org.usfirst.frc.team3952.robot.RobotMap.SERVO_MAXPOWER;
@@ -44,8 +45,16 @@ public class Climber extends SubsystemBase {
      * @param value It sets the speed at which the motors will turn in order to lift the robot up
      */
     public void lift(double value) {
-        liftMotor.set(value);
+        liftMotor.set(-value);
         liftMotor2.set(value);
+    }
+
+    public void liftR(double value){
+        liftMotor.set(value);
+    }
+
+    public void liftL(double value){
+        liftMotor2.set(-value);
     }
 
     /**

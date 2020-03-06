@@ -48,6 +48,10 @@ public class ManualClimber extends CommandBase
             climber.lift(-0.6);
         else if(mainController.getPOV() == 4)
             climber.lift(-1.0);
+            
+           // climber.liftR(mainController.getLateralMovement());
+            //climber.liftL(secondaryController.getLateralMovement());
+
     }
 
     public boolean isFinished() {
