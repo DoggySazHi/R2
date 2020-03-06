@@ -36,7 +36,7 @@ public class MainController extends AbstractController {
         if (joystick == null) return 0;
         double t = joystick.getZ();
         double dist = Math.abs(t) >= deadzoneT ? kT * Math.signum(t) * (Math.log(Math.abs(t) + 1 - deadzoneT) + cT) : 0;
-        return isInverted ? dist * -1 : dist;
+        return dist;
     }
 
     public final double c = 0.1;
@@ -54,10 +54,10 @@ public class MainController extends AbstractController {
         if (joystick == null) return 0;
         double x = joystick.getX();
         double dist = Math.abs(x) >= deadzone ? k * Math.signum(x) * (Math.log(Math.abs(x) + 1 - deadzone) + c) : 0;
-        return isInverted ? dist * -1 : dist;
+        return dist;
     }
     /**
-    * Sometimes during the match we need to drive backwards and that is HARD, so we basically inverse all the controlls, ex. turnLeft turns right, moveForward goes backwards. 
+    * Sometimes during the match we need to drive backwards and that is HARD, so we basically inverse all the controls, ex. turnLeft turns right, moveForward goes backwards.
     */
     public void setInverted(boolean isInverted)
     {

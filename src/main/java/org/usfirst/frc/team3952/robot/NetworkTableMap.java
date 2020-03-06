@@ -19,11 +19,13 @@ public class NetworkTableMap {
     public static NetworkTableEntry autoAlignX;
     public static NetworkTableEntry autoAlignY;
     public static NetworkTableEntry calibrateGyro;
+    public static NetworkTableEntry cameraMode;
     private static NetworkTable accelTable;
     private static NetworkTable controlWheelTable;
 
     private static NetworkTable r2Table;
     private static NetworkTable limeLiteTable;
+    public enum CameraMode { Front, Rear, Both }
 
     public static void init() {
         instance = NetworkTableInstance.getDefault();
@@ -49,5 +51,8 @@ public class NetworkTableMap {
         limeLiteTable = instance.getTable("LimeLightLite");
         autoAlignX = limeLiteTable.getEntry("X Position");
         autoAlignY = limeLiteTable.getEntry("Y Position");
+        cameraMode = limeLiteTable.getEntry("Camera Mode");
+        cameraMode.setDefaultDouble(CameraMode.Both.ordinal());
+
     }
 }
