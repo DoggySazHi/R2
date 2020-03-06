@@ -39,7 +39,7 @@ public class ManualClimber extends CommandBase
         if(mainController.getRawButton(6))
             climber.retract();
 
-        if(NetworkTableMap.manualClimber.getBoolean(false))
+        if(!NetworkTableMap.manualClimber.getBoolean(false))
         {
             if(mainController.getPOV() == 0)
                 climber.lift(1.0);

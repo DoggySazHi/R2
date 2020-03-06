@@ -59,6 +59,10 @@ public class AutonBuilder extends CommandBase {
                         c = tilt(cmd);
                     else if (cmd[0].equalsIgnoreCase("TURN") && cmd.length == 3)
                         c = turn(cmd);
+                    else if (cmd[0].equalsIgnoreCase("SHOOT") && cmd.length == 2)
+                        c = shoot(cmd);
+                    else if (cmd[0].equalsIgnoreCase("INTAKE") && cmd.length == 2)
+                        c = intake(cmd);
                     else if (cmd[0].equalsIgnoreCase("AUTOALIGN") && cmd.length == 1)
                         c = new AutoAlign(subsystems);
                     else if (cmd[0].equalsIgnoreCase("PARALLEL") && cmd.length == 2)
@@ -152,6 +156,36 @@ public class AutonBuilder extends CommandBase {
         }
         else {
             System.out.println("Error: invalid TILT command! Must be in the form of \"TILT [-1.0 - 1.0]\".");
+            return null;
+        }
+    }
+
+    private Command shoot(String[] cmd) {
+        var timePrime = tryParseLong(cmd[1]);
+        var timeShoot = tryParseLong(cmd[2]);
+        var disableStop = tryParseLong(cmd[3]);
+
+        if (timePrime.isPresent() && timeShoot.isPresent() && disableStop.isPresent()) {
+            var timePrimeNum = timePrime.get();
+            var timeShootNum = timeShoot.get();
+            var disableStopBool = disableStop.get() == 1;
+            return new TimedShoot(subsystems, timePrimeNum, timeShootNum, disableStopBool);
+        }
+        else {
+            System.out.println("Error: invalid SHOOT command! Must be in the form of \"TILT [0-???]\".");
+            return null;
+        }
+    }
+
+    private Command intake(String[] cmd) {
+        var time = tryParseLong(cmd[1]);
+
+        if (time.isPresent()) {
+            var timeNum = time.get();
+            return new TimedIntake(subsystems, timeNum);
+        }
+        else {
+            System.out.println("Error: invalid SHOOT command! Must be in the form of \"TILT [0-???]\".");
             return null;
         }
     }

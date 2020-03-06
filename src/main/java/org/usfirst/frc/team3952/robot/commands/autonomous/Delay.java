@@ -18,6 +18,9 @@ public class Delay extends CommandBase {
     }
 
     @Override
+    public void execute() {}
+
+    @Override
     public boolean isFinished() {
         return System.currentTimeMillis() - startTime >= delayMillis;
     }
