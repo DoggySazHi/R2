@@ -39,9 +39,6 @@ public class ManualIntakeShooter extends CommandBase {
 
         // Sets the up/down movement.
         intakeShooter.setAngleMotor(-secondaryController.getLateralMovement());
-
-        if (secondaryController.getRawButton(10))
-            intakeShooter.setRotateMotor(0.25);
     }
 
     @Override

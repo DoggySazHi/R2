@@ -16,40 +16,43 @@ public class Climber extends SubsystemBase {
     private final CANPWMFallback liftMotor2 = RobotMap.liftMotor2;
     private final CANPWMFallback climberActivator = RobotMap.climberActivator;
     //private Servo climberActivator2 = RobotMap.climberActivator2;
+
     /**
-    * It is the constructor for the climber subsystem
-    */
+     * It is the constructor for the climber subsystem
+     */
     public Climber() {
         retract();
     }
+
     /**
-    * It toggles the deploy mechanisms that deploys the claw
-    */
+     * It toggles the deploy mechanisms that deploys the claw
+     */
     public void deploy() {
-            servoControl(SERVO_MAXPOWER);
-        
+        servoControl(SERVO_MAXPOWER);
     }
 
     /**
-    * Opposite of deploy. See deploy <code>org.usfirst.frc.team3952.robot.subsystems.Climber.deploy()</code>
-    */
+     * Opposite of deploy. See deploy <code>org.usfirst.frc.team3952.robot.subsystems.Climber.deploy()</code>
+     */
     public void retract() {
-            servoControl(-SERVO_MAXPOWER);
-       
+        servoControl(-SERVO_MAXPOWER);
     }
 
     /**
-    * It turns the motor that lifts the robot up on
-    * @param value  It sets the speed at which the motors will turn in order to lift the robot up
-    */
+     * It turns the motor that lifts the robot up on
+     *
+     * @param value It sets the speed at which the motors will turn in order to lift the robot up
+     */
     public void lift(double value) {
         liftMotor.set(value);
         liftMotor2.set(value);
     }
+
     /**
-    * It is a way to control the climber activater servo. climberActivator.set(value);
-    * @param value Sets the position for the servos, range from 0.0 to 1.0
-    */
+     * It is a way to control the climber activater servo. climberActivator.set(value);
+     *
+     * @param value Sets the position for the servos, range from 0.0 to 1.0
+     */
     private void servoControl(double value) {
         climberActivator.set(value);
         /*
@@ -60,8 +63,7 @@ public class Climber extends SubsystemBase {
          */
     }
 
-    public void stop()
-    {
+    public void stop() {
         liftMotor.stop();
         liftMotor2.stop();
     }
