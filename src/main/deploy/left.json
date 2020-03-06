@@ -1,10 +1,10 @@
 {
     "instructions": [
         "PARALLEL START",
-        "MOVE 1000 0.3 0 0 0",
+        "MOVE 1000 0 0.3 0 0",
         "LIFT TOP",
         "PARALLEL END",
-        "MOVE 1000 0.2 0 0 0",
+        "MOVE 1000 0 0.2 0 0",
         "LIFT BOTTOM",
         "END"
     ]
