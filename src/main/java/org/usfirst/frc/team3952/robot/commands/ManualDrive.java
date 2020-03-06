@@ -36,7 +36,8 @@ public class ManualDrive extends CommandBase
         double rot = mainController.getRotation();
         //System.out.println("Hor: " + hor + " Lat: " + lat + " Rot: " + rot);
 
-        driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
+        if(!NetworkTableMap.manualClimber.getBoolean(false))
+            driveTrain.drive(hor, lat, rot, mainController.getQuickTurn());
     }
 
     public boolean isFinished() {

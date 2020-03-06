@@ -50,11 +50,11 @@ public class Climber extends SubsystemBase {
     }
 
     public void liftR(double value){
-        liftMotor.set(value);
+        liftMotor2.set(-value);
     }
 
     public void liftL(double value){
-        liftMotor2.set(-value);
+        liftMotor.set(value);
     }
 
     /**

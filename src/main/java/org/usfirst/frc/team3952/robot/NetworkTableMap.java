@@ -20,6 +20,7 @@ public class NetworkTableMap {
     public static NetworkTableEntry autoAlignY;
     public static NetworkTableEntry calibrateGyro;
     public static NetworkTableEntry cameraMode;
+    public static NetworkTableEntry manualClimber;
     private static NetworkTable accelTable;
     private static NetworkTable controlWheelTable;
 
@@ -35,6 +36,8 @@ public class NetworkTableMap {
         calibrateGyro = r2Table.getEntry("Calibrate Gyro");
         calibrateGyro.setBoolean(false);
         calibrateGyro.addListener(event -> RobotMap.gyro.calibrate(), EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        manualClimber = r2Table.getEntry("Manual Climber Setup");
+        manualClimber.setBoolean(false);
 
         accelTable = NetworkTableInstance.getDefault().getTable("AccelTest");
         xPosition = accelTable.getEntry("XPos");

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc.team3952.robot.NetworkTableMap;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
@@ -34,11 +35,13 @@ public class ManualIntakeShooter extends CommandBase {
         else
             intakeShooter.stop();
 
-        // Already compensated. Sets the tilt servo.
-        intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
+        if(!NetworkTableMap.manualClimber.getBoolean(false)) {
+            // Already compensated. Sets the tilt servo.
+            intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
 
-        // Sets the up/down movement.
-        intakeShooter.setAngleMotor(-secondaryController.getLateralMovement());
+            // Sets the up/down movement.
+            intakeShooter.setAngleMotor(-secondaryController.getLateralMovement());
+        }
     }
 
     @Override
