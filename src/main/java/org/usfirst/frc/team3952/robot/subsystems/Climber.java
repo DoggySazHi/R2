@@ -27,10 +27,8 @@ public class Climber extends SubsystemBase {
     * It toggles the deploy mechanisms that deploys the claw
     */
     public void deploy() {
-        if (!FLIP_SERVO_START_POS)
             servoControl(SERVO_MAXPOWER);
-        else
-            servoControl(-SERVO_MAXPOWER);
+        
     }
     /**
     * Nothing :))))
@@ -42,10 +40,8 @@ public class Climber extends SubsystemBase {
     * Opposite of deploy. See deploy <code>org.usfirst.frc.team3952.robot.subsystems.Climber.deploy()</code>
     */
     public void retract() {
-        if (!FLIP_SERVO_START_POS)
             servoControl(-SERVO_MAXPOWER);
-        else
-            servoControl(SERVO_MAXPOWER);
+       
     }
 
     /**

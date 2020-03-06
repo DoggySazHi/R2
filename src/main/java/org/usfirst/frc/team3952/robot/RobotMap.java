@@ -231,8 +231,8 @@ public class RobotMap {
         controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
-        ballShooter = new DoubleSolenoid(0, 1);
         controlPanelSolenoid = new DoubleSolenoid(2, 3);
+        ballShooter = new DoubleSolenoid(0, 1);
 
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
