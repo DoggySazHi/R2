@@ -27,9 +27,8 @@ public class DriveTime extends CommandBase {
 
     @Override
     public void initialize() {
-        DriveTrain driveTrain = subsystems.getDriveTrain();
         startTime = System.currentTimeMillis();
-        driveTrain.drive(speedX, speedY, speedZ, quickTurn);
+        System.out.println("Starting drive for " + time);
     }
 
     @Override

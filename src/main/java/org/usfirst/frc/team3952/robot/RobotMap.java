@@ -30,7 +30,7 @@ public class RobotMap {
     public static final long MOTOR_CHECK_DELAY = 1000;
 
     // Which file to load for the PseudoAutonomous.
-    public static final String AUTONOMOUS_SCRIPT = "left.json";
+    public static final String AUTONOMOUS_SCRIPT = "test.json";
 
     // Threshold for the gyro
     public static final double GYRO_THRESHOLD = 3;

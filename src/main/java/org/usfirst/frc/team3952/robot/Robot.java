@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpiutil.net.PortForwarder;
 import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
         RobotMap.init();
         NetworkTableMap.init();
         checkCredits();
+        createPorts();
 
         DriveTrain driveTrain = new DriveTrain();
         IntakeShooter intakeShooter = new IntakeShooter();
@@ -68,6 +70,16 @@ public class Robot extends TimedRobot {
         controlWheel.setDefaultCommand(new ManualTurn(subsystems));
         intakeShooter.setDefaultCommand(new ManualIntakeShooter(subsystems));
         climber.setDefaultCommand(new ManualClimber(subsystems));
+    }
+
+    private void createPorts() {
+        try {
+            PortForwarder.add(2000, "10.39.52.58", 80);
+            PortForwarder.add(2001, "10.39.52.58", 443);
+            PortForwarder.add(2002, "10.39.52.58", 1735);
+        } catch (Exception ignore) {
+            System.out.println("Failed to port forward!");
+        }
     }
 
     /**

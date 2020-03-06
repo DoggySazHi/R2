@@ -63,20 +63,24 @@ public class Path implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Path created to " + fileName);
         try {
             File dataFile = null;
             File[] deployFiles = Filesystem.getDeployDirectory().listFiles();
             if (deployFiles == null) return;
             for (File f : deployFiles)
                 if (f.getName().contains(fileName)) {
+                    System.out.println("Found file!");
                     dataFile = f;
                     break;
                 }
 
             if(dataFile != null) {
+                System.out.println("Loading file...");
                 status = Loading;
                 instructions = gson.fromJson(new FileReader(dataFile), Path.class).getInstructions();
                 status = Ready;
+                System.out.println("Loaded file!");
             }
             else
                 throw new FileNotFoundException("JSON file could not be found! Did you place it in the deploy folder, and name it correctly?");
@@ -89,5 +93,6 @@ public class Path implements Runnable {
             if(status == Unloaded)
                 status = Invalid;
         }
+        System.out.println("Status: " + status + " Commands: " + getInstructions().size());
     }
 }

@@ -34,16 +34,20 @@ public class AutonBuilder extends CommandBase {
             System.out.println("Starting builder...");
             try {
                 // Wait for it, so we spin on a bool (shouldn't take that long)
-                while(list.getStatus() == Unloaded || list.getStatus() == Loading) {}
+                while (list.getStatus() == Unloaded || list.getStatus() == Loading) {
+                    System.out.println("Waiting...");
+                }
+                System.out.println("Loaded!");
 
-                if(list.getStatus() != Invalid) {
+                if (list.getStatus() != Ready) {
                     System.out.println("ERROR: AutonBuilder was incapable of converting a Path to a command script!");
                     end = true;
                     return;
-                } else if(list.getStatus() != Ready)
-                    return;
+                }
+                System.out.println("Found instructions.");
 
-                for(String line : list.getInstructions()) {
+                for (String line : list.getInstructions()) {
+                    System.out.println("Now loading \"" + line + "\"");
                     String[] cmd = line.split(" ");
                     Command c = null;
 
@@ -61,8 +65,10 @@ public class AutonBuilder extends CommandBase {
                         c = handleParallel(cmd);
                     else if (cmd[0].equalsIgnoreCase("DELAY") && cmd.length == 2)
                         c = delay(cmd);
+                    else if (cmd[0].equalsIgnoreCase("PRINT") && cmd.length >= 2)
+                        c = print(cmd);
                     else if (cmd[0].equalsIgnoreCase("END") && cmd.length == 1)
-                        return;
+                        break;
                     if (c != null) {
                         if (parallelCommands.size() != 0)
                             parallelCommands.peek().addCommands(c);
@@ -79,6 +85,7 @@ public class AutonBuilder extends CommandBase {
             {
                 end = true;
             }
+            System.out.println("Finished building!");
         }).start();
     }
 
@@ -149,14 +156,13 @@ public class AutonBuilder extends CommandBase {
         }
     }
 
-    //TODO
     private Command turn(String[] cmd) {
-        if (cmd[1].equalsIgnoreCase("A")) {
-            return null;
-        } else if (cmd[1].equalsIgnoreCase("B")) {
-            return null;
+        var angle = tryParseDouble(cmd[1]);
+        var speed = tryParseDouble(cmd[2]);
+        if (angle.isPresent() && speed.isPresent()) {
+            return new TurnAngle(subsystems, angle.get(), speed.get());
         } else {
-            System.out.println("Error: invalid ??? command! Must be in the form of \"??? [???/???]\".");
+            System.out.println("Error: invalid TURN command! Must be in the form of \"TURN [DEG] [-1.0 - 1.0\".");
             return null;
         }
     }
@@ -165,11 +171,19 @@ public class AutonBuilder extends CommandBase {
         var delay = tryParseLong(cmd[1]);
         if (delay.isPresent()) {
             return new Delay(subsystems, delay.get());
-        }
-        else {
+        } else {
             System.out.println("Error: invalid DELAY command! Must be in the form of \"DELAY [0-???]\".");
             return null;
         }
+    }
+
+    private Command print(String[] cmd) {
+        StringBuilder sc = new StringBuilder();
+        for (int i = 1; i < cmd.length; i++) {
+            sc.append(cmd[i]);
+            sc.append(" ");
+        }
+        return new Logger(subsystems, sc.toString());
     }
 
     public Optional<Double> tryParseDouble(String input) {
@@ -203,5 +217,6 @@ public class AutonBuilder extends CommandBase {
                 commandGroup.addCommands(parallelCommands.pop());
         }
         CommandScheduler.getInstance().schedule(commandGroup);
+        System.out.println("Installed commands.");
     }
 }

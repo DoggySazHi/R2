@@ -6,7 +6,6 @@ import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.GYRO_ROTATION;
 import static org.usfirst.frc.team3952.robot.RobotMap.GYRO_THRESHOLD;
 
 public class TurnAngle extends CommandBase {
@@ -15,10 +14,13 @@ public class TurnAngle extends CommandBase {
     private ADXRS450_Gyro gyro;
 
     private double endingAngle;
-    public TurnAngle(RobotSubsystems subsystems, double turnAngle) {
+    private double speed;
+
+    public TurnAngle(RobotSubsystems subsystems, double turnAngle, double speed) {
         this.subsystems = subsystems;
         DriveTrain driveTrain = subsystems.getDriveTrain();
         endingAngle = turnAngle;
+        this.speed = speed;
         addRequirements(driveTrain);
     }
 
@@ -27,16 +29,16 @@ public class TurnAngle extends CommandBase {
         gyro = RobotMap.gyro;
         endingAngle += gyro.getAngle();
     }
-    
+
+    //TODO Figure out if negative is left, pos is right or vice versa
     @Override
     public void execute() {
         DriveTrain driveTrain = subsystems.getDriveTrain();
         driveTrain.drive(0, 0, 1, false);
-        if(endingAngle < gyro.getAngle()) {
-            driveTrain.drive(0, 0, -GYRO_ROTATION, false);
-        }
-        else {
-            driveTrain.drive(0,0, GYRO_ROTATION, false);
+        if (endingAngle < gyro.getAngle()) {
+            driveTrain.drive(0, 0, -speed, false);
+        } else {
+            driveTrain.drive(0, 0, speed, false);
         }
     }
 
