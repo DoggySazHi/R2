@@ -6,7 +6,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
  * Go to the next filled spot, assuming there are balls in the shooter.
  */
 public class GoToFilledSpot extends GoToEmptySpot {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public GoToFilledSpot(RobotSubsystems subsystems) {
         super(subsystems);

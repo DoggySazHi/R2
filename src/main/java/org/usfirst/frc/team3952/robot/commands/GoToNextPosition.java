@@ -1,12 +1,14 @@
 package org.usfirst.frc.team3952.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import static org.usfirst.frc.team3952.robot.RobotMap.STORAGE_MOTOR_SPEED;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
+import static org.usfirst.frc.team3952.robot.RobotMap.STORAGE_MOTOR_SPEED;
+
 public class GoToNextPosition extends CommandBase {
     private boolean nextLevel;
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
     private boolean stageTwo;
     private boolean wasLocked;
 

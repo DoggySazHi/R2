@@ -1,19 +1,21 @@
 package org.usfirst.frc.team3952.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
+import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.MAX_BALL_STORAGE;
 import static org.usfirst.frc.team3952.robot.RobotMap.STORAGE_MOTOR_SPEED;
 
-import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
-import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
-
 public class GoToEmptySpot extends CommandBase {
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
     private boolean wasLocked;
+
     /**
-    * rotates magazine to next spot for loading
-    * @param subsystems gets subsystem
-    */
+     * rotates magazine to next spot for loading
+     *
+     * @param subsystems gets subsystem
+     */
     public GoToEmptySpot(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();

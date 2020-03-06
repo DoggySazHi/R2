@@ -12,7 +12,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.ACCELEROMETER_THRESHOLD_AC
 public class DriveTrain extends SubsystemBase {
     private CANPWMFallback leftDrive = RobotMap.leftDriveFront;
     private CANPWMFallback rightDrive = RobotMap.rightDriveFront;
-    private DifferentialDrive drive = RobotMap.drive;
+    private final DifferentialDrive drive = RobotMap.drive;
     private double xPos;
     private double yPos;
     private static final double GRAVITY = 9.80665;

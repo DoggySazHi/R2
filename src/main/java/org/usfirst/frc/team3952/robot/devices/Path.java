@@ -6,8 +6,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Dictionary;
-import java.util.*;
+import java.util.List;
 
 import static org.usfirst.frc.team3952.robot.devices.Path.PathStatus.*;
 
@@ -17,50 +16,42 @@ import static org.usfirst.frc.team3952.robot.devices.Path.PathStatus.*;
  * @author DoggySazHi (touhou addict)
  */
 public class Path implements Runnable {
-    private static Gson gson;
+    private static final Gson gson;
 
     /**
-     * Instructions formatting: Long: time in milliseconds for a "command" to run. String: The instruction itself.
      * Instructions available are:
-     * NONE
-     * MOVE X Y Z
-     * LIFT 0.0-1.0
-     * TILT 0.0-1.0
+     * MOVE TIME X Y Z QUICK-TURN
+     * LIFT TOP/BOTTOM
+     * TILT X
+     * TURN DEGREES
+     * AUTOALIGN
      * END
      */
-    private List<Long> timings;
     private List<String> instructions;
-    private PathStatus status = Invalid;
-    private String fileName;
-    private boolean started;
-    private long lastCheck;
+    private transient PathStatus status = Unloaded;
+    private transient String fileName;
 
     /**
      * Get all instructions associated with the path.
      * @return The instructions as a dictionary.
      */
-    private List<String> getInstructions() {
+    public List<String> getInstructions() {
         return instructions;
-    }
-
-    private List<Long> getTimings() {
-        return timings;
     }
 
     public PathStatus getStatus() {
         return status;
     }
 
-    public enum PathStatus {Invalid, Loading, Ready}
+    public enum PathStatus {Unloaded, Invalid, Loading, Ready}
 
     static {
         gson = new Gson();
     }
 
-    public Path(List<String> instructions, List<Long> timings)
+    public Path(List<String> instructions)
     {
         this.instructions = instructions;
-        this.timings = timings;
     }
 
     public Path(String fileName)
@@ -87,34 +78,16 @@ public class Path implements Runnable {
                 instructions = gson.fromJson(new FileReader(dataFile), Path.class).getInstructions();
                 status = Ready;
             }
+            else
+                throw new FileNotFoundException("JSON file could not be found! Did you place it in the deploy folder, and name it correctly?");
         }
         catch (Exception e) {
             e.printStackTrace();
             status = Invalid;
         }
-    }
-
-    public void start()
-    {
-        started = true;
-        lastCheck = System.currentTimeMillis();
-    }
-
-    public String getCurrentInstruction()
-    {
-        if(!started || instructions.size() == 0) return "NONE";
-        long deltaTime = System.currentTimeMillis() - lastCheck;
-        lastCheck = System.currentTimeMillis();
-
-        if(timings.get(0) - deltaTime <= 0) {
-            timings.set(1, timings.get(1) + timings.get(0) - deltaTime);
-            timings.remove(0);
-            instructions.remove(0);
+        finally {
+            if(status == Unloaded)
+                status = Invalid;
         }
-        else
-            timings.set(0, timings.get(0) - deltaTime);
-        if(instructions.size() == 0) return "NONE";
-
-        return instructions.get(0);
     }
 }

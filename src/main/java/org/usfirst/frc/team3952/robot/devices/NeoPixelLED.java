@@ -8,13 +8,14 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
  * They hook up to PWM however, so watch out.
  */
 public class NeoPixelLED {
-    private AddressableLED light;
-    private AddressableLEDBuffer lightData;
+    private final AddressableLED light;
+    private final AddressableLEDBuffer lightData;
     private int rainbowStat;
 
     /**
      * Create a ring/strip of NeoPixels at the port number and count of LEDs. WARNING: The RoboRIO uses 6v on PWM!
-     * @param pwmPort The port to connect on.
+     *
+     * @param pwmPort  The port to connect on.
      * @param ledCount The amount of LEDs on the strip or ring. For our rings, it's 24.
      */
     public NeoPixelLED(int pwmPort, int ledCount) {

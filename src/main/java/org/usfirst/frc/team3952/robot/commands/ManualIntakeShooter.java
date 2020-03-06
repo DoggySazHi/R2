@@ -10,7 +10,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
  */
 public class ManualIntakeShooter extends CommandBase {
 
-    private RobotSubsystems subsystems;
+    private final RobotSubsystems subsystems;
 
     public ManualIntakeShooter(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
