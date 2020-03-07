@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
@@ -27,16 +30,19 @@ public class Climber extends SubsystemBase {
 
     /**
      * It toggles the deploy mechanisms that deploys the claw
+     *
+     * 5 is Deploy,
+     * 6 is Retract
      */
     public void deploy() {
-        servoControl(SERVO_MAXPOWER);
+        climberActivator.set(SERVO_MAXPOWER);
     }
 
     /**
      * Opposite of deploy. See deploy <code>org.usfirst.frc.team3952.robot.subsystems.Climber.deploy()</code>
      */
     public void retract() {
-        servoControl(-SERVO_MAXPOWER);
+        climberActivator.set(-SERVO_MAXPOWER);
     }
 
     /**
@@ -55,21 +61,6 @@ public class Climber extends SubsystemBase {
 
     public void liftL(double value){
         liftMotor.set(value);
-    }
-
-    /**
-     * It is a way to control the climber activater servo. climberActivator.set(value);
-     *
-     * @param value Sets the position for the servos, range from 0.0 to 1.0
-     */
-    private void servoControl(double value) {
-        climberActivator.set(value);
-        /*
-        if (!INVERT_CLIMBER_SERVOS)
-            climberActivator2.set(value);
-        else
-            climberActivator2.set(-value);
-         */
     }
 
     public void stop() {

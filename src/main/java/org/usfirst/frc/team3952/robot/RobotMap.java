@@ -106,7 +106,7 @@ public class RobotMap {
     public static final boolean FLIP_SERVO_START_POS = false;
 
     // Set the max (absolute) for the servos, as usually at 1.0, they pull so much current since they're fighting against themselves.
-    public static final double SERVO_MAXPOWER = 0.8;
+    public static final double SERVO_MAXPOWER = 1.0;
 
     // ---------------
     // DriveTrain Superstructure

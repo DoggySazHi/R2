@@ -244,7 +244,7 @@ public class CANPWMFallback implements SpeedController {
         if(!isServo()) return;
         if(useFullRange) value = (value + 1.0) / 2.0;
         if(servoInverted) value = 1.0 - value;
-        servo.set(value);
+        servo.setPosition(value);
     }
 
     /**

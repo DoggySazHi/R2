@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3952.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.*;
+import org.usfirst.frc.team3952.robot.commands.GoToNextPosition;
 import org.usfirst.frc.team3952.robot.devices.Path;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
@@ -55,14 +56,18 @@ public class AutonBuilder extends CommandBase {
                         c = drive(cmd);
                     else if (cmd[0].equalsIgnoreCase("LIFT") && cmd.length == 2)
                         c = lift(cmd);
-                    else if (cmd[0].equalsIgnoreCase("TILT") && cmd.length == 2)
+                    else if (cmd[0].equalsIgnoreCase("TILT") && (cmd.length == 2 || cmd.length == 3))
                         c = tilt(cmd);
                     else if (cmd[0].equalsIgnoreCase("TURN") && cmd.length == 3)
                         c = turn(cmd);
-                    else if (cmd[0].equalsIgnoreCase("SHOOT") && cmd.length == 2)
+                    else if (cmd[0].equalsIgnoreCase("SHOOT") && cmd.length == 4)
                         c = shoot(cmd);
+                    else if (cmd[0].equalsIgnoreCase("NEXT") && cmd.length == 1)
+                        c = new GoToNextPosition(subsystems);
                     else if (cmd[0].equalsIgnoreCase("INTAKE") && cmd.length == 2)
                         c = intake(cmd);
+                    else if (cmd[0].equalsIgnoreCase("CLIMBER") && cmd.length == 3)
+                        c = climber(cmd);
                     else if (cmd[0].equalsIgnoreCase("AUTOALIGN") && cmd.length == 1)
                         c = new AutoAlign(subsystems);
                     else if (cmd[0].equalsIgnoreCase("PARALLEL") && cmd.length == 2)
@@ -127,6 +132,12 @@ public class AutonBuilder extends CommandBase {
             return new TiltShooterDown(subsystems);
         else
         {
+            if(cmd.length == 3) {
+                var time = tryParseLong(cmd[1]);
+                var speed = tryParseDouble(cmd[2]);
+                if(time.isPresent() && speed.isPresent())
+                    return new TiltShooterVerticalTimed(subsystems, time.get(), speed.get());
+            }
             System.out.println("Error: invalid LIFT command! Must be in the form of \"LIFT [TOP/BOTTOM]\".");
             return null;
         }
@@ -172,7 +183,7 @@ public class AutonBuilder extends CommandBase {
             return new TimedShoot(subsystems, timePrimeNum, timeShootNum, disableStopBool);
         }
         else {
-            System.out.println("Error: invalid SHOOT command! Must be in the form of \"TILT [0-???]\".");
+            System.out.println("Error: invalid SHOOT command! Must be in the form of \"SHOOT [0-???] [0-???] [0/1]\".");
             return null;
         }
     }
@@ -185,7 +196,7 @@ public class AutonBuilder extends CommandBase {
             return new TimedIntake(subsystems, timeNum);
         }
         else {
-            System.out.println("Error: invalid SHOOT command! Must be in the form of \"TILT [0-???]\".");
+            System.out.println("Error: invalid SHOOT command! Must be in the form of \"INTAKE [0-???]\".");
             return null;
         }
     }
@@ -196,7 +207,18 @@ public class AutonBuilder extends CommandBase {
         if (angle.isPresent() && speed.isPresent()) {
             return new TurnAngle(subsystems, angle.get(), speed.get());
         } else {
-            System.out.println("Error: invalid TURN command! Must be in the form of \"TURN [DEG] [-1.0 - 1.0\".");
+            System.out.println("Error: invalid TURN command! Must be in the form of \"TURN [DEG] [-1.0 - 1.0]\".");
+            return null;
+        }
+    }
+
+    private Command climber(String[] cmd) {
+        var time = tryParseLong(cmd[1]);
+        var speed = tryParseDouble(cmd[2]);
+        if (time.isPresent() && speed.isPresent()) {
+            return new TimedClimber(subsystems, time.get(), speed.get());
+        } else {
+            System.out.println("Error: invalid CLIMBER command! Must be in the form of \"CLIMBER [TIME] [-1.0 - 1.0]\".");
             return null;
         }
     }

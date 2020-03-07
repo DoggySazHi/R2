@@ -12,6 +12,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class ManualIntakeShooter extends CommandBase {
 
     private final RobotSubsystems subsystems;
+    private double lastValue;
 
     public ManualIntakeShooter(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
@@ -28,16 +29,29 @@ public class ManualIntakeShooter extends CommandBase {
         IntakeShooter intakeShooter = subsystems.getIntakeShooter();
         SecondaryController secondaryController = subsystems.getSecondaryController();
 
+        System.out.println("Running...");
         if (secondaryController.getRawButton(4))
+        {
+            System.out.println("Intaking...");
             intakeShooter.intake(secondaryController.getRawButton(3), (secondaryController.getThrottle() + 1.0) / 2.0);
+        }
         else if (secondaryController.getRawButton(5))
+        {
+            System.out.println("Shooting...");
             intakeShooter.reject(secondaryController.getRawButton(3), secondaryController.getRawButton(1));
+        }
         else
             intakeShooter.stop();
 
         if(!NetworkTableMap.manualClimber.getBoolean(false)) {
             // Already compensated. Sets the tilt servo.
             intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
+            if(!secondaryController.getRawButton(11)) {
+                intakeShooter.setTiltServos(secondaryController.getHorizontalMovement());
+                lastValue = secondaryController.getHorizontalMovement();
+            } else {
+                intakeShooter.setTiltServos(lastValue);
+            }
 
             // Sets the up/down movement.
             intakeShooter.setAngleMotor(-secondaryController.getLateralMovement());
