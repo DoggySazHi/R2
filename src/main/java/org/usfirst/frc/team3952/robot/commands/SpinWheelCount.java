@@ -19,7 +19,7 @@ import static org.usfirst.frc.team3952.robot.RobotMap.*;
 /**
  * A command to automatically operate the Control Panel, using the color sensor.
  */
-public class PlayWheelOfFortune extends CommandBase {
+public class SpinWheelCount extends CommandBase {
     private final RobotSubsystems subsystems;
 
     // Is the robot somehow spinning the wrong way?
@@ -36,7 +36,7 @@ public class PlayWheelOfFortune extends CommandBase {
 
     private boolean incorrectDirection = false;
 
-    public PlayWheelOfFortune(RobotSubsystems subsystems) {
+    public SpinWheelCount(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
 
         addRequirements(subsystems.getControlWheel());
