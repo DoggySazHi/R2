@@ -12,11 +12,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class ManualIntakeShooter extends CommandBase {
 
     private final RobotSubsystems subsystems;
-<<<<<<< HEAD
     private double lastValue;
-=======
-    public double lastValue;
->>>>>>> 77e12673e2b0166f8a7d3c32e06bcc4378de6e3a
 
     public ManualIntakeShooter(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
@@ -33,15 +29,12 @@ public class ManualIntakeShooter extends CommandBase {
         IntakeShooter intakeShooter = subsystems.getIntakeShooter();
         SecondaryController secondaryController = subsystems.getSecondaryController();
 
-        System.out.println("Running...");
         if (secondaryController.getRawButton(4))
         {
-            System.out.println("Intaking...");
             intakeShooter.intake(secondaryController.getRawButton(3), (secondaryController.getThrottle() + 1.0) / 2.0);
         }
         else if (secondaryController.getRawButton(5))
         {
-            System.out.println("Shooting...");
             intakeShooter.reject(secondaryController.getRawButton(3), secondaryController.getRawButton(1));
         }
         else

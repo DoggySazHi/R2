@@ -79,15 +79,16 @@ public class RobotMap {
     // ---------------
     // Shooter Values
     // ---------------
+    //SuccessDVW18!
 
     // The amount of balls that can be stored in the shooter.
     public static final int MAX_BALL_STORAGE = 5;
 
     // The speed to run the storage motor at.
-    public static final double STORAGE_MOTOR_SPEED = 0.7;
+    public static final double STORAGE_MOTOR_SPEED = 0.90;
 
     // The speed to suck the balls in.
-    public static final double INTAKE_SPEED = 0.80;
+    public static final double INTAKE_SPEED = 1.0;
 
     // The speed for sucking using the roller.
     public static final double INTAKE_ROLLER_SPEED = 0.2;
