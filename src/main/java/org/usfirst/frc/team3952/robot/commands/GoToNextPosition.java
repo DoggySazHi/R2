@@ -15,10 +15,12 @@ public class GoToNextPosition extends CommandBase {
     public GoToNextPosition(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        addRequirements(shooter);
+        //addRequirements(shooter);
     }
+    
     @Override
     public void initialize() {
+        System.out.println("Started nextPos!");
         IntakeShooter shooter = subsystems.getIntakeShooter();
 
         if(!shooter.isLocked())
@@ -54,7 +56,7 @@ public class GoToNextPosition extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-        shooter.stop();
+        //shooter.stop();
         wasLocked = false;
         stageTwo = false;
         nextLevel = false;

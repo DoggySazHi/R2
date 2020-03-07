@@ -25,6 +25,7 @@ public abstract class AbstractController
         if(buttons.length >= 2)
             buttons[0] = buttons[1];
      
+        init();
         successfulInit = true;
     }
 

@@ -29,15 +29,12 @@ public class ManualIntakeShooter extends CommandBase {
         IntakeShooter intakeShooter = subsystems.getIntakeShooter();
         SecondaryController secondaryController = subsystems.getSecondaryController();
 
-        System.out.println("Running...");
         if (secondaryController.getRawButton(4))
         {
-            System.out.println("Intaking...");
             intakeShooter.intake(secondaryController.getRawButton(3), (secondaryController.getThrottle() + 1.0) / 2.0);
         }
         else if (secondaryController.getRawButton(5))
         {
-            System.out.println("Shooting...");
             intakeShooter.reject(secondaryController.getRawButton(3), secondaryController.getRawButton(1));
         }
         else

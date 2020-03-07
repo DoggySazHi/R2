@@ -183,7 +183,11 @@ public class CANPWMFallback implements SpeedController {
             if(isServo())
                 servo = new Servo(pwmNum);
             else
+            {
                 pwmDevice = new Talon(pwmNum);
+                pwmDevice.setSafetyEnabled(false);
+                pwmDevice.setExpiration(20);
+            }
         }
         // None: Don't init.
     }
