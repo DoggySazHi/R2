@@ -108,13 +108,16 @@ public class PlayWheelOfFortune extends CommandBase {
         }
         controlWheel.update(tilesPassed);
 
-        controlWheel.set(CW_SPEED_SLOW);
+        if (tilesPassed < MIN_COUNT - SLOWDOWN_TILES && controlWheel.getFMSColor() != null)
+            controlWheel.set(CW_SPEED_FAST);
+        else
+            controlWheel.set(CW_SPEED_SLOW);
     }
 
     public boolean isFinished() {
         ControlWheel controlWheel = subsystems.getControlWheel();
 
-        if(controlWheel.getClosestColor().color.equals(controlWheel.getFMSColor()))
+        if((tilesPassed >= MIN_COUNT && controlWheel.getFMSColor() == null) || controlWheel.getClosestColor().color.equals(controlWheel.getFMSColor()))
         {
             controlWheel.stop();
             return true;

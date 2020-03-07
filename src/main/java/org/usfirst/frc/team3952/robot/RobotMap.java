@@ -203,7 +203,7 @@ public class RobotMap {
         liftMotor2 = new CANPWMFallback(9, -1, "Lift Motor Right");
 
         // DIO (Limit switches, Ultrasonic)
-        spinnerLocked = new DigitalInput(1);
+        spinnerLocked = new DigitalInput(0);
         hitTop = new DigitalInput(2);
         hitBottom = new DigitalInput(3);
 

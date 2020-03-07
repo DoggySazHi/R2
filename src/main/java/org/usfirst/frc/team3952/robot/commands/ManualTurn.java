@@ -32,6 +32,12 @@ public class ManualTurn extends CommandBase
         ControlWheel controlWheel = subsystems.getControlWheel();
 
         double rot = mainController.getHorizontalMovement();
+
+        if(mainController.getRawButton(7))
+            controlWheel.enable();
+        if(mainController.getRawButton(8))
+            controlWheel.disable();
+
         controlWheel.set(rot);
         Color c = controlWheel.getColor();
         colorValue.setDoubleArray(new double[] {c.red, c.green, c.blue});

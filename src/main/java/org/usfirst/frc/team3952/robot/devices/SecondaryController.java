@@ -39,7 +39,7 @@ public class SecondaryController extends AbstractController
         buttons[7].whenPressed(wheelOfFortune);
         buttons[6].cancelWhenPressed(wheelOfFortune);
 
-        buttons[8].whenPressed(new GoToNextPosition(subsystems));
+        buttons[8].whenPressed(new GoToNextPosition(subsystems).withTimeout(5));
     }
 
     //it's not really a deadzone, but eh

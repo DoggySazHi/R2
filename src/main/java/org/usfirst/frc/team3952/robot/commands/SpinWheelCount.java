@@ -40,7 +40,6 @@ public class SpinWheelCount extends CommandBase {
         this.subsystems = subsystems;
 
         addRequirements(subsystems.getControlWheel());
-        //no, bad withTimeout(15);
     }
 
     @Override

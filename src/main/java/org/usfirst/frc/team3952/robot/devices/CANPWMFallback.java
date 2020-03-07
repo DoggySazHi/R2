@@ -175,7 +175,10 @@ public class CANPWMFallback implements SpeedController {
         //TODO make sure the CAN check works
         if (overrideMode == CAN && canNum != -1) {
             if(isCANAvailable())
+            {
                 canDevice = new VictorSPX(canNum);
+            }
+
             else
                 System.out.println("CAN device failed to connect for " + name + "!");
         }
@@ -185,8 +188,6 @@ public class CANPWMFallback implements SpeedController {
             else
             {
                 pwmDevice = new Talon(pwmNum);
-                pwmDevice.setSafetyEnabled(false);
-                pwmDevice.setExpiration(20);
             }
         }
         // None: Don't init.
