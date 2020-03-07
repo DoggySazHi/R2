@@ -1,20 +1,4 @@
-if (cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 6)
-                        c = drive(cmd);
-                    else if (cmd[0].equalsIgnoreCase("LIFT") && cmd.length == 2)
-                        c = lift(cmd);
-                    else if (cmd[0].equalsIgnoreCase("TILT") && cmd.length == 2)
-                        c = tilt(cmd);
-                    else if (cmd[0].equalsIgnoreCase("TURN") && cmd.length == 3)
-                        c = turn(cmd);
-                    else if (cmd[0].equalsIgnoreCase("SHOOT") && cmd.length == 4)
-                        c = shoot(cmd);
-                    else if (cmd[0].equalsIgnoreCase("INTAKE") && cmd.length == 2)
-                        c = intake(cmd);
-                    else if (cmd[0].equalsIgnoreCase("CLIMBER") && cmd.length == 3)
-                        c = climber(cmd);
-                    else if (cmd[0].equalsIgnoreCase("AUTOALIGN") && cmd.length == 1)
-                        c = new AutoAlign(subsystems);
-                        
+# Autonomous Commands
 - MOVE
     - Drive the robot normally, for an amount of time.
     - Parameters:
@@ -32,37 +16,39 @@ if (cmd[0].equalsIgnoreCase("MOVE") && cmd.length == 6)
         - Speed: A value between -1.0 and 1.0. A time must be provided in the previous one to count.
     - Examples:
         - ``LIFT TOP``
-        - ``LIFT 1500``
+        - ``LIFT 1500 0.2``
 - TILT
-    -
+    - Set the tilt angle for the front of the shooter.
     - Parameters:
-        - ???
+        - Position: Number between -1.0 and 1.0.
     - Examples:
-        - ???
+        - ``TILT 0.8``
 - TURN
-    -
+    - Turn a specified degree, but this cannot be used without a Gyro.
     - Parameters:
-        - ???
+        - Angle: Degrees to turn.
+        - Speed: Speed to turn at, between -1.0 and 1.0.
     - Examples:
-        - ???
+        - ``TURN 90 0.3``
 - SHOOT
-    -
+    - Shoot the ball for a limited amount of time.
     - Parameters:
-        - ???
+        - Prime Time: Time when you start spinning the shooters.
+        - Shoot Time: Time, in milliseconds, when you actually shoot.
+        - Disable Shooter: A value 0 or 1 to decide if the shooter should stop after it shoots.
     - Examples:
-        - ````
+        - ``SHOOT 1000 100 0``
 - NEXT
     - Move to the next empty slot.
-    - Parameters:
-        - ???
+    - Parameters: None
     - Examples:
-        - ````
+        - ``NEXT``
 - INTAKE
-    -
+    - Intake the balls for an amount of time.
     - Parameters:
-        - ???
+        - Time: Milliseconds to intake.
     - Examples:
-        - ````
+        - ``INTAKE 1500``
 - CLIMBER
     - Handle the climber's motors.
     - Parameters:

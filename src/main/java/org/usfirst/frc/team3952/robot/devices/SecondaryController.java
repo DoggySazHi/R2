@@ -43,7 +43,7 @@ public class SecondaryController extends AbstractController
     }
 
     //it's not really a deadzone, but eh
-    public static final double DEADZONE = 0.2;
+    public static final double DEADZONE = 0.05;
     public final double throttleZero = 0.1;
     public final double throttleMax = 0.9;
 

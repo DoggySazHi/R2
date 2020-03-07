@@ -12,11 +12,7 @@ import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 public class ManualIntakeShooter extends CommandBase {
 
     private final RobotSubsystems subsystems;
-<<<<<<< HEAD
     private double lastValue;
-=======
-    public double lastValue;
->>>>>>> 77e12673e2b0166f8a7d3c32e06bcc4378de6e3a
 
     public ManualIntakeShooter(RobotSubsystems subsystems) {
         this.subsystems = subsystems;
