@@ -40,4 +40,17 @@ public class ManualTurn extends CommandBase
 
         controlWheel.set(rot);
         Color c = controlWheel.getColor();
-        colorValue.setDoubleArray(new double[] {c.red, c.green, c.blue})
+        colorValue.setDoubleArray(new double[] {c.red, c.green, c.blue});
+    }
+
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        ControlWheel controlWheel = subsystems.getControlWheel();
+        controlWheel.stop();
+        controlWheel.disable();
+    }
+}
