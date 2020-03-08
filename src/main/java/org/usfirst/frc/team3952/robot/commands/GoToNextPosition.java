@@ -49,7 +49,7 @@ public class GoToNextPosition extends CommandBase {
     @Override
     public boolean isFinished() {
         IntakeShooter shooter = subsystems.getIntakeShooter();
-
+        System.out.println(nextLevel + " - " + shooter.isLocked());
         return nextLevel && shooter.isLocked();
     }
     
