@@ -130,14 +130,16 @@ public class Robot extends TimedRobot {
     private void checkControllers() {
         if (checkControllerTime == null)
             checkControllerTime = Instant.now();
-        else if (!mainControllerInit || !secondaryControllerInit)
-            if (Duration.between(checkControllerTime, Instant.now()).toMillis() > CONTROLLER_CHECK_DELAY) {
+        else if (!mainControllerInit || !secondaryControllerInit) {
+            var currentTime = Instant.now();
+            if (Duration.between(checkControllerTime, currentTime != null ? currentTime : Instant.EPOCH).toMillis() > CONTROLLER_CHECK_DELAY) {
                 if (!mainControllerInit)
                     initMainController();
                 if (!secondaryControllerInit)
                     initSecondaryController();
                 checkControllerTime = Instant.now();
             }
+        }
     }
 
     /**

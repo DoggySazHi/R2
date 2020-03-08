@@ -40,15 +40,15 @@ public class ManualDrive extends CommandBase
         double rot = mainController.getRotation();
         //System.out.println("Hor: " + hor + " Lat: " + lat + " Rot: " + rot);
 
-        System.out.println("Secondary Controller: " + mainController.getRawButton(5) + " " + mainController.getRawButton(6));
+        //System.out.println("Secondary Controller: " + mainController.getRawButton(5) + " " + mainController.getRawButton(6));
         if(mainController.getRawButton(5) || NetworkTableMap.forceClimberDeploy.getBoolean(false))
         {
-            System.out.println("Deploying...");
+            //System.out.println("Deploying...");
             climber.deploy();
         }
         else if(mainController.getRawButton(6))
         {
-            System.out.println("Retracting...");
+            //System.out.println("Retracting...");
             climber.retract();
         }
 

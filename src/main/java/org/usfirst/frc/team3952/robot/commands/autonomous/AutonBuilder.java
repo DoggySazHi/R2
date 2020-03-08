@@ -196,7 +196,7 @@ public class AutonBuilder extends CommandBase {
             return new TimedIntake(subsystems, timeNum);
         }
         else {
-            System.out.println("Error: invalid SHOOT command! Must be in the form of \"INTAKE [0-???]\".");
+            System.out.println("Error: invalid INTAKE command! Must be in the form of \"INTAKE [0-???]\".");
             return null;
         }
     }

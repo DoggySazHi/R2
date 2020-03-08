@@ -36,6 +36,7 @@ public class IntakeShooter extends SubsystemBase {
     public void intake(boolean max) {
         intake(max, INTAKE_ROLLER_SPEED);
     }
+
     /**
     * The intake motors run at a speed (one of the parameter) in order to take in the ball. 
     * @param max checks if the motor is running at max speed. 

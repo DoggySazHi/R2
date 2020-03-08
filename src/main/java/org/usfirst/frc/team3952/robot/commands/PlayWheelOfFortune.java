@@ -40,7 +40,6 @@ public class PlayWheelOfFortune extends CommandBase {
         this.subsystems = subsystems;
 
         addRequirements(subsystems.getControlWheel());
-        //no, bad withTimeout(15);
     }
 
     @Override
@@ -55,15 +54,18 @@ public class PlayWheelOfFortune extends CommandBase {
 
         tilesPassed = 0;
         direction = 0;
+        currentColor = -1;
 
         Color c = controlWheel.getClosestColor().color;
         for (int i = 0; i < 4; i++)
             if(c.equals(WHEEL[i])) {
                 currentColor = i;
-                return;
+                break;
             }
-        System.out.println("We might have a problem... Couldn't find initial color!");
-        currentColor = 0;
+        if(currentColor == -1) {
+            System.out.println("We might have a problem... Couldn't find initial color!");
+            currentColor = 0;
+        }
 
         controlWheel.enable();
         startTime = Instant.now();
@@ -71,7 +73,8 @@ public class PlayWheelOfFortune extends CommandBase {
 
     @Override
     public void execute() {
-        if (Duration.between(startTime, Instant.now()).toMillis() < CP_ACTIVATION_TIMER)
+        var currentTime = Instant.now();
+        if (Duration.between(startTime != null ? startTime : Instant.EPOCH, currentTime != null ? currentTime : Instant.EPOCH).toMillis() < CP_ACTIVATION_TIMER)
             return;
         ControlWheel controlWheel = subsystems.getControlWheel();
 

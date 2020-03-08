@@ -2,6 +2,7 @@ package org.usfirst.frc.team3952.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.NetworkTableMap;
+import org.usfirst.frc.team3952.robot.devices.MainController;
 import org.usfirst.frc.team3952.robot.devices.SecondaryController;
 import org.usfirst.frc.team3952.robot.subsystems.IntakeShooter;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
@@ -27,7 +28,13 @@ public class ManualIntakeShooter extends CommandBase {
     @Override
     public void execute() {
         IntakeShooter intakeShooter = subsystems.getIntakeShooter();
+        MainController mainController = subsystems.getMainController();
         SecondaryController secondaryController = subsystems.getSecondaryController();
+
+        if (mainController.getRawButton(1))
+        {
+            intakeShooter.setRotateMotor(-0.5 /* (secondaryController.getThrottle() + 1.0) / 2.0 */);
+        }
 
         if (secondaryController.getRawButton(4))
         {
