@@ -34,17 +34,6 @@ public class ManualClimber extends CommandBase
         MainController mainController = subsystems.getMainController();
         SecondaryController secondaryController = subsystems.getSecondaryController();
 
-        if(mainController.getRawButton(5))
-        {
-            System.out.println("Deploying...");
-            climber.deploy();
-        }
-        if(mainController.getRawButton(6))
-        {
-            System.out.println("Retracting...");
-            climber.retract();
-        }
-
         if(!NetworkTableMap.manualClimber.getBoolean(false))
         {
             if(mainController.getPOV() == 0)

@@ -31,9 +31,14 @@ public abstract class AbstractController
 
     public boolean getRawButton(int button)
     {
+        if(joystick != null)
+            return joystick.getRawButton(button);
+        return false;
+        /*
         if(!successfulInit || button >= buttons.length || button < 0 || buttons[button] == null)
             return false;
         return buttons[button].get();
+         */
     }
 
     protected abstract void init();

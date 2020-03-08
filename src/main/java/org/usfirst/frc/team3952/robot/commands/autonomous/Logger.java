@@ -4,12 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usfirst.frc.team3952.robot.subsystems.RobotSubsystems;
 
 public class Logger extends CommandBase {
-    private final RobotSubsystems subsystems;
     private boolean end;
     private String message;
 
     public Logger(RobotSubsystems subsystems, String message) {
-        this.subsystems = subsystems;
         this.message = message;
     }
 

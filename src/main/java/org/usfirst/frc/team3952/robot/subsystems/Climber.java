@@ -1,14 +1,9 @@
 package org.usfirst.frc.team3952.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.RobotMap;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
-import org.usfirst.frc.team3952.robot.devices.MainController;
 
-import static org.usfirst.frc.team3952.robot.RobotMap.FLIP_SERVO_START_POS;
 import static org.usfirst.frc.team3952.robot.RobotMap.SERVO_MAXPOWER;
 
 /**

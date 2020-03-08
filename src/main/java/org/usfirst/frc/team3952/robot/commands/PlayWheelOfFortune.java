@@ -45,6 +45,7 @@ public class PlayWheelOfFortune extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Started Wheel of Fortune");
         ControlWheel controlWheel = subsystems.getControlWheel();
 
         NetworkTableInstance ntInst = NetworkTableInstance.getDefault();

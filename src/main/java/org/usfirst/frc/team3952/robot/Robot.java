@@ -74,9 +74,11 @@ public class Robot extends TimedRobot {
 
     private void createPorts() {
         try {
-            PortForwarder.add(2000, "10.39.52.58", 80);
-            PortForwarder.add(2001, "10.39.52.58", 443);
-            PortForwarder.add(2002, "10.39.52.58", 1735);
+            PortForwarder.add(2000, "frcvision.local", 80);
+            PortForwarder.add(2001, "frcvision.local", 443);
+            PortForwarder.add(2002, "frcvision.local", 1735);
+            PortForwarder.add(1181, "frcvision.local", 1181);
+            PortForwarder.add(1182, "frcvision.local", 1182);
         } catch (Exception ignore) {
             System.out.println("Failed to port forward!");
         }
@@ -144,6 +146,7 @@ public class Robot extends TimedRobot {
     private void initMainController() {
         try {
             subsystems.setMainController(new MainController(new Joystick(0), subsystems));
+
             mainControllerInit = true;
         } catch (Exception ex) {
             System.out.println("The main controller has failed to initialize. See logs.\n" +

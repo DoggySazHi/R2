@@ -21,11 +21,14 @@ public class NetworkTableMap {
     public static NetworkTableEntry calibrateGyro;
     public static NetworkTableEntry cameraMode;
     public static NetworkTableEntry manualClimber;
+    public static NetworkTableEntry forceClimberDeploy;
+
     private static NetworkTable accelTable;
     private static NetworkTable controlWheelTable;
 
     private static NetworkTable r2Table;
     private static NetworkTable limeLiteTable;
+
     public enum CameraMode { Front, Rear, Both }
 
     public static void init() {
@@ -57,5 +60,8 @@ public class NetworkTableMap {
         cameraMode = limeLiteTable.getEntry("Camera Mode");
         cameraMode.setDefaultDouble(CameraMode.Both.ordinal());
 
+        forceClimberDeploy = r2Table.getEntry("Force Deploy");
+        forceClimberDeploy.setBoolean(false);
+        forceClimberDeploy.setDefaultBoolean(false);
     }
 }
