@@ -122,6 +122,8 @@ public class RobotMap {
     // Actually the DriveTrain
     public static DifferentialDrive drive;
 
+    // William Le + DoggySazHi + ReimuSazHi was here >:]
+
     // Sensors used for the DriveTrain, however are not used always.
     public static ADXRS450_Gyro gyro;
     public static BuiltInAccelerometer accelerometer;
