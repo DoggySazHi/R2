@@ -6,8 +6,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 import edu.wpi.first.hal.CANData;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.MOTOR_CHECK_DELAY;
 import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.*;
@@ -16,7 +16,7 @@ import static org.usfirst.frc.team3952.robot.devices.CANPWMFallback.Mode.*;
  * Allows easy swapping of port numbers, as well as identification of motors using both PWM and CAN.
  * Also reminds the user of port conflicts, instead of dumping horrendous exceptions.
  */
-public class CANPWMFallback implements SpeedController {
+public class CANPWMFallback implements MotorController {
 
     public enum Mode {None, PWM, CAN}
 
@@ -341,7 +341,7 @@ public class CANPWMFallback implements SpeedController {
     {
         if(getMode() == PWM) {
             if(isServo())
-                servo.stopMotor();
+                servo.setSpeed(0);
             else
                 pwmDevice.stopMotor();
         }
@@ -355,12 +355,6 @@ public class CANPWMFallback implements SpeedController {
     public void stopMotor()
     {
         stop();
-    }
-
-    @Override
-    public void pidWrite(double output) {
-        if(getMode() == PWM && !isServo())
-            pwmDevice.pidWrite(output);
     }
 
     private static long lastCheck;

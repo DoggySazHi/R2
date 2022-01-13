@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.usfirst.frc.team3952.robot.NetworkTableMap;
 import org.usfirst.frc.team3952.robot.RobotMap;
-import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
 
 import static org.usfirst.frc.team3952.robot.RobotMap.ACCELEROMETER_THRESHOLD_ACCELERATION;
 

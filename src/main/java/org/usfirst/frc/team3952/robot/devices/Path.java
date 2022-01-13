@@ -82,8 +82,9 @@ public class Path implements Runnable {
                 status = Ready;
                 System.out.println("Loaded file!");
             }
-            else
+            else {
                 throw new FileNotFoundException("JSON file could not be found! Did you place it in the deploy folder, and name it correctly?");
+            }
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -67,7 +67,7 @@ public class ControlWheel extends SubsystemBase {
     }
 
     public Color getFMSColor() {
-        String data = DriverStation.getInstance().getGameSpecificMessage();
+        String data = DriverStation.getGameSpecificMessage();
         Color output = null;
         if(data.length() > 0)
         {

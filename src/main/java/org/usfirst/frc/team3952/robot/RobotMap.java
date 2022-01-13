@@ -7,6 +7,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.util.Color;
 import org.usfirst.frc.team3952.robot.devices.AnalogUltrasonic;
 import org.usfirst.frc.team3952.robot.devices.CANPWMFallback;
@@ -46,10 +47,10 @@ public class RobotMap {
     // ---------------
 
     // Colors represented by the color sensor.
-    public static final Color CP_RED = ColorMatch.makeColor(0.475, 0.370, 0.150);
-    public static final Color CP_GREEN = ColorMatch.makeColor(0.190, 0.545, 0.260);
-    public static final Color CP_BLUE = ColorMatch.makeColor(0.150, 0.455, 0.385);
-    public static final Color CP_YELLOW = ColorMatch.makeColor(0.300, 0.550, 0.160);
+    public static final Color CP_RED = new Color(0.475, 0.370, 0.150);
+    public static final Color CP_GREEN = new Color(0.190, 0.545, 0.260);
+    public static final Color CP_BLUE = new Color(0.150, 0.455, 0.385);
+    public static final Color CP_YELLOW = new Color(0.300, 0.550, 0.160);
 
     //Sets the speed of the robot as it drives to the control wheel
     public static final double DRIVE_CONTROL_WHEEL_SPEED = 0.5;
@@ -185,14 +186,15 @@ public class RobotMap {
 
     public static void init() {
         CANPWMFallback.defaultMode = PWM;
+        new ColorMatch();
 
         // PWM (Motors and Servos)
         leftDriveFront = new CANPWMFallback(0, -1, "Left Drive"); //BL 3
         rightDriveFront = new CANPWMFallback(1, -1, "Right Drive"); //G1
         leftDriveRear = new CANPWMFallback(2, -1, "Left Drive (Rear)"); //O4
         rightDriveRear = new CANPWMFallback(3, -1, "Right Drive (Rear)"); //B2
-        SpeedControllerGroup left = new SpeedControllerGroup(leftDriveFront, leftDriveRear);
-        SpeedControllerGroup right = new SpeedControllerGroup(rightDriveFront, rightDriveRear);
+        MotorControllerGroup left = new MotorControllerGroup(leftDriveFront, leftDriveRear);
+        MotorControllerGroup right = new MotorControllerGroup(rightDriveFront, rightDriveRear);
 
         drive = new DifferentialDrive(left, right);
 
@@ -222,8 +224,8 @@ public class RobotMap {
         controlPanelSpinner = new CANPWMFallback(-1, 3, "Control Panel Spinner").withRamping(0.5);
 
         // PCM (Pneumatic Pistons)
-        controlPanelSolenoid = new DoubleSolenoid(2, 3);
-        ballShooter = new DoubleSolenoid(0, 1);
+        controlPanelSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
+        ballShooter = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
         // Other sensors on I2C or SPI (Gyro, Color Sensor)
         colorSensor = new ColorSensorV3(I2C.Port.kOnboard);

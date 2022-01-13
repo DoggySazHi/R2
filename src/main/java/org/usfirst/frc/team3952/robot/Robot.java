@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3952.robot;
 
-import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpiutil.net.PortForwarder;
+import edu.wpi.first.util.net.PortForwarder;
 import org.usfirst.frc.team3952.robot.commands.ManualClimber;
 import org.usfirst.frc.team3952.robot.commands.ManualDrive;
 import org.usfirst.frc.team3952.robot.commands.ManualIntakeShooter;
@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
      */
     private void initCameras() {
         // For testing purposes, add this to the end of robotInit()
-        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        UsbCamera camera = CameraServer.startAutomaticCapture();
         camera.setResolution(640, 480);
     }
 
